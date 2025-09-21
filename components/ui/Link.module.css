@@ -1,0 +1,31 @@
+.normal {
+  font-family: inherit;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #000;
+  text-decoration: none;
+}
+
+.normal:hover,
+.normal:focus {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.normal:active {
+  color: #ffcbd3;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.normal:visited {
+  text-decoration: none;
+}
+
+.disabled {
+  opacity: 0.3;
+  color: #000;
+  text-decoration: none;
+  pointer-events: none;
+}

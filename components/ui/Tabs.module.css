@@ -1,0 +1,40 @@
+.toggleTabs {
+  position: relative;
+  display: flex;
+  width: 100%;
+  max-width: 576px;
+  border-radius: 999px;
+  background: #fff4f6;
+  padding: 4px;
+}
+
+.toggleIndicator {
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  background: #ffc9d6; /* active tab background */
+  border-radius: 999px;
+  transition: all 0.3s ease;
+}
+
+.toggleTab {
+  flex: 1;
+  padding: 10px 16px;
+  text-align: center;
+  font-family: inherit;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #000;
+  color: #444;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  border-radius: 999px;
+  z-index: 1;
+  transition: color 0.3s ease;
+}
+
+.toggleTab.active {
+  color: #000;
+}

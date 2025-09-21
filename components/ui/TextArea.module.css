@@ -1,0 +1,35 @@
+.customTextArea {
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0);
+  border-radius: 12px;
+  padding: 12px;
+  max-width: 560px;
+  max-height: 180px;
+  resize: none;
+  overflow-y: auto;
+  font-family: "Lato", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #000;
+}
+
+.customTextArea::-webkit-scrollbar {
+  width: 6px;
+  margin-right: 10px;
+}
+
+.customTextArea::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.customTextArea::-webkit-scrollbar-thumb {
+  background-color: #ffcbd3;
+  border-radius: 12px;
+}
+
+.customTextArea:focus {
+  outline: none;
+  border: 2px solid #ffcbd3;
+}

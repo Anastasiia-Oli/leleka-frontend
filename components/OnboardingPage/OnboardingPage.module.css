@@ -1,0 +1,29 @@
+.formContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.mainImage {
+  display: none;
+  object-fit: cover;
+}
+
+@media only screen and (min-width: 1124px) {
+  .formContainer {
+    margin: 0 64px;
+    padding: 56px;
+  }
+
+  .onboardingLayout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .mainImage {
+    display: block;
+    width: 100%;
+    height: 100vh;
+  }
+}

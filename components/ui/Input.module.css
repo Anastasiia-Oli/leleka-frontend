@@ -1,0 +1,19 @@
+.customInputField {
+  border: 2px solid rgba(255, 255, 255, 0);
+  border-radius: 12px;
+  padding-block: 8px;
+  padding-inline: 12px;
+  width: 560px;
+  height: 40px;
+  background: rgba(0, 0, 0, 0.05);
+  font-family: "Lato", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #000;
+}
+
+.customInputField:focus {
+  outline: none;
+  border: 2px solid #ffcbd3;
+}
