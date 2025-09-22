@@ -8,6 +8,10 @@ interface DiaryEntryCardProps {
   onClick?: () => void;
   isSelected?: boolean;
 }
+// interface getEmotionStyle {
+//     bgColor: string;
+//     textColor: string
+// }
 
 const DiaryEntryCard: React.FC<DiaryEntryCardProps> = ({ entry, onClick, isSelected }) => {
   const getEmotionStyle = (emotionName: string) => {
