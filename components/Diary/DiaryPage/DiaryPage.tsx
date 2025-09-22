@@ -1,35 +1,27 @@
+"use client";
+
 import React, { useState } from "react";
-import { Trash2, Edit, Plus, Calendar, X } from "lucide-react";
 import { DiaryEntry, Note } from "../Diary.types";
 import { mockEntries, mockNotes } from "../Diary.mock";
 import DiaryList from "../DiaryList/DiaryList";
 import DiaryEntryDetails from "../DiaryEntryDetails/DiaryEntryDetails";
 import NotesList from "../NotesList/NotesList";
 import GreetingBlock from "../GreetingBlock/GreetingBlock";
-
+import css from "./DiaryPage.module.css";
 
 const DiaryPage: React.FC = () => {
   const [entries] = useState<DiaryEntry[]>(mockEntries);
   const [notes] = useState<Note[]>(mockNotes);
-  const [selectedEntry, setSelectedEntry] = useState<DiaryEntry | null>(entries[0]);
+  const [selectedEntry, setSelectedEntry] = useState<DiaryEntry | null>(entries[0] || null);
   const [selectedNote, setSelectedNote] = useState<Note | null>(null);
-  const [isMobile, setIsMobile] = useState(false);
-
-  React.useEffect(() => {
-    const checkIsMobile = () => {
-      setIsMobile(window.innerWidth < 1024);
-    };
-    
-    checkIsMobile();
-    window.addEventListener('resize', checkIsMobile);
-    
-    return () => window.removeEventListener('resize', checkIsMobile);
-  }, []);
 
   const handleEntryClick = (entry: DiaryEntry) => {
-    if (isMobile) {
-      console.log(`Navigate to /diary/${entry.id}`);
+    // На мобільних пристроях переходимо на окрему сторінку
+    // Для демо використаємо window.location, в реальному проекті - Next.js router
+    if (window.innerWidth < 1024) {
+      window.location.href = `/diary/${entry.id}`;
     } else {
+      // На десктопі показуємо деталі в правій панелі
       setSelectedEntry(entry);
       setSelectedNote(null);
     }
@@ -56,11 +48,13 @@ const DiaryPage: React.FC = () => {
     console.log('Open ConfirmationModal for deletion', selectedEntry);
   };
 
-  if (isMobile) {
-    return (
-      <div className="min-h-screen bg-gray-50 p-4">
-        <GreetingBlock />
-        <div className="space-y-4">
+  return (
+    <div className={css.container}>
+      <GreetingBlock />
+      
+      {/* Мобільна версія - показуємо тільки список */}
+      <div className={css.mobileLayout}>
+        <div className={css.mobileGrid}>
           <DiaryList 
             entries={entries}
             onEntryClick={handleEntryClick}
@@ -73,32 +67,30 @@ const DiaryPage: React.FC = () => {
           />
         </div>
       </div>
-    );
-  }
 
-  return (
-    <div className="min-h-screen bg-gray-50 p-6">
-      <GreetingBlock />
-      <div className="grid grid-cols-3 gap-6 h-[calc(100vh-12rem)]">
-        <DiaryList 
-          entries={entries}
-          onEntryClick={handleEntryClick}
-          selectedEntryId={selectedEntry?.id}
-          onAddEntry={handleAddEntry}
-        />
-        
-        <DiaryEntryDetails 
-          entry={selectedEntry}
-          onEdit={handleEditEntry}
-          onDelete={handleDeleteEntry}
-        />
-        
-        <NotesList
-          notes={notes}
-          onNoteClick={handleNoteClick}
-          selectedNoteId={selectedNote?.id}
-          onAddNote={handleAddNote}
-        />
+      {/* Десктопна версія - показуємо все в одній сітці */}
+      <div className={css.desktopLayout}>
+        <div className={css.desktopGrid}>
+          <DiaryList 
+            entries={entries}
+            onEntryClick={handleEntryClick}
+            selectedEntryId={selectedEntry?.id}
+            onAddEntry={handleAddEntry}
+          />
+          
+          <DiaryEntryDetails 
+            entry={selectedEntry}
+            onEdit={handleEditEntry}
+            onDelete={handleDeleteEntry}
+          />
+          
+          <NotesList
+            notes={notes}
+            onNoteClick={handleNoteClick}
+            selectedNoteId={selectedNote?.id}
+            onAddNote={handleAddNote}
+          />
+        </div>
       </div>
     </div>
   );

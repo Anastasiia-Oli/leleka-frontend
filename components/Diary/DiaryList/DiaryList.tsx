@@ -1,7 +1,8 @@
 import React from "react";
-import { DiaryEntry } from "@prisma/client";
+import { DiaryEntry } from "../Diary.types";
 import DiaryEntryCard from "../DiaryEntryCard/DiaryEntryCard";  
 import { Plus as PlusIcon } from "lucide-react";
+import css from "./DiaryList.module.css";
 
 interface DiaryListProps {
   entries: DiaryEntry[];
@@ -17,30 +18,38 @@ const DiaryList: React.FC<DiaryListProps> = ({
   onAddEntry 
 }) => {
   return (
-    <div className="bg-white rounded-xl h-full flex flex-col">
-      <div className="p-6 border-b border-gray-100">
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-semibold text-gray-900">Ваші записи</h2>
-          <button
-            onClick={onAddEntry}
-            className="flex items-center gap-2 text-gray-700 hover:text-gray-900 transition-colors"
-          >
-            <PlusIcon />
-            <span className="text-sm font-medium">Новий запис</span>
-          </button>
-        </div>
+    <div className={css.container}>
+      <div className={css.header}>
+        <h2 className={`${css.title} header-third`}>Ваші записи</h2>
+        <button
+          className={css.addButton}
+          onClick={onAddEntry}
+        >
+          <div className={css.addIcon}>
+            <PlusIcon size={24} />
+          </div>
+          <span className={css.addText}>Новий запис</span>
+        </button>
       </div>
       
-      <div className="flex-1 overflow-y-auto p-6">
-        {entries.map((entry) => (
-          <DiaryEntryCard
-            key={entry.id}
-            entry={entry}
-            onClick={() => onEntryClick?.(entry)}
-            isSelected={selectedEntryId === entry.id}
-          />
-        ))}
+      <div className={css.entriesList}>
+        {entries.length === 0 ? (
+          <div className={css.placeholder}>
+            <p className="text-primary">Записів поки що немає</p>
+          </div>
+        ) : (
+          entries.map((entry) => (
+            <DiaryEntryCard
+              key={entry.id}
+              entry={entry}
+              onClick={() => onEntryClick?.(entry)}
+              isSelected={selectedEntryId === entry.id}
+            />
+          ))
+        )}
       </div>
     </div>
   );
 };
+
+export default DiaryList;

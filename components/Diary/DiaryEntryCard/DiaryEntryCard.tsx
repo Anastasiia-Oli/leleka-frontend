@@ -1,8 +1,7 @@
-
 import React from "react";
 import { DiaryEntry } from "../Diary.types";
 import { EMOTIONS } from "../Diary.constants";
-
+import css from "./DiaryEntryCard.module.css";
 
 interface DiaryEntryCardProps {
   entry: DiaryEntry;
@@ -14,32 +13,37 @@ const DiaryEntryCard: React.FC<DiaryEntryCardProps> = ({ entry, onClick, isSelec
   const getEmotionStyle = (emotionName: string) => {
     const emotion = EMOTIONS.find(e => e.name === emotionName);
     return emotion ? { bgColor: emotion.bgColor, textColor: emotion.textColor } : 
-           { bgColor: "bg-gray-100", textColor: "text-gray-700" };
+           { bgColor: "var(--gray-lightest)", textColor: "var(--gray-dark)" };
   };
+
+  // Показуємо максимум 3 емоції, решту ховаємо під "+N"
+  const visibleEmotions = entry.emotions.slice(0, 3);
+  const hiddenEmotionsCount = entry.emotions.length - 3;
 
   return (
     <div
       onClick={onClick}
-      className={`
-        bg-pink-100 rounded-xl p-4 cursor-pointer transition-all duration-200 hover:bg-pink-150 mb-4
-        ${isSelected ? 'ring-2 ring-pink-300 bg-pink-200' : ''}
-      `}
+      className={`${css.card} ${isSelected ? css.selected : ''}`}
     >
-      <h3 className="font-medium text-gray-900 mb-2">{entry.title}</h3>
-      <p className="text-sm text-gray-600 mb-3">{entry.date}</p>
-      <div className="flex flex-wrap gap-2">
-        {entry.emotions.map((emotion, index) => {
-          const style = getEmotionStyle(emotion);
-          return (
-            <span 
-              key={index} 
-              className={`${style.bgColor} ${style.textColor} px-3 py-1 rounded-full text-xs font-medium`}
-            >
-              {emotion}
-            </span>
-          );
-        })}
+      <div className={css.cardHeader}>
+        <h3 className={`${css.cardTitle} header-fourth`}>{entry.title}</h3>
+        <span className={`${css.cardDate} text-primary`}>{entry.date}</span>
+      </div>
+      
+      <div className={css.emotions}>
+        {visibleEmotions.map((emotion, index) => (
+          <span key={index} className={css.emotionTag}>
+            {emotion}
+          </span>
+        ))}
+        {hiddenEmotionsCount > 0 && (
+          <span className={css.moreEmotions}>
+            +{hiddenEmotionsCount}
+          </span>
+        )}
       </div>
     </div>
   );
 };
+
+export default DiaryEntryCard;

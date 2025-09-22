@@ -1,8 +1,7 @@
-import React, { useState } from "react";
-import { Trash2, Edit, Plus, Calendar, X } from "lucide-react";
+import React from "react";
 import NoteCard from "../NoteCard/NoteCard";
 import { Note } from "../Diary.types";
-import { Book as BookIcon, Plus as PlusIcon } from "lucide-react";
+import { BookOpen as BookIcon, Plus as PlusIcon } from "lucide-react";
 
 interface NotesListProps {
   notes: Note[];
@@ -18,33 +17,84 @@ const NotesList: React.FC<NotesListProps> = ({
   onAddNote 
 }) => {
   return (
-    <div className="bg-white rounded-xl h-full flex flex-col">
-      <div className="p-6 border-b border-gray-100">
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
-            <BookIcon />
+    <div style={{ 
+      background: "var(--white)", 
+      borderRadius: "16px", 
+      height: "100%", 
+      display: "flex", 
+      flexDirection: "column" 
+    }}>
+      <div style={{ 
+        padding: "24px", 
+        borderBottom: "1px solid var(--gray-lightest)" 
+      }}>
+        <div style={{ 
+          display: "flex", 
+          alignItems: "center", 
+          justifyContent: "space-between", 
+          marginBottom: "16px" 
+        }}>
+          <h2 className="header-third" style={{ 
+            display: "flex", 
+            alignItems: "center", 
+            gap: "8px",
+            margin: 0
+          }}>
+            <BookIcon size={24} />
             Нотатки
           </h2>
           <button
             onClick={onAddNote}
-            className="flex items-center gap-2 text-gray-700 hover:text-gray-900 transition-colors"
+            style={{
+              display: "flex",
+              alignItems: "center", 
+              gap: "8px",
+              background: "none",
+              border: "none",
+              color: "var(--gray-dark)",
+              cursor: "pointer",
+              padding: "4px 8px",
+              borderRadius: "8px",
+              transition: "color 0.2s ease"
+            }}
+            onMouseEnter={(e) => e.currentTarget.style.color = "var(--black)"}
+            onMouseLeave={(e) => e.currentTarget.style.color = "var(--gray-dark)"}
           >
-            <PlusIcon />
-            <span className="text-sm font-medium">Нова нотатка</span>
+            <PlusIcon size={20} />
+            <span className="text-medium">Нова нотатка</span>
           </button>
         </div>
       </div>
       
-      <div className="flex-1 overflow-y-auto p-6">
-        {notes.map((note) => (
-          <NoteCard
-            key={note.id}
-            note={note}
-            onClick={() => onNoteClick?.(note)}
-            isSelected={selectedNoteId === note.id}
-          />
-        ))}
+      <div style={{ 
+        flex: 1, 
+        overflowY: "auto", 
+        padding: "24px" 
+      }}>
+        {notes.length === 0 ? (
+          <div style={{
+            display: "flex",
+            alignItems: "center", 
+            justifyContent: "center",
+            height: "200px",
+            color: "var(--gray)",
+            textAlign: "center"
+          }}>
+            <p className="text-primary">Нотаток поки що немає</p>
+          </div>
+        ) : (
+          notes.map((note) => (
+            <NoteCard
+              key={note.id}
+              note={note}
+              onClick={() => onNoteClick?.(note)}
+              isSelected={selectedNoteId === note.id}
+            />
+          ))
+        )}
       </div>
     </div>
   );
 };
+
+export default NotesList;
