@@ -16,12 +16,12 @@ const DiaryPage: React.FC = () => {
   const [selectedNote, setSelectedNote] = useState<Note | null>(null);
 
   const handleEntryClick = (entry: DiaryEntry) => {
-    // На мобільних пристроях переходимо на окрему сторінку
-    // Для демо використаємо window.location, в реальному проекті - Next.js router
-    if (window.innerWidth < 1024) {
+    // Use window.matchMedia for safe size checking
+    if (typeof window !== 'undefined' && window.matchMedia('(max-width: 1023px)').matches) {
+      // On mobile devices, go to a separate page
       window.location.href = `/diary/${entry.id}`;
     } else {
-      // На десктопі показуємо деталі в правій панелі
+      // On the desktop, show the details in the right pane
       setSelectedEntry(entry);
       setSelectedNote(null);
     }
@@ -52,7 +52,7 @@ const DiaryPage: React.FC = () => {
     <div className={css.container}>
       <GreetingBlock />
       
-      {/* Мобільна версія - показуємо тільки список */}
+      {/* Mobile version - show only the list */}
       <div className={css.mobileLayout}>
         <div className={css.mobileGrid}>
           <DiaryList 
@@ -68,7 +68,7 @@ const DiaryPage: React.FC = () => {
         </div>
       </div>
 
-      {/* Десктопна версія - показуємо все в одній сітці */}
+      {/* Desktop version - show everything in one grid */}
       <div className={css.desktopLayout}>
         <div className={css.desktopGrid}>
           <DiaryList 

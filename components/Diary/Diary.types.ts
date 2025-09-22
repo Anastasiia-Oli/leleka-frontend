@@ -16,3 +16,8 @@ export interface Note {
   createdAt?: Date;
   updatedAt?: Date;
 }
+
+export interface getEmotionStyle {
+    bgColor: string;
+    textColor: string
+}

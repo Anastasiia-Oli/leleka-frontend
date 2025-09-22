@@ -1,0 +1,41 @@
+.container {
+    min-height: 100vh;
+    background: var(--pastel-pink-lighter);
+    padding: 16px;
+}
+
+.mobileLayout {
+    display: block;
+}
+
+.desktopLayout {
+    display: none;
+}
+
+.mobileGrid {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.desktopGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 24px;
+    height: 450px;
+}
+
+/* Десктопна версія */
+@media (min-width: 1024px) {
+    .container {
+        padding: 24px;
+    }
+
+    .mobileLayout {
+        display: none;
+    }
+
+    .desktopLayout {
+        display: block;
+    }
+}

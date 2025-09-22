@@ -16,7 +16,7 @@ const DiaryEntryCard: React.FC<DiaryEntryCardProps> = ({ entry, onClick, isSelec
            { bgColor: "var(--gray-lightest)", textColor: "var(--gray-dark)" };
   };
 
-  // Показуємо максимум 3 емоції, решту ховаємо під "+N"
+  // Show a maximum of 3 emotions, hide the rest under "+N"
   const visibleEmotions = entry.emotions.slice(0, 3);
   const hiddenEmotionsCount = entry.emotions.length - 3;
 
