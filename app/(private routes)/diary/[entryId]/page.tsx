@@ -2,7 +2,7 @@
 
 import React from "react";
 import { useRouter } from "next/navigation";
-import DiaryEntryDetails from "@/components/Diary/DiaryEntryDetails/DiaryEntryDetails";
+// import DiaryEntryDetails from "@/components/Diary/DiaryEntryDetails/DiaryEntryDetails";
 import GreetingBlock from "@/components/Diary/GreetingBlock/GreetingBlock";
 import { mockEntries } from "@/components/Diary/Diary.mock";
 
@@ -20,13 +20,13 @@ const DiaryEntryPage = ({ params }: PageProps) => {
     router.push('/diary');
   };
 
-  const handleEdit = () => {
-    console.log('Open AddDiaryEntryModal for editing', entry);
-  };
+//   const handleEdit = () => {
+//     console.log('Open AddDiaryEntryModal for editing', entry);
+//   };
 
-  const handleDelete = () => {
-    console.log('Open ConfirmationModal for deletion', entry);
-  };
+//   const handleDelete = () => {
+//     console.log('Open ConfirmationModal for deletion', entry);
+//   };
 
   return (
     <div style={{ 
@@ -36,12 +36,12 @@ const DiaryEntryPage = ({ params }: PageProps) => {
     }}>
       <GreetingBlock />
       <div style={{ maxWidth: "100%", margin: "0 auto" }}>
-        <DiaryEntryDetails 
+        {/* <DiaryEntryDetails 
           entry={entry || null}
           onEdit={handleEdit}
           onDelete={handleDelete}
           onBack={handleBack}
-        />
+        /> */}
       </div>
     </div>
   );
