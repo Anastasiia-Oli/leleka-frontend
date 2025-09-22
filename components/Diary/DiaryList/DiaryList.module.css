@@ -1,0 +1,86 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    flex-shrink: 0;
+}
+
+.title {
+    margin: 0;
+    color: var(--black);
+}
+
+.addButton {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+}
+
+.addButton:hover {
+    opacity: 0.8;
+}
+
+.addText {
+    font-family: var(--font-family);
+    font-weight: var(--medium);
+    font-size: 14px;
+    line-height: 160%;
+    color: var(--black);
+}
+
+.addIcon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.entriesList {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    overflow-y: auto;
+}
+
+.placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 200px;
+    color: var(--gray);
+    text-align: center;
+}
+
+/* Mobile/Tablet styles */
+@media (max-width: 1023px) {
+    .header {
+        flex-direction: column;
+        gap: 16px;
+        align-items: flex-start;
+    }
+
+    .addButton {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .addText {
+        font-size: 14px;
+    }
+
+    .addIcon svg {
+        width: 20px;
+        height: 20px;
+    }
+}

@@ -15,7 +15,7 @@ const SideBar = () => {
             <Link href={"#"}>Подорож</Link>
           </li>
           <li>
-            <Link href={"#"}>Щоденник</Link>
+            <Link href={"/diary"}>Щоденник</Link>
           </li>
           <li>
             <Link href={"#"}>Профіль</Link>
