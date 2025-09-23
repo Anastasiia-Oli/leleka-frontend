@@ -2,6 +2,7 @@ import React from "react";
 import NoteCard from "../NoteCard/NoteCard";
 import { Note } from "../Diary.types";
 import { BookOpen as BookIcon, Plus as PlusIcon } from "lucide-react";
+import ButtonProps from "../../ui/Button";
 
 interface NotesListProps {
   notes: Note[];

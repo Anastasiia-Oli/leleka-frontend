@@ -1,6 +1,6 @@
 .container {
     min-height: 100vh;
-    background: var(--pastel-pink-lighter);
+    /* background: var(--pastel-pink-lighter); */
     padding: 16px;
 }
 

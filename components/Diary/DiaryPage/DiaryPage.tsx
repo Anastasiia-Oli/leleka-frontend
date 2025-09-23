@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { DiaryEntry, Note } from "../Diary.types";
 import { mockEntries, mockNotes } from "../Diary.mock";
 import DiaryList from "../DiaryList/DiaryList";
-// import DiaryEntryDetails from "../DiaryEntryDetails/DiaryEntryDetails";
+import DiaryEntryDetails from "../DiaryEntryDetails/DiaryEntryDetails";
 import NotesList from "../NotesList/NotesList";
 import GreetingBlock from "../GreetingBlock/GreetingBlock";
 import css from "./DiaryPage.module.css";
@@ -78,18 +78,18 @@ const DiaryPage: React.FC = () => {
             onAddEntry={handleAddEntry}
           />
           
-          {/* <DiaryEntryDetails 
+          <DiaryEntryDetails 
             entry={selectedEntry}
             onEdit={handleEditEntry}
             onDelete={handleDeleteEntry}
-          /> */}
+          />
           
-          <NotesList
+          {/* <NotesList
             notes={notes}
             onNoteClick={handleNoteClick}
             selectedNoteId={selectedNote?.id}
             onAddNote={handleAddNote}
-          />
+          /> */}
         </div>
       </div>
     </div>
