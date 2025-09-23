@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import css from "./Header.module.css";
 
@@ -15,3 +17,5 @@ const Header = () => {
     </header>
   );
 };
+
+export default Header;

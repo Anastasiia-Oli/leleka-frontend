@@ -2,6 +2,8 @@
     width: 389px;
     box-sizing: border-box;
     padding: 24px 16px;
+    background: var(--pastel-pink-lighter);
+    border-radius: 32px;
 }
 .card {
     background: var(--pastel-pink);

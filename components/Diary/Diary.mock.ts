@@ -1,7 +1,7 @@
-import { DiaryEntry, Note } from "./Diary.types";
+import { LegacyDiaryEntry, Note,  } from "./Diary.types";
 
 
-export const mockEntries: DiaryEntry[] = [
+export const mockEntries: LegacyDiaryEntry[] = [
   {
     id: "1",
     title: "Перший привіт",
@@ -12,8 +12,8 @@ export const mockEntries: DiaryEntry[] = [
 Тепер я точно знаю, що я не сама. Там справді хтось є, росте і спілкується зі мною. Неймовірне відчуття.`,
     date: "15 липня 2025",
     emotions: ["натхнення", "вдячність"],
-    createdAt: new Date("2025-07-15"),
-    updatedAt: new Date("2025-07-15")
+    createdAt: new Date("2025-07-15").toISOString(),
+    updatedAt: new Date("2025-07-15").toISOString()
   },
   {
     id: "2", 
@@ -21,8 +21,8 @@ export const mockEntries: DiaryEntry[] = [
     content: `Натхнення + дивні бажання`,
     date: "9 липня 2025",
     emotions: ["любов", "дивні бажання"],
-    createdAt: new Date("2025-07-09"),
-    updatedAt: new Date("2025-07-09")
+    createdAt: new Date("2025-07-09").toISOString(),
+    updatedAt: new Date("2025-07-09").toISOString()
   },
   {
     id: "3",
@@ -76,7 +76,7 @@ export const mockNotes: Note[] = [
     title: "Питання до лікаря",
     content: "Запитати про вітаміни, обговорити план пологів",
     date: "10 липня 2025", 
-    createdAt: new Date("2025-07-10"),
-    updatedAt: new Date("2025-07-10")
+    createdAt: new Date("2025-07-10").toISOString(),
+    updatedAt: new Date("2025-07-10").toISOString()
   }
 ];

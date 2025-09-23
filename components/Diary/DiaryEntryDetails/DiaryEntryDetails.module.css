@@ -1,25 +1,11 @@
-/* .container {
+.container {
     display: flex;
     flex-direction: column;
     height: 100%;
-    gap: 24px;
-    background: var(--white);
+    background: var(--pastel-pink-lighter);
     border-radius: 16px;
     padding: 24px;
-} */
-
-.container {
-    display: flex;
-    flex-direction: row;
-}
-
-.sidebar {
-    display: flex;
-    flex-direction: column;
-    width: 312px;
-    height: 900px;
-    border-right: 1px solid var(--gray-lightest);
-    padding-top: 8px;
+    gap: 16px;
 }
 
 .backButton {
@@ -93,13 +79,29 @@
 
 .date {
     color: var(--gray);
-    flex-shrink: 0;
+    margin-bottom: 16px;
+}
+
+.content {
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 8px;
+    margin-bottom: 16px;
+}
+
+.content p {
+    line-height: 1.6;
+    margin: 0;
+    color: var(--black);
 }
 
 .emotions {
     display: flex;
     gap: 8px;
     flex-wrap: wrap;
+    margin-top: auto;
+    padding-top: 16px;
+
 }
 
 .emotionTag {
@@ -110,18 +112,6 @@
     font-size: 14px;
     font-weight: 400;
     line-height: 1.2;
-}
-
-.content {
-    flex: 1;
-    overflow-y: auto;
-    padding-right: 8px;
-}
-
-.content p {
-    line-height: 1.6;
-    margin: 0;
-    color: var(--black);
 }
 
 .placeholder {

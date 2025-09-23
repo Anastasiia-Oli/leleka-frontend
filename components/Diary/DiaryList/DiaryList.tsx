@@ -25,10 +25,10 @@ const DiaryList: React.FC<DiaryListProps> = ({
           className={css.addButton}
           onClick={onAddEntry}
         >
-          <div className={css.addIcon}>
-            <PlusIcon size={24} />
-          </div>
           <span className={css.addText}>Новий запис</span>
+                    <div className={css.addIcon}>
+            <PlusIcon size={16} />
+          </div>
         </button>
       </div>
       

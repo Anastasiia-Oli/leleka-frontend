@@ -20,11 +20,12 @@
 }
 
 .addButton {
-    display: flex;
+    display: inline-block;
     align-items: center;
     gap: 8px;
     cursor: pointer;
     transition: opacity 0.2s ease;
+    background: var(--pastel-pink-lighter);
 }
 
 .addButton:hover {

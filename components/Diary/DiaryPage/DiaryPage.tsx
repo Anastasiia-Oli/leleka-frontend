@@ -2,32 +2,35 @@
 
 import React, { useState } from "react";
 import { 
-  DiaryEntry, 
   Note, 
   convertApiEntryToLegacy, 
-  convertLegacyEntryToApi,
   LegacyDiaryEntry 
 } from "../Diary.types";
-import { mockNotes } from "../Diary.mock";
+import { mockEntries, mockNotes } from "../Diary.mock";
 import DiaryList from "../DiaryList/DiaryList";
 import DiaryEntryDetails from "../DiaryEntryDetails/DiaryEntryDetails";
 import NotesList from "../NotesList/NotesList";
-import GreetingBlock from "../GreetingBlock/GreetingBlock";
-import { useDiaryEntries, useDeleteDiaryEntry } from "../../../hooks/useDiary";
+import GreetingBlock from "../../GreetingBlock/GreetingBlock";
+import { useDiaryEntries, useDeleteDiaryEntry } from "@/hooks/useDiary";
 import css from "./DiaryPage.module.css";
 
 const DiaryPage: React.FC = () => {
   const { data: apiEntries = [], isLoading, error } = useDiaryEntries();
   const deleteEntryMutation = useDeleteDiaryEntry();
   
-  // Конвертуємо API дані в legacy формат для сумісності
-  const entries: LegacyDiaryEntry[] = apiEntries.map(convertApiEntryToLegacy);
+  // Fallback на mock дані, якщо API не працює
+  const entries: LegacyDiaryEntry[] = React.useMemo(() => {
+    if (error || apiEntries.length === 0) {
+      return mockEntries; // Використовуємо mock дані
+    }
+    return apiEntries.map(convertApiEntryToLegacy);
+  }, [apiEntries, error]);
   
   const [notes] = useState<Note[]>(mockNotes);
   const [selectedEntry, setSelectedEntry] = useState<LegacyDiaryEntry | null>(null);
   const [selectedNote, setSelectedNote] = useState<Note | null>(null);
 
-  // Встановлюємо перший запис як вибраний, коли дані завантажились
+  // Встановлюємо перший запис як вибраний
   React.useEffect(() => {
     if (entries.length > 0 && !selectedEntry) {
       setSelectedEntry(entries[0]);
@@ -50,7 +53,6 @@ const DiaryPage: React.FC = () => {
 
   const handleAddEntry = () => {
     console.log('Open AddDiaryEntryModal');
-    // Тут буде модальне вікно для створення нового запису
   };
 
   const handleAddNote = () => {
@@ -59,12 +61,18 @@ const DiaryPage: React.FC = () => {
 
   const handleEditEntry = () => {
     console.log('Open AddDiaryEntryModal for editing', selectedEntry);
-    // Тут буде модальне вікно для редагування запису
   };
 
   const handleDeleteEntry = async () => {
     if (selectedEntry && window.confirm('Ви впевнені, що хочете видалити цей запис?')) {
       try {
+        // Якщо це mock дані, просто видаляємо локально
+        if (error || !apiEntries.length) {
+          console.log('Видалення mock запису:', selectedEntry.id);
+          setSelectedEntry(null);
+          return;
+        }
+
         await deleteEntryMutation.mutateAsync(selectedEntry.id);
         setSelectedEntry(null);
         console.log('Entry deleted successfully');
@@ -91,28 +99,26 @@ const DiaryPage: React.FC = () => {
     );
   }
 
-  if (error) {
-    return (
-      <div className={css.container}>
-        <GreetingBlock />
-        <div style={{ 
-          display: 'flex', 
-          justifyContent: 'center', 
-          alignItems: 'center', 
-          height: '200px',
-          color: 'var(--color-red)' 
-        }}>
-          <p>Помилка завантаження записів. Спробуйте пізніше.</p>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className={css.container}>
       <GreetingBlock />
       
-      {/* Mobile version - show only the list */}
+      {/* Показуємо попередження, якщо використовуємо mock дані */}
+      {error && (
+        <div style={{ 
+          padding: '16px', 
+          backgroundColor: 'var(--sand-light)', 
+          borderRadius: '8px', 
+          marginBottom: '24px',
+          textAlign: 'center'
+        }}>
+          <p style={{ margin: 0, color: 'var(--gray-dark)' }}>
+            Сервер недоступний. Показані тестові дані.
+          </p>
+        </div>
+      )}
+      
+      {/* Mobile version */}
       <div className={css.mobileLayout}>
         <div className={css.mobileGrid}>
           <DiaryList 
@@ -128,7 +134,7 @@ const DiaryPage: React.FC = () => {
         </div>
       </div>
 
-      {/* Desktop version - show everything in one grid */}
+      {/* Desktop version */}
       <div className={css.desktopLayout}>
         <div className={css.desktopGrid}>
           <DiaryList 
@@ -143,14 +149,6 @@ const DiaryPage: React.FC = () => {
             onEdit={handleEditEntry}
             onDelete={handleDeleteEntry}
           />
-          
-          {/* Можна розкоментувати, коли буде потрібно
-          <NotesList
-            notes={notes}
-            onNoteClick={handleNoteClick}
-            selectedNoteId={selectedNote?.id}
-            onAddNote={handleAddNote}
-          /> */}
         </div>
       </div>
     </div>

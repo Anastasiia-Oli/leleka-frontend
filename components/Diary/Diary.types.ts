@@ -1,4 +1,3 @@
-// components/Diary/Diary.types.ts
 export interface DiaryEntry {
   _id: string;
   title: string;
@@ -33,18 +32,18 @@ export interface getEmotionStyle {
   textColor: string;
 }
 
-// Мапування старих типів на нові для зворотної сумісності
+// Legacy типи для зворотної сумісності
 export interface LegacyDiaryEntry {
   id: string;
   title: string;
   content: string;
   date: string;
   emotions: string[];
-  createdAt?: Date;
-  updatedAt?: Date;
+  createdAt?: string | Date;
+  updatedAt?: string | Date;
 }
 
-// Функція для конвертації API відповіді в legacy формат
+// Функції конвертації
 export const convertApiEntryToLegacy = (apiEntry: DiaryEntry): LegacyDiaryEntry => ({
   id: apiEntry._id,
   title: apiEntry.title,
@@ -55,7 +54,6 @@ export const convertApiEntryToLegacy = (apiEntry: DiaryEntry): LegacyDiaryEntry 
   updatedAt: new Date(apiEntry.updatedAt),
 });
 
-// Функція для конвертації legacy формату в API формат
 export const convertLegacyEntryToApi = (legacyEntry: Partial<LegacyDiaryEntry>): CreateDiaryEntryData => ({
   title: legacyEntry.title || '',
   description: legacyEntry.content || '',

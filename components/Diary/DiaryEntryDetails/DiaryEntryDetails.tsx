@@ -1,11 +1,11 @@
 import React from "react";
 import { Edit, X } from "lucide-react";
-import { DiaryEntry } from "../Diary.types";
+import { LegacyDiaryEntry } from "../Diary.types";
 import { EMOTIONS } from "../Diary.constants";
 import css from "./DiaryEntryDetails.module.css";
 
 interface DiaryEntryDetailsProps {
-  entry: DiaryEntry | null;
+  entry: LegacyDiaryEntry | null;
   onEdit?: () => void;
   onDelete?: () => void;
   onBack?: () => void;
@@ -59,7 +59,10 @@ const DiaryEntryDetails: React.FC<DiaryEntryDetailsProps> = ({
                 onClick={onEdit}
                 title="Редагувати"
               >
-                <Edit />
+                    <svg className={css.editIcon} viewBox="0 0 24 24">
+                      <use href="@/public/leleka-sprite.svg#icon-edit_square" />
+                    </svg>
+
               </button>
             )}
             {onDelete && (
@@ -68,7 +71,9 @@ const DiaryEntryDetails: React.FC<DiaryEntryDetailsProps> = ({
                 onClick={onDelete}
                 title="Видалити"
               >
-                <X />
+                    <svg className={css.deleteIcon} viewBox="0 0 24 24">
+                      <use href="@/public/leleka-sprite.svg#icon-delete_forever" />
+                    </svg>
               </button>
             )}
           </div>
@@ -76,20 +81,21 @@ const DiaryEntryDetails: React.FC<DiaryEntryDetailsProps> = ({
         
         <div className={css.headerInfo}>
           <div className={`${css.date} text-primary`}>{entry.date}</div>
-          
-          <div className={css.emotions}>
-            {entry.emotions.map((emotion, index) => (
-              <span key={index} className={css.emotionTag}>
-                {emotion}
-              </span>
-            ))}
-          </div>
         </div>
       </div>
 
       <div className={css.content}>
-        <p className="text-primary">{entry.content}</p>
+              <p className="text-primary">{entry.content}</p>
+                    <div className={css.emotions}>
+        {entry.emotions.map((emotion, index) => (
+          <span key={index} className={css.emotionTag}>
+            {emotion}
+          </span>
+        ))}
       </div>
+      </div>
+
+
     </div>
   );
 };

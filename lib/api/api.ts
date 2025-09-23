@@ -1,18 +1,10 @@
-// import axios from "axios";
-
-// const baseURL = process.env.NEXT_PUBLIC_SERVER;
-
-// const nextServer = axios.create({ baseURL, withCredentials: true });
-
-// export default nextServer;
-
 import axios from "axios";
 
 const baseURL = process.env.NEXT_PUBLIC_SERVER || "https://leleka-backend-1.onrender.com";
 
 const nextServer = axios.create({ 
   baseURL, 
-  withCredentials: true,
+  withCredentials: false, // Змінено з true на false
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json',
@@ -22,10 +14,12 @@ const nextServer = axios.create({
 // Інтерсептор для запитів
 nextServer.interceptors.request.use(
   (config) => {
-    // Додаємо токен авторизації, якщо він є
-    const token = localStorage.getItem('accessToken');
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+    // Перевіряємо, чи працюємо в браузері
+    if (typeof window !== 'undefined') {
+      const token = localStorage.getItem('accessToken');
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
     }
     return config;
   },
@@ -41,10 +35,9 @@ nextServer.interceptors.response.use(
   },
   (error) => {
     if (error.response?.status === 401) {
-      // Видаляємо невалідний токен
-      localStorage.removeItem('accessToken');
-      // Можна додати редирект на сторінку логіну
-      // window.location.href = '/sign-in';
+      if (typeof window !== 'undefined') {
+        localStorage.removeItem('accessToken');
+      }
     }
     return Promise.reject(error);
   }

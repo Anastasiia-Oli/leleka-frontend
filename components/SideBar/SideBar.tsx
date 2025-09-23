@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import React from "react";
 import css from "./SideBar.module.css";
@@ -9,16 +11,16 @@ const SideBar = () => {
         <div>Sidebar</div>
         <ul>
           <li>
-            <Link href={"#"}>Мій день</Link>
+            <Link href={"/"}>Мій день</Link>
           </li>
           <li>
-            <Link href={"#"}>Подорож</Link>
+            <Link href={"/journey/0"}>Подорож</Link>
           </li>
           <li>
             <Link href={"/diary"}>Щоденник</Link>
           </li>
           <li>
-            <Link href={"#"}>Профіль</Link>
+            <Link href={"/profile"}>Профіль</Link>
           </li>
         </ul>
       </aside>
