@@ -1,15 +1,16 @@
 .container {
     min-height: 100vh;
-    /* background: var(--pastel-pink-lighter); */
-    padding: 16px;
+    padding: 24px 16px;
 }
 
 .mobileLayout {
+    /* background: var(--pastel-pink-lighter); */
     display: block;
 }
 
 .desktopLayout {
-    display: none;
+    /* background: var(--pastel-pink-lighter); */
+    display: flex;
 }
 
 .mobileGrid {

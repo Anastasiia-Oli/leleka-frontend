@@ -1,7 +1,12 @@
+.container {
+    width: 389px;
+    box-sizing: border-box;
+    padding: 24px 16px;
+}
 .card {
-    background: var(--pastel-pink-lighter);
+    background: var(--pastel-pink);
     border-radius: 16px;
-    padding: 20px;
+    padding: 16px;
     cursor: pointer;
     transition: all 0.3s ease;
     border: 2px solid transparent;
@@ -41,13 +46,14 @@
 }
 
 .emotionTag {
-    background: var(--pastel-pink);
+    background: var(--pastel-pink-lightest);
     color: var(--black);
-    padding: 4px 12px;
+    padding: 2px 12px;
     border-radius: 16px;
     font-size: 12px;
     font-weight: 400;
     line-height: 1.2;
+    text-align: center;
 }
 
 .moreEmotions {

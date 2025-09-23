@@ -1,27 +1,43 @@
 "use client";
 
 import React, { useState } from "react";
-import { DiaryEntry, Note } from "../Diary.types";
-import { mockEntries, mockNotes } from "../Diary.mock";
+import { 
+  DiaryEntry, 
+  Note, 
+  convertApiEntryToLegacy, 
+  convertLegacyEntryToApi,
+  LegacyDiaryEntry 
+} from "../Diary.types";
+import { mockNotes } from "../Diary.mock";
 import DiaryList from "../DiaryList/DiaryList";
 import DiaryEntryDetails from "../DiaryEntryDetails/DiaryEntryDetails";
 import NotesList from "../NotesList/NotesList";
 import GreetingBlock from "../GreetingBlock/GreetingBlock";
+import { useDiaryEntries, useDeleteDiaryEntry } from "../../../hooks/useDiary";
 import css from "./DiaryPage.module.css";
 
 const DiaryPage: React.FC = () => {
-  const [entries] = useState<DiaryEntry[]>(mockEntries);
+  const { data: apiEntries = [], isLoading, error } = useDiaryEntries();
+  const deleteEntryMutation = useDeleteDiaryEntry();
+  
+  // Конвертуємо API дані в legacy формат для сумісності
+  const entries: LegacyDiaryEntry[] = apiEntries.map(convertApiEntryToLegacy);
+  
   const [notes] = useState<Note[]>(mockNotes);
-  const [selectedEntry, setSelectedEntry] = useState<DiaryEntry | null>(entries[0] || null);
+  const [selectedEntry, setSelectedEntry] = useState<LegacyDiaryEntry | null>(null);
   const [selectedNote, setSelectedNote] = useState<Note | null>(null);
 
-  const handleEntryClick = (entry: DiaryEntry) => {
-    // Use window.matchMedia for safe size checking
+  // Встановлюємо перший запис як вибраний, коли дані завантажились
+  React.useEffect(() => {
+    if (entries.length > 0 && !selectedEntry) {
+      setSelectedEntry(entries[0]);
+    }
+  }, [entries, selectedEntry]);
+
+  const handleEntryClick = (entry: LegacyDiaryEntry) => {
     if (typeof window !== 'undefined' && window.matchMedia('(max-width: 1023px)').matches) {
-      // On mobile devices, go to a separate page
       window.location.href = `/diary/${entry.id}`;
     } else {
-      // On the desktop, show the details in the right pane
       setSelectedEntry(entry);
       setSelectedNote(null);
     }
@@ -34,6 +50,7 @@ const DiaryPage: React.FC = () => {
 
   const handleAddEntry = () => {
     console.log('Open AddDiaryEntryModal');
+    // Тут буде модальне вікно для створення нового запису
   };
 
   const handleAddNote = () => {
@@ -42,11 +59,54 @@ const DiaryPage: React.FC = () => {
 
   const handleEditEntry = () => {
     console.log('Open AddDiaryEntryModal for editing', selectedEntry);
+    // Тут буде модальне вікно для редагування запису
   };
 
-  const handleDeleteEntry = () => {
-    console.log('Open ConfirmationModal for deletion', selectedEntry);
+  const handleDeleteEntry = async () => {
+    if (selectedEntry && window.confirm('Ви впевнені, що хочете видалити цей запис?')) {
+      try {
+        await deleteEntryMutation.mutateAsync(selectedEntry.id);
+        setSelectedEntry(null);
+        console.log('Entry deleted successfully');
+      } catch (error) {
+        console.error('Error deleting entry:', error);
+        alert('Помилка при видаленні запису');
+      }
+    }
   };
+
+  if (isLoading) {
+    return (
+      <div className={css.container}>
+        <GreetingBlock />
+        <div style={{ 
+          display: 'flex', 
+          justifyContent: 'center', 
+          alignItems: 'center', 
+          height: '200px' 
+        }}>
+          <p>Завантаження...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className={css.container}>
+        <GreetingBlock />
+        <div style={{ 
+          display: 'flex', 
+          justifyContent: 'center', 
+          alignItems: 'center', 
+          height: '200px',
+          color: 'var(--color-red)' 
+        }}>
+          <p>Помилка завантаження записів. Спробуйте пізніше.</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className={css.container}>
@@ -84,7 +144,8 @@ const DiaryPage: React.FC = () => {
             onDelete={handleDeleteEntry}
           />
           
-          {/* <NotesList
+          {/* Можна розкоментувати, коли буде потрібно
+          <NotesList
             notes={notes}
             onNoteClick={handleNoteClick}
             selectedNoteId={selectedNote?.id}
