@@ -4,7 +4,7 @@ import {
   CreateDiaryEntryData, 
   UpdateDiaryEntryData 
 } from "@/components/Diary/Diary.types";
-import * as diaryService from "@/lib/services/diaryService";
+import * as diaryService from "@/lib/store/diaryService";
 
 // Отримати всі записи щоденника
 export const useDiaryEntries = () => {

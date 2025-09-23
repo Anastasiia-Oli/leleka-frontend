@@ -1,5 +1,6 @@
 import { DiaryEntry, Note } from "./Diary.types";
 
+
 export const mockEntries: DiaryEntry[] = [
   {
     id: "1",

@@ -1,4 +1,4 @@
-.container {
+/* .container {
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -6,6 +6,20 @@
     background: var(--white);
     border-radius: 16px;
     padding: 24px;
+} */
+
+.container {
+    display: flex;
+    flex-direction: row;
+}
+
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    width: 312px;
+    height: 900px;
+    border-right: 1px solid var(--gray-lightest);
+    padding-top: 8px;
 }
 
 .backButton {

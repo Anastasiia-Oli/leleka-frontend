@@ -1,12 +1,12 @@
 import React from "react";
-import { DiaryEntry } from "../Diary.types";
+import { LegacyDiaryEntry } from "../Diary.types";
 import DiaryEntryCard from "../DiaryEntryCard/DiaryEntryCard";  
 import { Plus as PlusIcon } from "lucide-react";
 import css from "./DiaryList.module.css";
 
 interface DiaryListProps {
-  entries: DiaryEntry[];
-  onEntryClick?: (entry: DiaryEntry) => void;
+  entries: LegacyDiaryEntry[];
+  onEntryClick?: (entry: LegacyDiaryEntry) => void;
   selectedEntryId?: string;
   onAddEntry?: () => void;
 }
