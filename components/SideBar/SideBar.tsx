@@ -18,7 +18,7 @@ const SideBar = () => {
             <Link href={"#"}>Щоденник</Link>
           </li>
           <li>
-            <Link href={"#"}>Профіль</Link>
+            <Link href={"/profile"}>Профіль</Link>
           </li>
         </ul>
       </aside>
