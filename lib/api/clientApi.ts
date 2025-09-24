@@ -38,7 +38,7 @@ export async function registerUser(
   params: RegisterRequest
 ): Promise<RegisterUserResponse> {
   const response = await nextServer.post<RegisterUserResponse>(
-    "/api/auth/register",
+    "/auth/register",
     params
   );
   return response.data;
@@ -62,8 +62,7 @@ type CheckSessionRequest = {
 };
 
 export const checkSession = async () => {
-  const response =
-    await nextServer.post<CheckSessionRequest>("/auth/refresh");
+  const response = await nextServer.post<CheckSessionRequest>("/auth/refresh");
   return response.data.success;
 };
 
