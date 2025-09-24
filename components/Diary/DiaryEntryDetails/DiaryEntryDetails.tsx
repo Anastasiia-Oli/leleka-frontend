@@ -69,7 +69,7 @@ const DiaryEntryDetails: React.FC<DiaryEntryDetailsProps> = ({
           
           <div className={css.headerInfo}>
               <div className={`${css.date} text-primary`}>{entry.date}</div>
-                {onDelete && (
+                          {onDelete && (
               <button 
                 className={css.closeButton}
                 onClick={onDelete}

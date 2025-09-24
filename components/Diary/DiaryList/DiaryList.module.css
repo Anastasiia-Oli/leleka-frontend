@@ -45,6 +45,12 @@
     align-items: center;
     justify-content: center;
 }
+.editIcon {
+    fill: var(--black);
+    transition: fill 0.2s ease;
+    width: 24px;
+    height: 24px;
+}
 
 .entriesList {
     flex: 1;
