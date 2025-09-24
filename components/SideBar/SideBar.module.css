@@ -26,7 +26,7 @@
   padding: 8px;
   font-family: var(--font-family);
   font-weight: 400;
-  font-size: 16px;
+  font-size: 14px;
   line-height: 1.5;
   color: #000;
   transition: transform;
@@ -39,5 +39,15 @@
 @media screen and (min-width: 768px) {
   .sidebar {
     display: flex;
+  }
+  .sidebar li {
+    font-size: 16px;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .sidebar {
+    display: flex;
+    width: 300px;
   }
 }
