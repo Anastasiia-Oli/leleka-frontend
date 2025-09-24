@@ -21,16 +21,16 @@ const DiaryList: React.FC<DiaryListProps> = ({
     <div className={css.container}>
       <div className={css.header}>
         <h2 className={`${css.title} header-third`}>Ваші записи</h2>
-        <button
+         <button
           className={css.addButton}
           onClick={onAddEntry}
         >
           <span className={css.addText}>Новий запис</span>
               <div className={css.addIcon}>
                 <svg className={css.editIcon} viewBox="0 0 32 32" width="24" height="24">
-                  <use href="/leleka-sprite.svg#icon-add-circle" />
-                </svg>
-          </div>
+                  <use href="/leleka-sprite.svg#icon-add_circle" />
+                </svg> 
+              </div>
         </button>
       </div>
       
