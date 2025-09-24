@@ -60,3 +60,15 @@
 //   });
 //   return response.data;
 // }
+
+import { cookies } from "next/headers";
+import nextServer from "./api";
+import { Tasks } from "./clientApi";
+
+export async function getTasksServer(): Promise<Tasks> {
+  const cookieStore = await cookies;
+  const { data } = await nextServer.get<Tasks>("/tasks", {
+    headers: { Cookie: cookieStore.toString() },
+  });
+  return data;
+}

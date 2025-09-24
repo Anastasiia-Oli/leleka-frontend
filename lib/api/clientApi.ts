@@ -115,3 +115,15 @@
 //   const res = await nextServer.patch<User>("/users/me", params);
 //   return res.data;
 // };
+
+import { Task } from "@/types/user";
+import nextServer from "./api";
+
+export interface Tasks {
+  data: Task[];
+}
+
+export async function getTasks(): Promise<Tasks> {
+  const { data } = await nextServer.get<Tasks>("/tasks");
+  return data;
+}
