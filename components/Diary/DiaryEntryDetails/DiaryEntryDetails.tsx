@@ -51,37 +51,42 @@ const DiaryEntryDetails: React.FC<DiaryEntryDetailsProps> = ({
       
       <div className={css.header}>
         <div className={css.headerTop}>
-          <h2 className={`${css.title} header-third`}>{entry.title}</h2>
           <div className={css.headerActions}>
-            {onEdit && (
-              <button 
-                className={css.actionButton}
-                onClick={onEdit}
-                title="Редагувати"
-              >
-                <svg className={css.editIcon} viewBox="0 0 32 32" width="20" height="20">
-                  <use href="/leleka-sprite.svg#icon-edit_square" />
-                </svg>
-              </button>
-            )}
-            {onDelete && (
+            <div className={css.headerRow}>
+              <h2 className={`${css.title} header-third`}>{entry.title}</h2>
+                {onEdit && (
+                  <button 
+                    className={css.actionButton}
+                    onClick={onEdit}
+                    title="Редагувати"
+                  >
+                    <svg className={css.editIcon} viewBox="0 0 32 32" width="24" height="24">
+                      <use href="/leleka-sprite.svg#icon-edit_square" />
+                    </svg>
+                  </button>
+                  )}
+            </div>
+          
+          <div className={css.headerInfo}>
+              <div className={`${css.date} text-primary`}>{entry.date}</div>
+                {onDelete && (
               <button 
                 className={css.closeButton}
                 onClick={onDelete}
                 title="Видалити"
               >
-                <svg className={css.deleteIcon} viewBox="0 0 32 32" width="20" height="20">
+                <svg className={css.deleteIcon} viewBox="0 0 32 32" width="24" height="24">
                   <use href="/leleka-sprite.svg#icon-delete_forever" />
                 </svg>
               </button>
             )}
           </div>
-        </div>
-        
-        <div className={css.headerInfo}>
-          <div className={`${css.date} text-primary`}>{entry.date}</div>
+
+          </div>
         </div>
       </div>
+        
+
 
       <div className={css.content}>
         <p className="text-primary">{entry.content}</p>

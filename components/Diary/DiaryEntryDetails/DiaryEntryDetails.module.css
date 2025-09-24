@@ -2,11 +2,12 @@
     display: flex;
     flex-direction: column;
     height: 100%;
-    background: var(--white);
+    background: var(--pastel-pink-lighter);
     border-radius: 16px;
     padding: 24px;
-    gap: 16px;
-    border: 1px solid var(--gray-lightest);
+    gap: 8px;
+    box-sizing: border-box;
+    
 }
 
 .backButton {
@@ -25,14 +26,8 @@
     color: var(--pastel-pink-dark);
 }
 
-.header {
-    flex-shrink: 0;
-}
 
 .headerTop {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
     margin-bottom: 12px;
     gap: 16px;
 }
@@ -43,9 +38,16 @@
     flex: 1;
 }
 
+.headerRow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
 .headerActions {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 8px;
     flex-shrink: 0;
 }
@@ -55,15 +57,19 @@
     background: none;
     border: none;
     cursor: pointer;
-    padding: 6px;
+    padding: 8px;
     border-radius: 8px;
     transition: background-color 0.2s ease;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 32px;
-    height: 32px;
 }
+
+.actionButton {
+    margin-left: 8px;
+}
+
+
 
 .actionButton:hover,
 .closeButton:hover {
@@ -76,25 +82,35 @@
     transition: fill 0.2s ease;
 }
 
+.editIcon {
+    margin-right: 8px;
+}
 .actionButton:hover .editIcon,
 .closeButton:hover .deleteIcon {
     fill: var(--gray-dark);
 }
 
 .headerInfo {
-    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+    margin-left: 8px;
+    justify-content: left;
 }
 
 .date {
     color: var(--gray);
     margin-bottom: 16px;
     font-size: 14px;
+    font-weight: 400;
+    line-height: 160%;
+    margin: 9px 8px 9px 0px;
 }
 
 .content {
     flex: 1;
     overflow-y: auto;
-    display: flex;
     flex-direction: column;
     gap: 16px;
 }
@@ -104,21 +120,20 @@
     margin: 0;
     color: var(--black);
     flex: 1;
+    margin-bottom: 16px;
 }
 
 .emotions {
     display: flex;
     gap: 8px;
     flex-wrap: wrap;
-    margin-top: auto;
-    padding-top: 16px;
-    border-top: 1px solid var(--gray-lightest);
+    align-items: center;
 }
 
 .emotionTag {
-    background: var(--pastel-pink-lighter);
+    background: var(--gray-lightest);
     color: var(--black);
-    padding: 6px 12px;
+    padding: 4px 10px;
     border-radius: 16px;
     font-size: 14px;
     font-weight: 400;
@@ -137,7 +152,7 @@
 /* Desktop fixed height with scroll */
 @media (min-width: 1024px) {
     .container {
-        height: 450px;
+        /* height: 450px; */
         /* Fixed height for desktop */
     }
 }
