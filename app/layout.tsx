@@ -1,17 +1,10 @@
 import type { Metadata } from "next";
-import { Comfortaa, Lato } from "next/font/google";
+import { Comfortaa } from "next/font/google";
 import "./globals.css";
 import TanStackProvider from "@/components/TanStackProvider/TanStackProvider";
 import Header from "@/components/Header/Header";
-// import Breadcrumbs from "@/components/Breadcrumbs/Breadcrumbs";
-// import SideBar from "@/components/SideBar/SideBar";
 import AuthProvider from "@/components/AuthProvider/AuthProvider";
-
-const lato = Lato({
-  subsets: ["latin"],
-  weight: ["400", "700"],
-  variable: "--font-family",
-});
+import { lato } from "./fonts";
 
 const comfortaa = Comfortaa({
   subsets: ["latin", "cyrillic"],
