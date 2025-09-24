@@ -59,10 +59,9 @@ const DiaryEntryDetails: React.FC<DiaryEntryDetailsProps> = ({
                 onClick={onEdit}
                 title="Редагувати"
               >
-                    <svg className={css.editIcon} viewBox="0 0 24 24">
-                      <use href="@/public/leleka-sprite.svg#icon-edit_square" />
-                    </svg>
-
+                <svg className={css.editIcon} viewBox="0 0 32 32" width="20" height="20">
+                  <use href="/leleka-sprite.svg#icon-edit_square" />
+                </svg>
               </button>
             )}
             {onDelete && (
@@ -71,9 +70,9 @@ const DiaryEntryDetails: React.FC<DiaryEntryDetailsProps> = ({
                 onClick={onDelete}
                 title="Видалити"
               >
-                    <svg className={css.deleteIcon} viewBox="0 0 24 24">
-                      <use href="@/public/leleka-sprite.svg#icon-delete_forever" />
-                    </svg>
+                <svg className={css.deleteIcon} viewBox="0 0 32 32" width="20" height="20">
+                  <use href="/leleka-sprite.svg#icon-delete_forever" />
+                </svg>
               </button>
             )}
           </div>
@@ -85,17 +84,15 @@ const DiaryEntryDetails: React.FC<DiaryEntryDetailsProps> = ({
       </div>
 
       <div className={css.content}>
-              <p className="text-primary">{entry.content}</p>
-                    <div className={css.emotions}>
-        {entry.emotions.map((emotion, index) => (
-          <span key={index} className={css.emotionTag}>
-            {emotion}
-          </span>
-        ))}
+        <p className="text-primary">{entry.content}</p>
+        <div className={css.emotions}>
+          {entry.emotions.map((emotion, index) => (
+            <span key={index} className={css.emotionTag}>
+              {emotion}
+            </span>
+          ))}
+        </div>
       </div>
-      </div>
-
-
     </div>
   );
 };

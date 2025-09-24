@@ -14,8 +14,8 @@ export interface Note {
   title: string;
   content: string;
   date: string;
-  createdAt?: Date;
-  updatedAt?: Date;
+  createdAt?: string | Date;
+  updatedAt?: string | Date;
 }
 
 export interface CreateDiaryEntryData {

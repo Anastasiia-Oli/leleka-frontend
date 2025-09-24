@@ -3,7 +3,7 @@
     flex-direction: column;
     height: 100%;
     padding: 24px, 16px;
-    /* background: var(--pastel-pink-lighter); */
+    background: var(--pastel-pink-lighter);
 }
 
 .header {
