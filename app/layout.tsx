@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import {Comfortaa, Lato} from "next/font/google";
+import { Comfortaa, Lato } from "next/font/google";
 import "./globals.css";
 import TanStackProvider from "@/components/TanStackProvider/TanStackProvider";
 import Header from "@/components/Header/Header";
@@ -9,13 +9,13 @@ import SideBar from "@/components/SideBar/SideBar";
 const lato = Lato({
   subsets: ["latin"],
   weight: ["400", "700"],
-  variable: "--font-family"
+  variable: "--font-family",
 });
 
 const comfortaa = Comfortaa({
-  subsets: ["latin"],
+  subsets: ["latin", "cyrillic"],
   weight: ["700"],
-  variable: "--second-family"
+  variable: "--second-family",
 });
 
 export const metadata: Metadata = {
@@ -32,7 +32,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="uk">
       <body className={`${lato.variable} ${comfortaa.variable}`}>
         <TanStackProvider>
           <Header />
