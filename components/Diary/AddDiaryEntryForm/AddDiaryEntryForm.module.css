@@ -1,0 +1,43 @@
+.fieldWrapper {
+  margin-bottom: 1rem;
+}
+
+.label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+}
+
+.input,
+.textarea {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 0.375rem;
+}
+
+.checkboxGroup {
+  display: flex;
+  gap: 1rem;
+}
+
+.error {
+  color: #e00;
+  font-size: 0.75rem;
+  margin-top: 0.25rem;
+}
+
+.submitBtn {
+  width: 100%;
+  padding: 0.5rem;
+  background-color: #2563eb;
+  color: white;
+  border-radius: 0.375rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.submitBtn:hover {
+  background-color: #1d4ed8;
+}
