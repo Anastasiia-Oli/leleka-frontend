@@ -1,5 +1,7 @@
+"use client";
 import Link from "next/link";
-import React from "react";
+import { useRouter } from "next/navigation";
+import React, { useState } from "react";
 import css from "./SideBar.module.css";
 
 const SideBar = () => {
@@ -10,9 +12,9 @@ const SideBar = () => {
         <ul>
           <li>
             <Link href={"#"}>Мій день</Link>
-          </li>
+              </li>
           <li>
-            <Link href={"#"}>Подорож</Link>
+            <Link href={"/journey/5"}>Подорож</Link>
           </li>
           <li>
             <Link href={"#"}>Щоденник</Link>
@@ -20,7 +22,7 @@ const SideBar = () => {
           <li>
             <Link href={"#"}>Профіль</Link>
           </li>
-        </ul>
+          </ul>
       </aside>
     </section>
   );

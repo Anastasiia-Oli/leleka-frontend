@@ -1,0 +1,274 @@
+.journeyDetailsSection {
+  font-family: var(--font-family);
+  margin-top: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-inline: 16px;
+  /* трішки відступів для мобілки */
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* Контейнер "Розвиток малюка" */
+.journeyDetailsContainer {
+  padding: 16px;
+  background: #fff4f6;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  border-radius: 24px;
+}
+
+/* Tablet */
+@media screen and (min-width: 768px) {
+  .journeyDetailsContainer {
+    padding: 24px;
+    gap: 32px;
+  }
+
+  .babySizeImage {
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+  }
+}
+
+/* Desktop */
+@media screen and (min-width: 1200px) {
+  .journeyDetailsContainer {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  .babySizeImage {
+    width: 461px;
+    height: auto;
+  }
+}
+
+/* Текстовий блок */
+.journeyTextInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  font-family: "Lato", sans-serif;
+}
+
+/* Цікавий факт */
+.interestingFacts {
+  font-size: 16px;
+  line-height: 1.5;
+  color: #000;
+  border-radius: 12px;
+  padding: 12px;
+  background-color: #ffdae0;
+  font-family: "Lato", sans-serif;
+}
+
+/* Опис */
+.journeyDescription {
+  font-family: var(--font-family);
+  text-align: justify;
+  font-size: 16px;
+  line-height: 1.5;
+  display: inline-flex;
+  overflow-y: auto;
+  scrollbar-width: none;
+  color: #000;
+  max-height: none;
+  /* для мобілки не обрізаємо */
+}
+
+@media screen and (min-width: 1200px) {
+  .journeyDescription {
+    max-height: 280px;
+    /* тільки на десктопі обмежуємо */
+  }
+}
+
+/* Блок "Тіло мами" */
+.journeyDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+@media screen and (min-width: 1200px) {
+  .journeyDetails {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  .infoForMomBlock {
+    flex: 1;
+    max-width: 602px;
+  }
+
+  .taskBlock {
+    flex: 1;
+  }
+}
+
+/* How you feel, advices, tasks */
+.howYouCanFeel,
+.advices,
+.taskBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  border-radius: 24px;
+  background-color: #fff4f6;
+}
+
+@media screen and (min-width: 768px) {
+  .howYouCanFeel,
+  .advices,
+  .taskBlock {
+    padding: 24px;
+    border-radius: 32px;
+  }
+}
+
+/* Tags in howYouCanFeel */
+.howYouCanFeel ul {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  list-style: none;
+}
+
+.titleLogoFacts {
+  display: flex;
+  gap: 8px;
+}
+
+.journeyDetails {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 24px;
+  margin-top: 24px;
+}
+
+/* ----------- Блок для мами ----------- */
+.infoForMomBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.howYouCanFeel,
+.advices {
+  background-color: #fff4f6;
+  border-radius: 16px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.howYouCanFeel {
+  height: 194px;
+}
+.advicesTitle {
+  font-size: 20px;
+  font-weight: 600;
+  color: #000;
+}
+
+.howYouCanFeel ul {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.howYouCanFeel li {
+  background-color: #e5d8dc;
+  color: #000;
+  font-size: 14px;
+  padding: 6px 12px;
+  border-radius: 12px;
+  font-weight: 500;
+}
+
+.howYouCanFeel p {
+  font-size: 15px;
+  line-height: 1.5;
+  color: #333;
+  overflow-y: scroll;
+}
+
+/* ----------- Поради ----------- */
+.advicesList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.iconTitleAdvice {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.iconTitleAdvice h5 {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.advicesList p {
+  font-size: 14px;
+  line-height: 1.5;
+  color: #333;
+  margin-left: 32px;
+  /* вирівнювання по іконці */
+}
+
+/* ----------- Важливі завдання ----------- */
+.taskBlock {
+  background-color: #fff4f6;
+  border-radius: 16px;
+  padding: 24px;
+}
+
+.taskBlock h2 {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: #000;
+}
+
+.taskBlock ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.taskBlock li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.taskBlock li input[type="checkbox"] {
+  accent-color: #ff8ea3;
+  /* рожевий чекбокс */
+}
+
+.taskBlock li span {
+  font-size: 14px;
+  color: #555;
+}

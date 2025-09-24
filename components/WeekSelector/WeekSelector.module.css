@@ -1,0 +1,70 @@
+.weekButton {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  border: 0px solid rgba(0, 0, 0, 0.15);
+  border-radius: 32px;
+  padding: 16px;
+  background-color: #fff4f6;
+}
+
+.activatedButton {
+  border: 4px solid rgba(0, 0, 0, 0.15);
+  border-radius: 32px;
+  background-color: #ffcbd3;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+}
+
+.weekNumbers {
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 1.4;
+  letter-spacing: 0.01em;
+  text-align: center;
+  color: #000;
+  align-self: center;
+  font-family: "Comfortaa", sans-serif;
+}
+
+.weekText {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.5;
+  text-align: center;
+  color: #000;
+  font-family: "Lato", sans-serif;
+}
+
+.weeksList {
+  list-style: none;
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  width: 100%;
+  min-width: 1453px;
+  scrollbar-width: none;
+  padding: 0 16px;
+  box-sizing: border-box;
+}
+
+.weeksList::-webkit-scrollbar {
+  display: none;
+}
+
+.weeksList li {
+  flex: 0 0 auto;
+  height: 100%;
+}
+
+.weekSelectorContainer {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  margin: 16px 0;
+  scrollbar-width: none;
+}
