@@ -46,14 +46,14 @@ export async function registerUser(
 
 export async function login(params: LoginRequest): Promise<LoginUserResponse> {
   const response = await nextServer.post<LoginUserResponse>(
-    "/api/auth/login",
+    "/auth/login",
     params
   );
   return response.data;
 }
 
 export async function logout(): Promise<LogoutResponse> {
-  const response = await nextServer.post<LogoutResponse>("/api/auth/logout");
+  const response = await nextServer.post<LogoutResponse>("/auth/logout");
   return response.data;
 }
 
@@ -63,11 +63,11 @@ type CheckSessionRequest = {
 
 export const checkSession = async () => {
   const response =
-    await nextServer.post<CheckSessionRequest>("api/auth/refresh");
+    await nextServer.post<CheckSessionRequest>("/auth/refresh");
   return response.data.success;
 };
 
 export const getMe = async () => {
-  const { data } = await nextServer.get<User>("/api/users/current");
+  const { data } = await nextServer.get<User>("/users/current");
   return data;
 };
