@@ -19,6 +19,12 @@
   flex-direction: column;
   gap: 24px;
   border-radius: 24px;
+  height: auto;
+}
+
+.babySizeImage {
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 24px;
 }
 
 /* Tablet */
@@ -27,19 +33,21 @@
     padding: 24px;
     gap: 32px;
   }
-
-  .babySizeImage {
-    width: 100%;
-    max-width: 500px;
-    height: auto;
-  }
 }
 
 /* Desktop */
+@media screen and (min-width: 768px) {
+  .babySizeImage {
+    width: 461px;
+    height: 379px;
+  }
+}
+
 @media screen and (min-width: 1200px) {
   .journeyDetailsContainer {
     flex-direction: row;
     align-items: flex-start;
+    height: 467px;
   }
 
   .babySizeImage {
@@ -53,7 +61,12 @@
   display: flex;
   flex-direction: column;
   gap: 18px;
+  height: 280px;
   font-family: "Lato", sans-serif;
+}
+
+.descriptionContainer {
+  height: 280px;
 }
 
 /* Цікавий факт */
@@ -85,6 +98,10 @@
   .journeyDescription {
     max-height: 280px;
     /* тільки на десктопі обмежуємо */
+  }
+  .babySizeImage {
+    width: 461px;
+    height: 379px;
   }
 }
 

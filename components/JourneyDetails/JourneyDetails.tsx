@@ -6,6 +6,7 @@ import css from "./JourneyDetails.module.css";
 import { useState } from "react";
 import { getJourneyDetailsByWeek } from "@/lib/api/clientApi";
 import { JourneyDetails } from "@/types/journeyType";
+import TasksReminderCard from "../TasksReminderCard/TasksReminderCard";
 
 export default function JourneyDetailsComponent({
   weekNumber,
@@ -45,14 +46,16 @@ export default function JourneyDetailsComponent({
             <p>{data.baby.analogy}</p>
           </div>
           <div className={css.journeyTextInfo}>
-            <p className={css.journeyDescription}>{data.baby.babyActivity}</p>
-            <p className={css.journeyDescription}>
-              {data.baby.babyDevelopment}
-            </p>
+            <div className={css.descriptionContainer}>
+              <p className={css.journeyDescription}>{data.baby.babyActivity}</p>
+              <p className={css.journeyDescription}>
+                {data.baby.babyDevelopment}
+              </p>
+            </div>
             <div className={css.interestingFacts}>
               <div className={css.titleLogoFacts}>
                 <svg width={24} height={24} className={css.factsIcon}>
-                  <use href="leleka-sprite.svg#icon-star_shine"></use>
+                  <use href="/leleka-sprite.svg#icon-star_shine"></use>
                 </svg>
                 <h4 className={css.factsTitle}>Цікавий факт тижня</h4>
               </div>
@@ -80,44 +83,35 @@ export default function JourneyDetailsComponent({
                 <li>
                   <div className={css.iconTitleAdvice}>
                     <svg width={24} height={24} className={css.factsIcon}>
-                      <use href="leleka-sprite.svg#icon-fork_spoon"></use>
+                      <use href="/leleka-sprite.svg#icon-fork_spoon"></use>
                     </svg>
-                    <h5>Харчування</h5>
+                    <h5>{data?.mom.comfortTips[0].category}</h5>
                   </div>
-                  <p>
-                    Зосередьтесь на продуктах, багатих на вітамін C (цитрусові,
-                    ківі), він допомагає тілу засвоювати залізо.
-                  </p>
+                  <p>{data?.mom.comfortTips[0].tip}</p>
                 </li>
                 <li>
                   <div className={css.iconTitleAdvice}>
                     <svg width={24} height={24} className={css.factsIcon}>
                       <use href="/leleka-sprite.svg#icon-fitness_center"></use>
                     </svg>
-                    <h5>Активність</h5>
+                    <h5>{data?.mom.comfortTips[1].category}</h5>
                   </div>
-                  <p>
-                    Якщо почуваєтесь добре, спробуйте йогу для вагітних. Вона
-                    допомагає розслабитись і зняти напругу.
-                  </p>
+                  <p>{data?.mom.comfortTips[1].tip}</p>
                 </li>
                 <li>
                   <div className={css.iconTitleAdvice}>
                     <svg width={24} height={24} className={css.factsIcon}>
-                      <use href="leleka-sprite.svg#icon-star_shine"></use>
+                      <use href="/leleka-sprite.svg#icon-chair"></use>
                     </svg>
-                    <h5>Відпочинок</h5>
+                    <h5>{data?.mom.comfortTips[2].category}</h5>
                   </div>
-                  <p>
-                    Не соромтесь просити про допомогу і більше відпочивайте,
-                    коли відчуваєте втому.
-                  </p>
+                  <p>{data?.mom.comfortTips[0].tip}</p>
                 </li>
               </ul>
             </div>
           </div>
           <div className={css.taskBlock}>
-            <h2>Важливі завдання</h2>
+            <TasksReminderCard />
           </div>
         </div>
       )}
