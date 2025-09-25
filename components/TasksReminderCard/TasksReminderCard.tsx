@@ -1,37 +1,105 @@
 "use client";
-import { getTasks } from "@/lib/api/clientApi";
-import { useQuery } from "@tanstack/react-query";
+import { changeStateTask, getTasks } from "@/lib/api/clientApi";
+import { Task } from "@/types/user";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Link from "next/link";
-import React, { useState } from "react";
+import css from "./TasksReminderCard.module.css";
+
+function formateDate(date?: string) {
+  if (date) {
+    const d = new Date(date);
+    return d.toLocaleDateString("uk-UA", {
+      day: "2-digit",
+      month: "2-digit",
+    });
+  }
+  return new Date().toDateString();
+}
 
 const TasksReminderCard = () => {
-  const [isDone, setIsDone] = useState<boolean>(false);
+  const queryClient = useQueryClient();
 
-  const { data, isSuccess } = useQuery({
+  const { data: tasks = [], isSuccess } = useQuery<Task[]>({
     queryKey: ["tasks"],
-    queryFn: () => getTasks(),
+    queryFn: (): Promise<Task[]> => getTasks(),
+    refetchOnMount: false,
   });
 
+  const { mutate } = useMutation({
+    mutationFn: (task: Task) => changeStateTask(task, { isDone: !task.isDone }),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["tasks"] }),
+  });
+
+  const today = new Date().toISOString().slice(0, 10);
+  const todayTasks = tasks.filter((t) => t.date === today);
+  const futureTasks = tasks.filter((t) => t.date !== today);
+
   return (
-    <>
+    <div className={css.card}>
       <div>
-        <h2>Важливі завдання</h2>
-        <button>+</button>
+        <h2 className={css.title}>Важливі завдання</h2>
+        <Link href={`/tasks`}>+</Link>
       </div>
-      {isSuccess && data.data.length === 0 && (
+      {isSuccess && tasks.length === 0 && (
         <div>
-          <h3>Наразі немає жодних завдань</h3>
-          <p>Створіть мершій нове завдання!</p>
+          <h3 className={css.sectionTitle}>Наразі немає жодних завдань</h3>
+          <p className={css.empty}>Створіть мершій нове завдання!</p>
+          <Link href={`/tasks`}>Створити завдання</Link>
         </div>
       )}
-      {isSuccess &&
-        data.data.map((task) => {
-          const date = new Date().toISOString().slice(0, 10);
-          task.date === date ? <p></p> : null;
-        })}
 
-      <Link href={`/tasks`}>Створити завдання</Link>
-    </>
+      {isSuccess && tasks.length > 0 && (
+        <>
+          <h3 className={css.sectionTitle}>Сьогодні:</h3>
+          <ul className={css.list}>
+            {todayTasks.length === 0 && (
+              <p className={css.empty}>Немає завдань</p>
+            )}
+            {todayTasks.length > 0 &&
+              todayTasks.map((task) => (
+                <li key={task.id} className={css.listItem}>
+                  <span className={css.date}>{formateDate(task.date)}</span>
+                  <input
+                    type="checkbox"
+                    checked={task.isDone}
+                    onChange={() => mutate(task)}
+                    className={css.checkbox}
+                  ></input>
+                  <span
+                    className={`${css.text} ${task.isDone ? css.done : ""}`}
+                  >
+                    {task.text}
+                  </span>
+                </li>
+              ))}
+          </ul>
+
+          <h3 className={css.sectionTitle}>Найближчий тиждень:</h3>
+          <ul className={css.list}>
+            {futureTasks.length === 0 && (
+              <p className={css.empty}>Немає завдань</p>
+            )}
+            {futureTasks.length > 0 &&
+              futureTasks.map((task) => (
+                <li key={task.id} className={css.listItem}>
+                  <span className={css.date}>{formateDate(task.date)}</span>
+                  <input
+                    type="checkbox"
+                    checked={task.isDone}
+                    onChange={() => mutate(task)}
+                    className={css.checkbox}
+                  ></input>
+                  <span
+                    className={`${css.text} ${task.isDone ? css.done : ""}`}
+                  >
+                    {task.text}
+                  </span>
+                </li>
+              ))}
+          </ul>
+        </>
+      )}
+    </div>
   );
 };
 

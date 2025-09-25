@@ -119,11 +119,19 @@
 import { Task } from "@/types/user";
 import nextServer from "./api";
 
-export interface Tasks {
-  data: Task[];
+export type SetTaskState = { id: string; isDone: boolean };
+
+export async function getTasks(): Promise<Task[]> {
+  const { data } = await nextServer.get<Task[]>("/tasks");
+  return data;
 }
 
-export async function getTasks(): Promise<Tasks> {
-  const { data } = await nextServer.get<Tasks>("/tasks");
+export async function changeStateTask(
+  task: Task,
+  { isDone }: Task
+): Promise<SetTaskState> {
+  const { data } = await nextServer.patch<SetTaskState>(`/tasks/${task.id}`, {
+    isDone,
+  });
   return data;
 }
