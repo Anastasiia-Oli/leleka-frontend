@@ -1,5 +1,4 @@
-import { LegacyDiaryEntry, Note,  } from "./Diary.types";
-
+import { LegacyDiaryEntry } from "./Diary.types";
 
 export const mockEntries: LegacyDiaryEntry[] = [
   {
@@ -12,8 +11,8 @@ export const mockEntries: LegacyDiaryEntry[] = [
 Тепер я точно знаю, що я не сама. Там справді хтось є, росте і спілкується зі мною. Неймовірне відчуття.`,
     date: "15 липня 2025",
     emotions: ["натхнення", "вдячність"],
-    createdAt: new Date("2025-07-15").toISOString(),
-    updatedAt: new Date("2025-07-15").toISOString()
+    createdAt: "2025-07-15T00:00:00.000Z",
+    updatedAt: "2025-07-15T00:00:00.000Z"
   },
   {
     id: "2", 
@@ -21,8 +20,8 @@ export const mockEntries: LegacyDiaryEntry[] = [
     content: `Натхнення + дивні бажання`,
     date: "9 липня 2025",
     emotions: ["любов", "дивні бажання"],
-    createdAt: new Date("2025-07-09").toISOString(),
-    updatedAt: new Date("2025-07-09").toISOString()
+    createdAt: "2025-07-09T00:00:00.000Z",
+    updatedAt: "2025-07-09T00:00:00.000Z"
   },
   {
     id: "3",
@@ -30,8 +29,8 @@ export const mockEntries: LegacyDiaryEntry[] = [
     content: `енергія + дивні бажання`,
     date: "9 липня 2025",
     emotions: ["енергія", "дивні бажання"],
-    createdAt: new Date("2025-07-09"),
-    updatedAt: new Date("2025-07-09")
+    createdAt: "2025-07-09T00:00:00.000Z",
+    updatedAt: "2025-07-09T00:00:00.000Z"
   },
   {
     id: "4",
@@ -39,8 +38,8 @@ export const mockEntries: LegacyDiaryEntry[] = [
     content: `нудота + тривога`,
     date: "9 липня 2025", 
     emotions: ["нудота", "тривога"],
-    createdAt: new Date("2025-07-09"),
-    updatedAt: new Date("2025-07-09")
+    createdAt: "2025-07-09T00:00:00.000Z",
+    updatedAt: "2025-07-09T00:00:00.000Z"
   },
   {
     id: "5",
@@ -48,8 +47,8 @@ export const mockEntries: LegacyDiaryEntry[] = [
     content: `апетит + дивні бажання`,
     date: "9 липня 2025",
     emotions: ["апетит", "дивні бажання"],
-    createdAt: new Date("2025-07-09"),
-    updatedAt: new Date("2025-07-09")
+    createdAt: "2025-07-09T00:00:00.000Z",
+    updatedAt: "2025-07-09T00:00:00.000Z"
   },
   {
     id: "6",
@@ -57,26 +56,8 @@ export const mockEntries: LegacyDiaryEntry[] = [
     content: `радість + щастя`,
     date: "9 липня 2025",
     emotions: ["радість", "щастя"],
-    createdAt: new Date("2025-07-09"),
-    updatedAt: new Date("2025-07-09")
+    createdAt: "2025-07-09T00:00:00.000Z",
+    updatedAt: "2025-07-09T00:00:00.000Z"
   }
 ];
 
-export const mockNotes: Note[] = [
-  {
-    id: "1",
-    title: "Список покупок",
-    content: "Молоко, хліб, яйця, овочі для салату",
-    date: "15 липня 2025",
-    createdAt: new Date("2025-07-15"),
-    updatedAt: new Date("2025-07-15")
-  },
-  {
-    id: "2",
-    title: "Питання до лікаря",
-    content: "Запитати про вітаміни, обговорити план пологів",
-    date: "10 липня 2025", 
-    createdAt: new Date("2025-07-10").toISOString(),
-    updatedAt: new Date("2025-07-10").toISOString()
-  }
-];

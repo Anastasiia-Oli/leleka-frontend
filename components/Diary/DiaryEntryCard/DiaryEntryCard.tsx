@@ -21,16 +21,31 @@ const DiaryEntryCard: React.FC<DiaryEntryCardProps> = ({ entry, onClick, isSelec
   const visibleEmotions = entry.emotions.slice(0, 3);
   const hiddenEmotionsCount = entry.emotions.length - 3;
 
-  // Форматуємо дату для відображення
+  // Виправлена функція форматування дати
   const formatDate = (dateString: string) => {
+    // Якщо дата вже в правильному форматі, повертаємо її
+    if (typeof dateString === 'string' && dateString.includes('липня')) {
+      return dateString;
+    }
+
     try {
+      // Спробуємо створити дату з рядка
       const date = new Date(dateString);
+      
+      // Перевіряємо, чи дата валідна
+      if (isNaN(date.getTime())) {
+        // Якщо дата невалідна, повертаємо оригінальний рядок
+        return dateString;
+      }
+
+      // Форматуємо дату в український формат
       return date.toLocaleDateString('uk-UA', {
         day: 'numeric',
         month: 'long',
         year: 'numeric'
       });
     } catch (error) {
+      // У випадку помилки повертаємо оригінальний рядок
       return dateString;
     }
   };
