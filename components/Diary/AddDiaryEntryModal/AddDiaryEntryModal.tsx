@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import AddDiaryEntryForm from "../AddDiaryEntryForm/AddDiaryEntryForm";
 import css from "./AddDiaryEntryModal.module.css";
@@ -13,9 +13,9 @@ interface Props {
 export default function AddDiaryEntryModal({ mode, entryId }: Props) {
   const router = useRouter();
 
-  const closeModal = () => {
+  const closeModal = useCallback(() => {
     router.back();
-  };
+  }, [router]);
 
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
@@ -23,7 +23,7 @@ export default function AddDiaryEntryModal({ mode, entryId }: Props) {
     };
     document.addEventListener("keydown", handleEsc);
     return () => document.removeEventListener("keydown", handleEsc);
-  }, []);
+  }, [closeModal]);
 
   return (
     <div className={css.backdrop} onClick={closeModal}>

@@ -1,43 +1,44 @@
-import axios from "axios";
-
 export interface DiaryEntryData {
   title: string;
   description: string;
-  date?: string; // якщо не передано, бекенд може використати сьогоднішню дату
+  date?: string; // якщо не передано, бекенд використає сьогоднішню дату
   emotions: string[];
 }
 
 // Створення нового запису
 export async function createDiaryEntry(data: DiaryEntryData) {
-  const { data: result } = await axios.post("/api/diary", data);
-  return result;
+  const res = await fetch("/api/diaries", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  });
+
+  if (!res.ok) throw new Error("Не вдалося створити запис");
+  return res.json();
 }
 
 // Оновлення існуючого запису
 export async function updateDiaryEntry(id: string, data: DiaryEntryData) {
-  const { data: result } = await axios.put(`/api/diary/${id}`, data);
-  return result;
+  const res = await fetch(`/api/diaries/${id}`, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  });
+
+  if (!res.ok) throw new Error("Не вдалося оновити запис");
+  return res.json();
 }
 
 // Отримати список записів
 export async function getDiaryEntries() {
-  const { data } = await axios.get("/api/diary");
-  return data;
+  const res = await fetch("/api/diaries");
+  if (!res.ok) throw new Error("Не вдалося отримати записи");
+  return res.json();
 }
 
 // Отримати один запис за ID
 export async function getDiaryEntryById(id: string) {
-  const { data } = await axios.get(`/api/diary/${id}`);
-  return data;
-}
-
-// Отримати список категорій (емоцій)
-export interface Category {
-  id: string;
-  name: string;
-}
-
-export async function fetchCategories(): Promise<Category[]> {
-  const { data } = await axios.get("/api/categories");
-  return data;
+  const res = await fetch(`/api/diaries/${id}`);
+  if (!res.ok) throw new Error("Не вдалося отримати запис");
+  return res.json();
 }
