@@ -1,10 +1,13 @@
 .header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   padding: 16px 20px;
   background: var(--background);
   position: relative;
+}
+
+.headerComponents {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .logo {

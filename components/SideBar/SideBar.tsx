@@ -2,16 +2,10 @@
 import Link from "next/link";
 import css from "./SideBar.module.css";
 
-interface SideBarProps {
-  isOpen: boolean;
-  onClose: () => void;
-}
-
-const SideBar = ({ isOpen = true, onClose }: SideBarProps) => {
+const SideBar = () => {
   return (
     <>
-      {isOpen && (
-        <section className={css.container} onClick={onClose}>
+        <section className={css.container}>
           <aside className={css.sidebar} onClick={(e) => e.stopPropagation()}>
             <ul>
               <li>
@@ -41,7 +35,6 @@ const SideBar = ({ isOpen = true, onClose }: SideBarProps) => {
             </ul>
           </aside>
         </section>
-      )}
     </>
   );
 };
