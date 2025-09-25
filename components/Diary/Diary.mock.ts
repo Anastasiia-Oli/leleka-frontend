@@ -1,4 +1,4 @@
-import { LegacyDiaryEntry } from "./Diary.types";
+import { LegacyDiaryEntry, Note } from "./Diary.types";
 
 export const mockEntries: LegacyDiaryEntry[] = [
   {
@@ -61,3 +61,21 @@ export const mockEntries: LegacyDiaryEntry[] = [
   }
 ];
 
+export const mockNotes: Note[] = [
+  {
+    id: "1",
+    title: "Список покупок",
+    content: "Молоко, хліб, яйця, овочі для салату",
+    date: "15 липня 2025",
+    createdAt: new Date("2025-07-15T00:00:00.000Z"),
+    updatedAt: new Date("2025-07-15T00:00:00.000Z")
+  },
+  {
+    id: "2",
+    title: "Питання до лікаря",
+    content: "Запитати про вітаміни, обговорити план пологів",
+    date: "10 липня 2025", 
+    createdAt: new Date("2025-07-10T00:00:00.000Z"),
+    updatedAt: new Date("2025-07-10T00:00:00.000Z")
+  }
+];
