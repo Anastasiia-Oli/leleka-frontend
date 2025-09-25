@@ -19,11 +19,9 @@ export function ClientJourney({ currentWeek }: { currentWeek: number }) {
     setSelectedWeek(choosedWeek);
   };
 
-
   return (
     <div>
       <GreetingBlock />
-      {selectedWeek}
       <WeekSelector
         weeks={pregnacyWeeks}
         onButtonClick={handleClickAndStateUpdate}

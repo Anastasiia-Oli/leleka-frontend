@@ -22,6 +22,7 @@ export default function JourneyDetailsComponent({
   const { data, isLoading, error } = useQuery<JourneyDetails>({
     queryKey: ["journey", weekNumber],
     queryFn: () => getJourneyDetailsByWeek(weekNumber),
+    refetchOnMount: false,
   });
 
   if (isLoading) return <p>loading...</p>;

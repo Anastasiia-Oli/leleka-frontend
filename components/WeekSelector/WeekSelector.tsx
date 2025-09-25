@@ -17,12 +17,20 @@ const WeekSelector = ({ weeks, onButtonClick }: WeekSelectorProps) => {
       <ul className={css.weeksList}>
         {weeks.map((week) => {
           const isActive = pathname === `/journey/${week}`;
+          const isDisabled = week > 6;
+
           return (
             <li className={css.weekItem} key={week}>
               <Link
-                href={`/journey/${week}`}
-                className={`${css.weekButton} ${isActive ? css.activatedButton : ""}`}
-                onClick={() => onButtonClick(week)}
+                href={isDisabled ? "#" : `/journey/${week}`}
+                className={`${isActive ? css.activatedButton : ""} ${isDisabled ? css.disabledBtn : css.weekButton}`}
+                onClick={(e) => {
+                  if (isDisabled) {
+                    e.preventDefault();
+                    return;
+                  }
+                  onButtonClick(week);
+                }}
               >
                 <p className={css.weekNumbers}>{week}</p>
                 <p className={css.weekText}>тиждень</p>

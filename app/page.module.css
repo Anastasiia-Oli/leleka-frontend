@@ -13,3 +13,25 @@
   min-height: 100svh;
   font-family: var(--font-geist-sans);
 }
+
+.sideContent {
+  width: 300px;
+}
+
+@media screen and (min-width: 1200px) {
+  .sideContent {
+    width: 313px;
+  }
+}
+
+.mainContent {
+  flex: 1;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+@media screen and (max-width: 767px) {
+  .mainContent {
+    margin-left: 0;
+  }
+}
