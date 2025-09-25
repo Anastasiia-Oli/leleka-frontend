@@ -1,46 +1,22 @@
-// lib/api/clientApis.ts
+// lib/api/clientApi.ts
 import { User } from "@/types/user";
-import nextServer from "./api";
+import { api } from "@/app/api/api"; 
 
-export interface RegisterRequest {
-  name: string;
-  email: string;
-  password: string;
-}
+export interface RegisterRequest { name: string; email: string; password: string; }
 export interface RegisterUserResponse {
   status: number;
   message: string;
-  data: {
-    _id: string;
-    name: string;
-    email: string;
-    createdAt: string;
-    updatedAt: string;
-  };
+  data: { _id: string; name: string; email: string; createdAt: string; updatedAt: string; };
 }
 
-export interface LoginRequest {
-  email: string;
-  password: string;
-}
-
-export interface LoginResponseRaw {
-  status: number;
-  message: string;
-  data: { accessToken?: string };
-}
-
-export interface LoginUserResponse {
-  status: number;
-  message: string;
-  data: User;
-}
-
+export interface LoginRequest { email: string; password: string; }
+export interface LoginResponseRaw { status: number; message: string; data: { accessToken?: string };}
+export interface LoginUserResponse { status: number; message: string; data: User; }
 export type LogoutResponse = { message?: string };
 
 const ACCESS_TOKEN_KEY = "accessToken";
 
-export const getAccessToken = (): string | null =>
+export const getAccessToken = () =>
   typeof window !== "undefined" ? localStorage.getItem(ACCESS_TOKEN_KEY) : null;
 
 export const setAccessToken = (token: string | null) => {
@@ -48,59 +24,54 @@ export const setAccessToken = (token: string | null) => {
   if (token) localStorage.setItem(ACCESS_TOKEN_KEY, token);
   else localStorage.removeItem(ACCESS_TOKEN_KEY);
 
-  if (token) nextServer.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-  else delete nextServer.defaults.headers.common["Authorization"];
+  if (token) api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+  else delete api.defaults.headers.common["Authorization"];
 };
 
 if (typeof window !== "undefined") {
   const token = getAccessToken();
-  if (token) {
-    nextServer.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-  }
-  nextServer.interceptors.response.use(
-    (r) => r,
-    (err) => {
+  if (token) api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+  api.interceptors.response.use(
+    r => r,
+    err => {
       if (err?.response?.status === 401) {
         setAccessToken(null);
-        if (typeof window !== "undefined") window.location.href = "/auth/login";
+        window.location.href = "/auth/login";
       }
       throw err;
     }
   );
 }
 
-export async function registerUser(
-  params: RegisterRequest
-): Promise<RegisterUserResponse> {
-  const response = await nextServer.post<RegisterUserResponse>(
-    "/auth/register",
-    params
-  );
-  return response.data;
+export async function registerUser(params: RegisterRequest): Promise<RegisterUserResponse> {
+  const { data } = await api.post<RegisterUserResponse>("/api/auth/register", params, {
+    withCredentials: false, 
+  });
+  return data;
 }
 
-export async function login(
-  params: LoginRequest
-): Promise<LoginUserResponse> {
-  const response = await nextServer.post<LoginUserResponse>(
-    "/auth/login",
-    params
-  );
-  return response.data;
+export async function login(params: LoginRequest): Promise<LoginUserResponse> {
+  const { data } = await api.post<LoginUserResponse>("/api/auth/login", params, {
+    withCredentials: false,
+  });
+  return data;
 }
-
 
 export async function loginAndStoreToken(params: LoginRequest): Promise<LoginResponseRaw> {
-  const res = await nextServer.post<LoginResponseRaw>("/auth/login", params);
-  const token = res.data?.data?.accessToken ?? null;
+  const { data } = await api.post<LoginResponseRaw>("/api/auth/login", params, {
+    withCredentials: false,
+  });
+  const token = data?.data?.accessToken ?? null;
   if (token) setAccessToken(token);
-  return res.data;
+  return data;
 }
 
 export async function logoutAndClear(): Promise<LogoutResponse> {
   try {
-    const response = await nextServer.post<LogoutResponse>("/auth/logout");
-    return response.data;
+    const { data } = await api.post<LogoutResponse>("/api/auth/logout", null, {
+      withCredentials: false,
+    });
+    return data;
   } finally {
     setAccessToken(null);
   }
@@ -108,14 +79,12 @@ export async function logoutAndClear(): Promise<LogoutResponse> {
 
 export const isAuthenticated = () => Boolean(getAccessToken());
 
-type CheckSessionResponse = { success: boolean };
 
-export const checkSession = async () => {
-  const response = await nextServer.post<CheckSessionResponse>("/auth/refresh");
-  return response.data.success;
-};
+export const checkSession = async () => Boolean(getAccessToken());
 
 export const getMe = async () => {
-  const { data } = await nextServer.get<User>("/users/current");
+  const { data } = await api.get<User>("/api/users/current", {
+    withCredentials: false,
+  });
   return data;
 };
