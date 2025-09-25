@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import dynamic from 'next/dynamic';
 import { 
   Note, 
   convertApiEntryToLegacy, 
@@ -10,9 +11,20 @@ import { mockEntries, mockNotes } from "../Diary.mock";
 import DiaryList from "../DiaryList/DiaryList";
 import DiaryEntryDetails from "../DiaryEntryDetails/DiaryEntryDetails";
 import NotesList from "../NotesList/NotesList";
-import GreetingBlock from "../../GreetingBlock/GreetingBlock";
 import { useDiaryEntries, useDeleteDiaryEntry } from "@/hooks/useDiary";
 import css from "./DiaryPage.module.css";
+
+// Динамічний імпорт GreetingBlock без SSR
+const GreetingBlock = dynamic(() => import("../../GreetingBlock/GreetingBlock"), {
+  ssr: false,
+  loading: () => (
+    <div style={{ marginBottom: "32px" }}>
+      <h1 className="header-first" style={{ margin: 0 }}>
+        Доброго ранку!
+      </h1>
+    </div>
+  )
+});
 
 const DiaryPage: React.FC = () => {
   const { data: apiEntries = [], isLoading, error } = useDiaryEntries();
