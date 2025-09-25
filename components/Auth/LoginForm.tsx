@@ -3,7 +3,7 @@
 import axios from "axios";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { loginAndStoreToken } from "@/lib/api/clientApi";
+import { login } from "@/lib/api/clientApi"; 
 import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
 import styles from "./AuthPage.module.css";
@@ -16,7 +16,7 @@ const Schema = Yup.object({
   password: Yup.string().min(6, "Мінімум 6 символів").required("Вкажіть пароль"),
 });
 
-const AFTER_LOGIN = "/"; 
+const AFTER_LOGIN = "/";
 
 export default function LoginForm() {
   const router = useRouter();
@@ -26,9 +26,12 @@ export default function LoginForm() {
       initialValues={{ email: "", password: "" }}
       validationSchema={Schema}
       onSubmit={async (values, { setSubmitting }) => {
-        const payload = { email: values.email.trim().toLowerCase(), password: values.password };
+        const payload = {
+          email: values.email.trim().toLowerCase(),
+          password: values.password,
+        };
         try {
-          await loginAndStoreToken(payload);
+          await login(payload); 
           toast.success("Вхід успішний!");
           router.push(AFTER_LOGIN);
         } catch (err: unknown) {

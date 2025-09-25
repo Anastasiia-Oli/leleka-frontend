@@ -3,7 +3,7 @@
 import axios from "axios";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { registerUser, loginAndStoreToken } from "@/lib/api/clientApi";
+import { registerUser, login } from "@/lib/api/clientApi"; 
 import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
 import styles from "./AuthPage.module.css";
@@ -32,10 +32,10 @@ export default function RegistrationForm() {
           email: values.email.trim().toLowerCase(),
           password: values.password,
         };
+
         try {
           await registerUser(payload);
-          // сразу логинимся, сохраняя токен
-          await loginAndStoreToken({ email: payload.email, password: payload.password });
+          await login({ email: payload.email, password: payload.password });
           toast.success("Реєстрація успішна!");
           router.push(AFTER_REGISTER);
         } catch (err: unknown) {
