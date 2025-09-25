@@ -1,10 +1,11 @@
+/* ===== Контейнер ===== */
 .container {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
-/* Хедер */
+/* ===== Хедер ===== */
 .header {
   display: flex;
   align-items: center;
@@ -28,13 +29,8 @@
   }
 }
 
-.breadcrumb {
-  padding: 0.5rem 1rem;
-  font-size: 0.9rem;
-  color: #666;
-}
 
-/* Основна частина */
+/* ===== Основна частина ===== */
 .main {
   display: flex;
   flex: 1;
@@ -59,7 +55,7 @@
   align-items: center;
 }
 
-/* Верхня частина профілю */
+/* ===== Верхня частина профілю ===== */
 .profileTop {
   display: flex;
   flex-direction: column;
@@ -93,7 +89,7 @@
   justify-content: center;
 }
 
-/* Інфо справа */
+/* ===== Інфо справа ===== */
 .userInfo {
   text-align: center;
 }
@@ -126,7 +122,7 @@
   background: #ec4899;
 }
 
-/* Форма */
+/* ===== Форма ===== */
 .label {
   width: 100%;
   max-width: 400px;
@@ -141,7 +137,7 @@
   border-radius: 4px;
 }
 
-/* Кнопки */
+/* ===== Кнопки ===== */
 .buttons {
   display: flex;
   gap: 1rem;

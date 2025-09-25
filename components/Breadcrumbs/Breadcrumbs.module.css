@@ -1,0 +1,33 @@
+.breadcrumb {
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.breadcrumbsList {
+  list-style: none; /* прибрали крапки */
+  display: flex; /* в рядок */
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0;
+  margin: 0;
+}
+
+.breadcrumbItem {
+  display: flex;
+  align-items: center;
+}
+
+.breadcrumbDivider {
+  margin: 0 0.25rem;
+  color: #999;
+}
+
+.breadcrumbLink {
+  text-decoration: none;
+  color: #ec4899;
+}
+
+.breadcrumbLink:hover {
+  text-decoration: underline;
+}

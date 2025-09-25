@@ -10,10 +10,8 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-// import { useRouter } from "next/router"; // Імпортуйте useRouter
 import Image from "next/image";
 import styles from "./userProfile.module.css";
-// import Breadcrumbs from "../components/Breadcrumbs";
 import Breadcrumbs from "../../../components/Breadcrumbs/Breadcrumbs";
 
 // --- УВАГА: Замініть цей URL на реальний URL вашого бекенду ---
@@ -179,16 +177,16 @@ export default function UserProfilePage() {
   // Основний рендеринг, коли дані завантажено
   return (
     <div className={styles.container}>
-      <header className={styles.header}>
-        <div className={styles.logo}>ЛОГО</div>
-        <div className={styles.title}>Лелека</div>
-        <button className={styles.burger}>☰</button>
-      </header>
+      {/* <header className={styles.header}> */}
+        {/* <div className={styles.logo}>ЛОГО</div> */}
+        {/* <div className={styles.title}>Лелека</div> */}
+        {/* <button className={styles.burger}>☰</button> */}
+      {/* </header> */}
 
       {/* <div className={styles.breadcrumb}>Лелека &gt; Профіль</div> */}
              <Breadcrumbs />
       <main className={styles.main}>
-        <aside className={styles.sidebar}>Сайдбар</aside>
+        {/* <aside className={styles.sidebar}>Сайдбар</aside> */}
 
         <section className={styles.section}>
           <div className={styles.profileTop}>
