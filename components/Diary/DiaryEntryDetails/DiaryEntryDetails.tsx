@@ -45,7 +45,7 @@ const DiaryEntryDetails: React.FC<DiaryEntryDetailsProps> = ({
           className={css.backButton}
           onClick={onBack}
         >
-          ← Назад
+          ← Назад до списку
         </button>
       )}
       
@@ -86,8 +86,6 @@ const DiaryEntryDetails: React.FC<DiaryEntryDetailsProps> = ({
         </div>
       </div>
         
-
-
       <div className={css.content}>
         <p className="text-primary">{entry.content}</p>
         <div className={css.emotions}>

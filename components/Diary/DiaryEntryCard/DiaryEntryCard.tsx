@@ -1,4 +1,5 @@
-// components/Diary/DiaryEntryCard/DiaryEntryCard.tsx
+'use client';
+
 import React from "react";
 import { LegacyDiaryEntry } from "../Diary.types";
 import { EMOTIONS } from "../Diary.constants";

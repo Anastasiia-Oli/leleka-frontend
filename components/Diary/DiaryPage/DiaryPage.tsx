@@ -30,20 +30,19 @@ const DiaryPage: React.FC = () => {
   const [selectedEntry, setSelectedEntry] = useState<LegacyDiaryEntry | null>(null);
   const [selectedNote, setSelectedNote] = useState<Note | null>(null);
 
-  // Встановлюємо перший запис як вибраний
-  React.useEffect(() => {
-    if (entries.length > 0 && !selectedEntry) {
-      setSelectedEntry(entries[0]);
-    }
-  }, [entries, selectedEntry]);
+  // Видаляємо логіку автоматичного вибору запису, оскільки тепер відкриваємо на новій сторінці
+  // React.useEffect(() => {
+  //   if (entries.length > 0 && !selectedEntry) {
+  //     // Перевіряємо чи це десктоп
+  //     if (typeof window !== 'undefined' && window.matchMedia('(min-width: 1024px)').matches) {
+  //       setSelectedEntry(entries[0]);
+  //     }
+  //   }
+  // }, [entries, selectedEntry]);
 
   const handleEntryClick = (entry: LegacyDiaryEntry) => {
-    if (typeof window !== 'undefined' && window.matchMedia('(max-width: 1023px)').matches) {
-      window.location.href = `/diary/${entry.id}`;
-    } else {
-      setSelectedEntry(entry);
-      setSelectedNote(null);
-    }
+    // На всіх пристроях переходимо на окрему сторінку
+    window.location.href = `/diary/${entry.id}`;
   };
 
   const handleNoteClick = (note: Note) => {
@@ -69,7 +68,14 @@ const DiaryPage: React.FC = () => {
         // Якщо це mock дані, просто видаляємо локально
         if (error || !apiEntries.length) {
           console.log('Видалення mock запису:', selectedEntry.id);
-          setSelectedEntry(null);
+          // Знаходимо наступний запис для вибору або очищуємо вибір
+          const currentIndex = entries.findIndex(e => e.id === selectedEntry.id);
+          if (entries.length > 1) {
+            const nextEntry = entries[currentIndex + 1] || entries[currentIndex - 1];
+            setSelectedEntry(nextEntry);
+          } else {
+            setSelectedEntry(null);
+          }
           return;
         }
 
@@ -118,39 +124,13 @@ const DiaryPage: React.FC = () => {
         </div>
       )}
       
-      {/* Mobile version */}
-      <div className={css.mobileLayout}>
-        <div className={css.mobileGrid}>
-          <DiaryList 
-            entries={entries}
-            onEntryClick={handleEntryClick}
-            onAddEntry={handleAddEntry}
-          />
-          <NotesList
-            notes={notes}
-            onNoteClick={handleNoteClick}
-            onAddNote={handleAddNote}
-          />
-        </div>
-      </div>
-
-      {/* Desktop version */}
-      <div className={css.desktopLayout}>
-        <div className={css.desktopGrid}>
-          <DiaryList 
-            entries={entries}
-            onEntryClick={handleEntryClick}
-            selectedEntryId={selectedEntry?.id}
-            onAddEntry={handleAddEntry}
-          />
-          
-          <DiaryEntryDetails 
-            entry={selectedEntry}
-            onEdit={handleEditEntry}
-            onDelete={handleDeleteEntry}
-          />
-        </div>
-      </div>
+      {/* Mobile and Desktop version - only DiaryList */}
+      <DiaryList 
+        entries={entries}
+        onEntryClick={handleEntryClick}
+        selectedEntryId={selectedEntry?.id}
+        onAddEntry={handleAddEntry}
+      />
     </div>
   );
 };
