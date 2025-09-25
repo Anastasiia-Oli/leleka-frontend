@@ -1,7 +1,12 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import { createDiaryEntry, updateDiaryEntry } from "../../../lib/api/diaryApi";
+import {
+  createDiaryEntry,
+  updateDiaryEntry,
+  fetchCategories,
+} from "../../../lib/api/diaryApi";
 import diaryEntrySchema from "@/lib/validation/diaryEntrySchema";
 import css from "./AddDiaryEntryForm.module.css";
 
@@ -11,16 +16,38 @@ interface Props {
   onSuccess: () => void;
 }
 
-// Тип для значень форми
 interface FormValues {
   title: string;
-  categories: string[];
+  categories: string[]; // у Formik зберігаємо id категорій
   content: string;
   description: string;
   emotions: string[];
 }
 
+interface Category {
+  id: string;
+  name: string;
+}
+
 export default function AddDiaryEntryForm({ mode, entryId, onSuccess }: Props) {
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  // завантаження категорій з бекенду
+  useEffect(() => {
+    const loadCategories = async () => {
+      try {
+        const data: Category[] = await fetchCategories();
+        setCategories(data);
+      } catch (err) {
+        console.error("Помилка завантаження категорій:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadCategories();
+  }, []);
+
   const initialValues: FormValues = {
     title: "",
     categories: [],
@@ -57,19 +84,22 @@ export default function AddDiaryEntryForm({ mode, entryId, onSuccess }: Props) {
 
           <div className={css.fieldWrapper}>
             <label className={css.label}>Категорії</label>
-            <div className={css.checkboxGroup}>
-              <label>
-                <Field type="checkbox" name="categories" value="радість" />{" "}
-                Радість
-              </label>
-              <label>
-                <Field type="checkbox" name="categories" value="сум" /> Сум
-              </label>
-              <label>
-                <Field type="checkbox" name="categories" value="злість" />{" "}
-                Злість
-              </label>
-            </div>
+            {loading ? (
+              <p>Завантаження...</p>
+            ) : (
+              <div className={css.checkboxGroup}>
+                {categories.map((cat) => (
+                  <label key={cat.id}>
+                    <Field
+                      type="checkbox"
+                      name="categories"
+                      value={cat.id} // ✅ у Formik підуть id категорій
+                    />{" "}
+                    {cat.name}
+                  </label>
+                ))}
+              </div>
+            )}
             <ErrorMessage
               name="categories"
               component="div"
