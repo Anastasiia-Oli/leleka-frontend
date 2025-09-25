@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import css from "./SideBar.module.css";
-// import AuthNavigation from "../AuthNavigation/AuthNavigation";
+import AuthNavigation from "../AuthNavigation/AuthNavigation";
 
 const SideBar = () => {
   return (
@@ -34,7 +34,7 @@ const SideBar = () => {
               <Link href={"/profile"}>Профіль</Link>
             </li>
           </ul>
-          {/* <AuthNavigation /> */}
+          <AuthNavigation />
         </aside>
       </section>
     </>

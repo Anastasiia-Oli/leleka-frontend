@@ -1,66 +1,65 @@
-// "use client";
+"use client";
 
-// import css from "./AuthNavigation.module.css";
-// import Link from "next/link";
-// import { useAuthUserStore } from "@/lib/store/authStore";
-// import { useRouter } from "next/navigation";
-// import { logout } from "@/lib/api/clientApi";
-// import Image from "next/image";
+import css from "./AuthNavigation.module.css";
+import Link from "next/link";
+import { useAuthUserStore } from "@/lib/store/authStore";
+import { useRouter } from "next/navigation";
+import { logout } from "@/lib/api/clientApi";
+import Image from "next/image";
 
-// export default function AuthNavigation() {
-//   const router = useRouter();
-//   const { user, isAuthenticated } = useAuthUserStore();
-//   const clearIsAuthenticated = useAuthUserStore(
-//     (state) => state.clearIsAuthenticated
-//   );
+export default function AuthNavigation() {
+  const router = useRouter();
+  const { user, isAuthenticated } = useAuthUserStore();
+  const clearIsAuthenticated = useAuthUserStore(
+    (state) => state.clearIsAuthenticated
+  );
 
-//   const handleLogout = async () => {
-//     await logout();
-//     clearIsAuthenticated();
-//     router.push("/login");
-//   };
+  const handleLogout = async () => {
+    await logout();
+    clearIsAuthenticated();
+    router.push("/login");
+  };
 
-//   return (
-//     <>
-//       {!isAuthenticated && (
-//         <>
-//           <Link href="/profile" prefetch={false} className={css.navigationLink}>
-//             <Image
-//               src={user.photo || "/images/plaseholder.png"} // запасной вариант, если фото нет
-//               alt="User avatar"
-//               width={40}
-//               height={40}
-//               className="userPhoto"
-//             />
-//             <ul>
-//               <li>{user.name}</li>
-//               <li>{user.email}</li>
-//             </ul>
-//             Profile
-//           </Link>
+  return (
+    <div className={css.sideFooterAuth}>
+      {!isAuthenticated && ( //delete "!" later
+        <div className={css.sideAuth}>
+          <Link href="/profile" prefetch={false} className={css.navigationLink}>
+            <Image
+              src={"/images/placeholder.png"} // user.photo || <- add later
+              alt="User avatar"
+              width={40}
+              height={40}
+              className="userPhoto"
+            />
+            <ul className={css.sideUser}>
+              <li className={css.sideName}>{user.name}Example Name</li>
+              <li className={css.sideEmail}>{user.email}example@gmail.com</li>
+            </ul>
+          </Link>
 
-//           <button onClick={handleLogout} className={css.logoutButton}>
-//             <svg width={24} height={24} className={css.logoutIcon}>
-//               <use href="/leleka-sprite.svg#icon-logout"></use>
-//             </svg>
-//           </button>
-//         </>
-//       )}
+          <button onClick={handleLogout} className={css.logoutButton}>
+            <svg width={24} height={24} className={css.logoutIcon}>
+              <use href="/leleka-sprite.svg#icon-logout"></use>
+            </svg>
+          </button>
+        </div>
+      )}
 
-//       {!isAuthenticated && (
-//         <>
-//           <Link href="/login" prefetch={false} className={css.navigationLink}>
-//             Увійти
-//           </Link>
-//           <Link
-//             href="/register"
-//             prefetch={false}
-//             className={css.navigationLink}
-//           >
-//             Зареєструватися
-//           </Link>
-//         </>
-//       )}
-//     </>
-//   );
-// }
+      {!isAuthenticated && (
+        <div className={css.sideNotAuth}>
+          <Link href="/login" prefetch={false} className={css.navigationLink}>
+            Увійти
+          </Link>
+          <Link
+            href="/register"
+            prefetch={false}
+            className={css.navigationLink}
+          >
+            Зареєструватися
+          </Link>
+        </div>
+      )}
+    </div>
+  );
+}

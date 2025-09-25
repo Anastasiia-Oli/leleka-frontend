@@ -1,8 +1,37 @@
-/* .userPhoto {
+.sideFooterAuth {
+}
+
+.sideAuth {
+}
+
+.navigationLink {
+}
+
+.userPhoto {
   border-radius: 100%;
+}
+
+.sideUser {
+}
+
+.sideName {
+}
+
+.sideEmail {
 }
 
 .logoutButton {
   width: 40px;
   height: 40px;
-} */
+}
+
+.logoutIcon {
+}
+
+/* ---- */
+
+.sideNotAuth {
+}
+
+.navigationLink {
+}
