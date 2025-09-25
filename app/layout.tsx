@@ -1,16 +1,10 @@
 import type { Metadata } from "next";
-import { Comfortaa, Lato } from "next/font/google";
+import { Comfortaa } from "next/font/google";
 import "./globals.css";
 import TanStackProvider from "@/components/TanStackProvider/TanStackProvider";
 import Header from "@/components/Header/Header";
-import Breadcrumbs from "@/components/Breadcrumbs/Breadcrumbs";
-import SideBar from "@/components/SideBar/SideBar";
-
-const lato = Lato({
-  subsets: ["latin"],
-  weight: ["400", "700"],
-  variable: "--font-family",
-});
+import AuthProvider from "@/components/AuthProvider/AuthProvider";
+import { lato } from "./fonts";
 
 const comfortaa = Comfortaa({
   subsets: ["latin", "cyrillic"],
@@ -28,23 +22,24 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
+  modal,
 }: Readonly<{
   children: React.ReactNode;
+  modal: React.ReactNode;
 }>) {
   return (
     <html lang="uk">
       <body className={`${lato.variable} ${comfortaa.variable}`}>
         <TanStackProvider>
-          <Header />
-          <main>
-            <SideBar />
-            <div className="content">
-              <Breadcrumbs />
-              {children}
-            </div>
-          </main>
+          <AuthProvider>
+            <Header />
+            {children}
+            {modal}
+          </AuthProvider>
         </TanStackProvider>
       </body>
     </html>
   );
 }
+
+// change language in this file
