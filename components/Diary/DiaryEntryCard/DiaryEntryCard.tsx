@@ -21,7 +21,7 @@ const DiaryEntryCard: React.FC<DiaryEntryCardProps> = ({ entry, onClick, isSelec
   const visibleEmotions = entry.emotions.slice(0, 3);
   const hiddenEmotionsCount = entry.emotions.length - 3;
 
-  // Виправлена функція форматування дати
+  // Функція форматування дати
   const formatDate = (dateString: string) => {
     // Якщо дата вже в правильному форматі, повертаємо її
     if (typeof dateString === 'string' && dateString.includes('липня')) {

@@ -2,7 +2,6 @@ import React from "react";
 import { LegacyDiaryEntry } from "../Diary.types";
 import DiaryEntryCard from "../DiaryEntryCard/DiaryEntryCard";  
 import css from "./DiaryList.module.css";
-import formatDate from "../DiaryEntryCard/DiaryEntryCard" 
 
 interface DiaryListProps {
   entries: LegacyDiaryEntry[];

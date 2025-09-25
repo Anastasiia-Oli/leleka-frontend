@@ -18,12 +18,14 @@
 .title {
     margin: 0;
     color: var(--black);
+    font-weight: var(--bold);
+    font-size: 18px;
+    line-height: 140%;
 }
 
 
 .addButton {
     display: flex;
-
     border: none;
     align-items: center;
     gap: 8px;
@@ -31,6 +33,7 @@
     transition: opacity 0.2s ease;
     background: var(--pastel-pink-lighter);
     flex-direction: row;
+    padding: 0px;
 }
 
 .addButton:hover {
@@ -38,11 +41,12 @@
 }
 
 .addText {
-    font-family: var(--font-family);
+    /* font-family: var(--font-family); */
     font-weight: var(--medium);
-    font-size: 16px;
+    font-size: 14px;
     line-height: 160%;
     color: var(--black);
+    white-space: nowrap;
 }
 
 .addIcon {
@@ -78,13 +82,13 @@
 /* Mobile/Tablet styles */
 @media (max-width: 1023px) {
     .header {
-        flex-direction: column;
+        /* flex-direction: column; */
         gap: 16px;
         align-items: flex-start;
     }
 
     .addButton {
-        width: 100%;
+
         justify-content: center;
     }
 }

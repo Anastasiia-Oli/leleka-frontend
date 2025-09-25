@@ -1,5 +1,5 @@
 .container {
-    width: 389px;
+    min-width: 375px;
     box-sizing: border-box;
     padding: 24px 16px;
     background: var(--pastel-pink-lighter);
@@ -22,7 +22,7 @@
 .cardHeader {
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: center;
     margin-bottom: 12px;
     gap: 16px;
 }
@@ -74,7 +74,7 @@
     }
 
     .cardHeader {
-        flex-direction: column;
+        /* flex-direction: column; */
         gap: 8px;
         align-items: flex-start;
     }
