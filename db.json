@@ -1,0 +1,9 @@
+{
+  "users":
+    {
+      "id": 1,
+      "name": "Іван Іванов",
+      "email": "ivanIvanov@example.com",
+      "gender": "дівчинка"
+    }
+}

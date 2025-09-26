@@ -1,12 +1,3 @@
-// // import React from "react";
-
-// // const page = () => {
-// //   return <div>page</div>;
-// // };
-
-// // export default page;
-
-
 "use client";
 
 import { useState, useEffect, useRef } from "react";
@@ -17,32 +8,38 @@ import Breadcrumbs from "../../../components/Breadcrumbs/Breadcrumbs";
 // --- УВАГА: Замініть цей URL на реальний URL вашого бекенду ---
 const API_URL = "https://leleka-backend-1.onrender.com/api";
 
+// Створюємо інтерфейс для даних, які оновлюються
+interface UpdatedProfileData {
+  name?: string;
+  email?: string;
+  gender?: string;
+  dueDate?: string;
+}
+
 export default function UserProfilePage() {
-  // const router = useRouter();
-  // Стан для відстеження статусу авторизації та завантаження
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  // Стан для даних користувача
+  const [initialName, setInitialName] = useState("");
+  const [initialEmail, setInitialEmail] = useState("");
+  const [initialGender, setInitialGender] = useState("невідомо");
+  const [initialDueDate, setInitialDueDate] = useState("");
+  const [initialAvatarUrl, setInitialAvatarUrl] = useState<string | null>(null);
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [gender, setGender] = useState("невідомо");
   const [dueDate, setDueDate] = useState("");
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
 
-  // Стан для завантаження нового аватара
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // Хук для завантаження даних при завантаженні сторінки
   useEffect(() => {
     const fetchUserData = async () => {
-      // 1. Отримуємо токен з локального сховища
       const token = localStorage.getItem("authToken");
-
-      // 2. Перевіряємо, чи існує токен
       if (!token) {
         setIsLoggedIn(false);
         setLoading(false);
@@ -53,7 +50,6 @@ export default function UserProfilePage() {
       setLoading(true);
 
       try {
-        // 3. Виконуємо GET-запит до бекенду
         const response = await fetch(`${API_URL}/users/current`, {
           method: "GET",
           headers: {
@@ -62,7 +58,6 @@ export default function UserProfilePage() {
           },
         });
 
-        // 4. Перевіряємо відповідь
         if (!response.ok) {
           throw new Error("Не вдалося завантажити дані профілю");
         }
@@ -70,16 +65,19 @@ export default function UserProfilePage() {
         const userData = await response.json();
         console.log("Дані користувача отримано:", userData);
 
-        // 5. Оновлюємо стан компонента
+        setInitialName(userData.name || "");
+        setInitialEmail(userData.email || "");
+        setInitialGender(userData.gender || "невідомо");
+        setInitialDueDate(userData.dueDate || "");
+        setInitialAvatarUrl(userData.avatarUrl || null);
+
         setName(userData.name || "");
         setEmail(userData.email || "");
         setGender(userData.gender || "невідомо");
         setDueDate(userData.dueDate || "");
         setAvatarUrl(userData.avatarUrl || null);
-
       } catch (error) {
         console.error("Помилка при завантаженні даних:", error);
-        // Якщо токен недійсний, можливо, треба вийти з системи
         if (error instanceof Error && error.message.includes("401")) {
           localStorage.removeItem("authToken");
           setIsLoggedIn(false);
@@ -88,17 +86,15 @@ export default function UserProfilePage() {
         setLoading(false);
       }
     };
-
     fetchUserData();
-  }, []); // Пустий масив залежностей: запускається лише один раз
+  }, []);
 
-  // Обробник для вибору нового файлу аватара
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       setAvatarFile(file);
       setPreview(URL.createObjectURL(file));
-      setAvatarUrl(null); // Очищаємо URL з бекенду, щоб показати прев'ю
+      setAvatarUrl(null);
     }
   };
 
@@ -106,24 +102,53 @@ export default function UserProfilePage() {
     fileInputRef.current?.click();
   };
 
-  // Обробник для збереження змін
   const handleSave = async () => {
     setLoading(true);
     const token = localStorage.getItem("authToken");
-    if (!token) return;
+    if (!token) {
+        setLoading(false);
+        return;
+    }
+
+    // Використовуємо наш новий тип для updatedFields
+    const updatedFields: UpdatedProfileData = {};
+    let isAvatarChanged = false;
+
+    if (name !== initialName) {
+      updatedFields.name = name;
+    }
+    if (email !== initialEmail) {
+      updatedFields.email = email;
+    }
+    if (gender !== initialGender) {
+      updatedFields.gender = gender;
+    }
+    if (dueDate !== initialDueDate) {
+      updatedFields.dueDate = dueDate;
+    }
+    if (avatarFile) {
+      isAvatarChanged = true;
+    }
+
+    if (Object.keys(updatedFields).length === 0 && !isAvatarChanged) {
+        setLoading(false);
+        console.log("Немає змін для збереження.");
+        return;
+    }
 
     const formData = new FormData();
-    formData.append("name", name);
-    formData.append("email", email);
-    formData.append("gender", gender);
-    formData.append("dueDate", dueDate);
-    if (avatarFile) {
-      formData.append("avatar", avatarFile); // 'avatar' має відповідати назві поля на бекенді
+
+    for (const key in updatedFields) {
+      formData.append(key, updatedFields[key as keyof UpdatedProfileData] as string);
+    }
+
+    if (isAvatarChanged) {
+      formData.append("avatar", avatarFile as Blob);
     }
 
     try {
       const response = await fetch(`${API_URL}/user/profile`, {
-        method: "PUT",
+        method: "PATCH",
         headers: {
           "Authorization": `Bearer ${token}`,
         },
@@ -135,11 +160,17 @@ export default function UserProfilePage() {
       }
 
       console.log("Дані успішно оновлено!");
-      // Після успішного збереження, можна перезавантажити дані
       const updatedData = await response.json();
-      setName(updatedData.name);
-      setEmail(updatedData.email);
-      setAvatarUrl(updatedData.avatarUrl);
+      
+      setInitialName(updatedData.name || "");
+      setInitialEmail(updatedData.email || "");
+      setInitialGender(updatedData.gender || "невідомо");
+      setInitialDueDate(updatedData.dueDate || "");
+      setInitialAvatarUrl(updatedData.avatarUrl || null);
+      
+      setAvatarFile(null);
+      setPreview(null);
+      setAvatarUrl(updatedData.avatarUrl || null);
 
     } catch (error) {
       console.error("Помилка при збереженні:", error);
@@ -149,17 +180,21 @@ export default function UserProfilePage() {
   };
 
   const handleCancel = () => {
-    // Тут можна скинути стан до початкових значень, отриманих з бекенду
+    setName(initialName);
+    setEmail(initialEmail);
+    setGender(initialGender);
+    setDueDate(initialDueDate);
+    setAvatarFile(null);
+    setPreview(null);
+    setAvatarUrl(initialAvatarUrl);
     console.log("Зміни скасовано.");
   };
 
-  // --- Умовний рендеринг ---
   if (loading) {
     return <div className={styles.loadingMessage}>Завантаження даних профілю...</div>;
   }
 
   if (!isLoggedIn) {
-    // Тимчасова кнопка для тестування, поки немає сторінки логіну
     const handleTestLogin = () => {
       const fakeToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEyMyIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNTE2MjM5MDIyfQ.2O1XkYJ-pS2XQ5iG8rF6pS-E5mGg-jP8Y8z8b2M4";
       localStorage.setItem("authToken", fakeToken);
@@ -174,20 +209,10 @@ export default function UserProfilePage() {
     );
   }
 
-  // Основний рендеринг, коли дані завантажено
   return (
     <div className={styles.container}>
-      {/* <header className={styles.header}> */}
-        {/* <div className={styles.logo}>ЛОГО</div> */}
-        {/* <div className={styles.title}>Лелека</div> */}
-        {/* <button className={styles.burger}>☰</button> */}
-      {/* </header> */}
-
-      {/* <div className={styles.breadcrumb}>Лелека &gt; Профіль</div> */}
-             <Breadcrumbs />
+      <Breadcrumbs />
       <main className={styles.main}>
-        {/* <aside className={styles.sidebar}>Сайдбар</aside> */}
-
         <section className={styles.section}>
           <div className={styles.profileTop}>
             <div className={styles.avatarContainer}>
@@ -248,9 +273,3 @@ export default function UserProfilePage() {
     </div>
   );
 }
-
-
-
-
-
-
