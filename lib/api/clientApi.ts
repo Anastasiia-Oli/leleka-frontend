@@ -30,7 +30,7 @@ export interface LoginRequest {
 export interface LoginUserResponse {
   status: number;
   message: string;
-  data: User; 
+  data: User;
 }
 
 export type ApiResponse<T> = {
@@ -57,9 +57,7 @@ export async function registerUser(
   return data;
 }
 
-export async function login(
-  params: LoginRequest
-): Promise<LoginUserResponse> {
+export async function login(params: LoginRequest): Promise<LoginUserResponse> {
   const { data } = await nextServer.post<LoginUserResponse>(
     "/auth/login",
     params
@@ -80,7 +78,7 @@ export const checkSession = async () => {
 };
 
 export const getMe = async () => {
-  const { data } = await nextServer.get<User>("/users/current");
+  const { data } = await nextServer.get<User>("/auth/refresh");
   return data;
 };
 
