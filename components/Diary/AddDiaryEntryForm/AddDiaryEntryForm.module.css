@@ -26,7 +26,6 @@
   padding: 8px 12px;
   border: 2px solid rgba(255, 255, 255, 0);
   border-radius: 12px;
-  background: #f5f5f5;
   font-weight: 400;
   font-size: 14px;
   line-height: 1.5;
@@ -36,7 +35,8 @@
 }
 
 .textarea {
-  min-height: 120px;
+  padding: 12px;
+  min-height: 250px;
   resize: vertical;
 }
 
@@ -73,7 +73,8 @@
   top: 50%;
   transform: translateY(-50%);
   transition: transform 0.2s ease;
-  fill: #555;
+  stroke: rgba(0, 0, 0, 0.6);
+  stroke-width: 2 !important;
 }
 
 .iconOpen {
@@ -94,12 +95,22 @@
 }
 
 .dropdownHeader {
+  position: relative;
   padding: 10px 16px;
   font-weight: 500;
   font-size: 14px;
   color: rgba(0, 0, 0, 0.6);
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   background: #fff;
+}
+
+.dropdownHeader .selectIcon {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  fill: #555;
+  cursor: pointer;
 }
 
 .option {
@@ -130,13 +141,13 @@
   border-bottom: 4px solid #ffcbd3;
   border-radius: 100px;
   font-family: "Lato", sans-serif;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 500;
   line-height: 1.6;
   cursor: pointer;
   width: 100%;
-  max-width: 268px;
-  height: 46px;
+  max-width: 294px;
+  height: 42px;
   margin: 0 auto;
   transition: background-color 0.2s ease-in-out;
 }
@@ -144,4 +155,33 @@
 .submitBtn:hover {
   background-color: #fff;
   border-bottom: 4px solid rgba(0, 0, 0, 0.15);
+}
+
+/* Tablet */
+@media (min-width: 768px) {
+  .form {
+    width: 640px;
+  }
+
+  .submitBtn {
+    max-width: 268px;
+  }
+}
+
+/* Desktop */
+@media (min-width: 1440px) {
+  .label {
+    font-size: 16px;
+  }
+
+  .input,
+  .textarea,
+  .select {
+    font-size: 16px;
+  }
+
+  .submitBtn {
+    font-size: 16px;
+    height: 46px;
+  }
 }

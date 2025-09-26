@@ -59,7 +59,11 @@ export default function AddDiaryEntryForm({
           {/* Заголовок */}
           <div className={css.fieldWrapper}>
             <label className={css.label}>Заголовок</label>
-            <Field name="title" className={css.input} />
+            <Field
+              name="title"
+              className={css.input}
+              placeholder="Введіть заголовок запису"
+            />
             <ErrorMessage name="title" component="div" className={css.error} />
           </div>
 
@@ -150,7 +154,12 @@ export default function AddDiaryEntryForm({
           {/* ✏️ Запис */}
           <div className={css.fieldWrapper}>
             <label className={css.label}>Запис</label>
-            <Field as="textarea" name="description" className={css.textarea} />
+            <Field
+              as="textarea"
+              name="description"
+              className={css.textarea}
+              placeholder="Запишіть, як ви себе відчуваєте"
+            />
             <ErrorMessage
               name="description"
               component="div"
@@ -160,7 +169,7 @@ export default function AddDiaryEntryForm({
 
           {/* 📤 Кнопка */}
           <button type="submit" className={css.submitBtn}>
-            {mode === "create" ? "Створити" : "Зберегти зміни"}
+            Зберегти
           </button>
         </Form>
       )}

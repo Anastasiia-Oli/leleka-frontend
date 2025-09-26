@@ -17,7 +17,6 @@
   background-color: #fff;
   padding: 48px 20px;
   overflow-y: auto;
-  font-size: 16px;
 }
 
 .closeBtn {
@@ -33,13 +32,15 @@
   cursor: pointer;
   border: none;
   background: none;
-  font-size: 20px;
 }
 
 .closeBtn svg {
   width: 24px;
   height: 24px;
   flex-shrink: 0;
+  stroke: #000 !important;
+  stroke-width: 2 !important;
+  fill: none !important;
 }
 
 .closeBtn:hover {
@@ -61,21 +62,18 @@
 /* Tablet */
 @media (min-width: 768px) {
   .modal {
-    padding: 48px 32px;
+    padding: 64px 32px;
     width: 100%;
     max-width: 704px;
-    font-size: 18px;
   }
 
   .closeBtn {
-    top: 24px;
-    right: 24px;
-    font-size: 24px;
+    top: 36px;
+    right: 36px;
   }
 
   .title {
-    font-size: 36px;
-    margin-bottom: 32px;
+    margin-bottom: 48px;
   }
 }
 
@@ -85,17 +83,14 @@
     padding: 64px;
     width: 100%;
     max-width: 768px;
-    font-size: 20px;
   }
 
   .closeBtn {
-    top: 32px;
-    right: 32px;
-    font-size: 28px;
+    top: 36px;
+    right: 36px;
   }
 
   .title {
     font-size: 48px;
-    margin-bottom: 48px;
   }
 }
