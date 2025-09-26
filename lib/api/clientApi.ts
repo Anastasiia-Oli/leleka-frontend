@@ -1,4 +1,4 @@
-import { User } from "@/types/user";
+import { User, Task } from "@/types/user";
 import nextServer from "./api";
 
 export interface RegisterRequest {
@@ -71,8 +71,6 @@ export const getMe = async () => {
   return data;
 };
 
-import { Task } from "@/types/user";
-
 export type SetTaskState = { id: string; isDone: boolean };
 
 export async function getTasks(): Promise<Task[]> {
@@ -84,7 +82,7 @@ export async function changeStateTask(
   task: Task,
   { isDone }: Task
 ): Promise<SetTaskState> {
-  const { data } = await nextServer.patch<SetTaskState>(`/tasks/${task.id}`, {
+  const { data } = await nextServer.patch<SetTaskState>(`/tasks/${task._id}`, {
     isDone,
   });
   return data;

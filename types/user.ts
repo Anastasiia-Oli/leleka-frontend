@@ -11,7 +11,7 @@ export interface User {
   updatedAt: string;
 }
 export type Task = {
-  id?: string;
+  _id?: string;
   text?: string;
   date?: string | undefined;
   isDone?: boolean;

@@ -31,21 +31,31 @@ const TasksReminderCard = () => {
   });
 
   const today = new Date().toISOString().slice(0, 10);
-  const todayTasks = tasks.filter((t) => t.date === today);
-  const futureTasks = tasks.filter((t) => t.date !== today);
+  const todayTasks = tasks.filter((t) => t.date === today && t.isDone !== true);
+  const futureTasks = tasks.filter((t) =>
+    t.date ? t.date > today && t.isDone !== true : []
+  );
+  const execTasks = tasks.filter((t) => t.isDone === true);
 
   return (
     <div className={css.card}>
-      <div>
+      <div className={css.listHeader}>
         <h2 className={css.title}>Важливі завдання</h2>
-        <Link href={`/tasks`}>+</Link>
+        <Link href={`/tasks`} className={css.newTask}>
+          +
+        </Link>
       </div>
+
       {isSuccess && tasks.length === 0 && (
-        <div>
-          <h3 className={css.sectionTitle}>Наразі немає жодних завдань</h3>
-          <p className={css.empty}>Створіть мершій нове завдання!</p>
-          <Link href={`/tasks`}>Створити завдання</Link>
-        </div>
+        <>
+          <div>
+            <h3 className={css.sectionTitle}>Наразі немає жодних завдань</h3>
+            <p className={css.empty}>Створіть мершій нове завдання!</p>
+          </div>
+          <Link href={`/tasks`} className={css.btn}>
+            Створити завдання
+          </Link>
+        </>
       )}
 
       {isSuccess && tasks.length > 0 && (
@@ -57,7 +67,7 @@ const TasksReminderCard = () => {
             )}
             {todayTasks.length > 0 &&
               todayTasks.map((task) => (
-                <li key={task.id} className={css.listItem}>
+                <li key={task._id} className={css.listItem}>
                   <span className={css.date}>{formateDate(task.date)}</span>
                   <input
                     type="checkbox"
@@ -81,7 +91,31 @@ const TasksReminderCard = () => {
             )}
             {futureTasks.length > 0 &&
               futureTasks.map((task) => (
-                <li key={task.id} className={css.listItem}>
+                <li key={task._id} className={css.listItem}>
+                  <span className={css.date}>{formateDate(task.date)}</span>
+                  <input
+                    type="checkbox"
+                    checked={task.isDone}
+                    onChange={() => mutate(task)}
+                    className={css.checkbox}
+                  ></input>
+                  <span
+                    className={`${css.text} ${task.isDone ? css.done : ""}`}
+                  >
+                    {task.text}
+                  </span>
+                </li>
+              ))}
+          </ul>
+
+          <h3 className={css.sectionTitle}>Виконані завдання за тиждень:</h3>
+          <ul className={css.list}>
+            {execTasks.length === 0 && (
+              <p className={css.empty}>Немає завдань</p>
+            )}
+            {execTasks.length > 0 &&
+              execTasks.map((task) => (
+                <li key={task._id} className={css.listItem}>
                   <span className={css.date}>{formateDate(task.date)}</span>
                   <input
                     type="checkbox"
