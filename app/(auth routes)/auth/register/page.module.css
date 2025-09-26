@@ -1,0 +1,98 @@
+
+
+.scene{
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:var(--bg);
+  padding:16px;
+}
+
+.regCard{
+  width:100%;
+  max-width:360px;
+  background:var(--card);
+  border-radius:24px;
+  overflow:hidden;
+  box-shadow:0 6px 18px rgba(15,23,42,.08);
+  display:grid;
+  grid-template-columns:1fr;
+}
+
+.regLeft{
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+/* ЛОГО */
+.logoFixed {
+  position: absolute;
+  top: 13.5px;
+  left: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.logoIcon { width: 32px; height: 32px; }
+.brandText {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text);
+  font-family: var(--second-family);
+}
+
+/* КОНТЕНТ */
+.leftInner{ width:100%; max-width:335px; margin:0 auto; }
+.regTitle{
+  font-family: var(--second-family);
+  font-weight: 700;
+  width:100%;
+  margin:0 0 16px;
+  text-align:center;
+  font-size:clamp(26px,7.5vw,34px);
+  line-height:1.1;
+}
+.formWrap{ width:100%; max-width:335px; margin:0 auto; }
+
+/* кнопка/инпуты/ошибки у тебя остаются в модулях компонентов форм */
+
+/* Правая половина */
+.regRight{ display:none; }
+.regImg{
+  position:absolute; inset:0;
+  width:100%; height:100%;
+  object-fit:contain; object-position:center;
+  background:#fafaf9;
+}
+
+/* ===== TABLET (>=768px) ===== */
+@media (min-width:768px){
+  .regCard{ width:720px; height:900px; max-width:none; }
+  .regLeft{ padding:40px 24px; justify-content:center; min-height:auto; }
+  .logoFixed { top:20px; left:32px; }
+  .formWrap{ width:100%; max-width:480px; margin:0 auto; }
+  .leftInner{ max-width:480px; margin:0 auto; }
+  .regTitle{ width:480px; height:43px; margin:0 auto 20px; font-size:clamp(32px,4.2vw,40px); }
+}
+
+/* ===== DESKTOP (>=1440px) ===== */
+@media (min-width:1440px){
+  .regCard{
+    width:1440px; height:900px; max-width:none;
+    grid-template-columns:720px 720px;
+  }
+  .regRight{ display:block; position:relative; background:#fafaf9; }
+  .logoFixed { top:20px; left:64px; }
+  .regLeft{ justify-content:center; min-height:auto; }
+  .leftInner{ width:592px; max-width:100%; margin:0 auto; }
+  .regTitle{
+    width:480px; height:58px; line-height:58px;
+    margin:0 auto 32px;
+  }
+  .formWrap{ width:480px; }
+}

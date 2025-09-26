@@ -1,7 +1,7 @@
 import axios, { AxiosError } from "axios";
 import type { ChildSex } from "../types/types";
 
-const baseURL = process.env.NEXT_PUBLIC_SERVER;
+const baseURL = `${process.env.NEXT_PUBLIC_API_URL}/api`;
 
 const nextServer = axios.create({ baseURL, withCredentials: true });
 
