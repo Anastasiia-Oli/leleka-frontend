@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { Comfortaa } from "next/font/google";
 import "./globals.css";
 import TanStackProvider from "@/components/TanStackProvider/TanStackProvider";
-import Header from "@/components/Header/Header";
 import AuthProvider from "@/components/AuthProvider/AuthProvider";
 import { lato } from "./fonts";
+import HeaderWrapper from "@/components/HeaderWrapper/HeaderWrapper";
 
 const comfortaa = Comfortaa({
   subsets: ["latin", "cyrillic"],
@@ -32,7 +32,7 @@ export default function RootLayout({
       <body className={`${lato.variable} ${comfortaa.variable}`}>
         <TanStackProvider>
           <AuthProvider>
-            <Header />
+            <HeaderWrapper />
             {children}
             {modal}
           </AuthProvider>
