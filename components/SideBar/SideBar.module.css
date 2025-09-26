@@ -19,7 +19,7 @@
   background: var(--background);
 }
 
-.sidebar li {
+.sidebar .li {
   display: flex;
   align-items: center;
   flex-direction: row;
@@ -33,7 +33,7 @@
   transition: transform;
 }
 
-.sidebar li:hover {
+.sidebar .li:hover {
   background-color: #fff4f6;
 }
 

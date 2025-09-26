@@ -17,14 +17,18 @@ export default function AuthNavigation() {
   const handleLogout = async () => {
     await logout();
     clearIsAuthenticated();
-    router.push("/login");
+    router.push("/auth/login");
   };
 
   return (
     <div className={css.sideFooterAuth}>
       {!isAuthenticated && ( //delete "!" later
         <div className={css.sideAuth}>
-          <Link href="/profile" prefetch={false} className={css.navigationLink}>
+          <Link
+            href="/profile"
+            prefetch={false}
+            className={css.navigationLinkAuth}
+          >
             <Image
               src={"/images/placeholder.png"} // user.photo || <- add later
               alt="User avatar"
@@ -39,8 +43,12 @@ export default function AuthNavigation() {
           </Link>
 
           <button onClick={handleLogout} className={css.logoutButton}>
-            <svg width={24} height={24} className={css.logoutIcon}>
-              <use href="/leleka-sprite.svg#icon-logout"></use>
+            <svg width={40} height={40} className={css.logoutIcon}>
+              <use
+                width={40}
+                height={40}
+                href="/leleka-sprite.svg#icon-logout"
+              ></use>
             </svg>
           </button>
         </div>
@@ -48,11 +56,15 @@ export default function AuthNavigation() {
 
       {!isAuthenticated && (
         <div className={css.sideNotAuth}>
-          <Link href="/login" prefetch={false} className={css.navigationLink}>
+          <Link
+            href="/auth/login"
+            prefetch={false}
+            className={css.navigationLink}
+          >
             Увійти
           </Link>
           <Link
-            href="/register"
+            href="/auth/register"
             prefetch={false}
             className={css.navigationLink}
           >
