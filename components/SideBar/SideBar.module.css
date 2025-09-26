@@ -4,10 +4,10 @@
 }
 
 .sidebar {
-  position: relative;
+  /* position: fixed;
   top: 0;
   left: 0;
-  display: none;
+  display: none; */
   flex-direction: column;
   border-right: 1px solid rgba(0, 0, 0, 0.15);
   padding-block: 8px 0px;
@@ -16,7 +16,7 @@
   height: 100vh;
   padding-left: 16px;
   padding-right: 16px;
-  flex-shrink: 0;
+  background: var(--background);
 }
 
 .sidebar li {
@@ -47,7 +47,7 @@
   }
 }
 
-@media screen and (max-width: 1200px) {
+@media screen and (min-width: 1200px) {
   .sidebar {
     display: flex;
     width: 300px;

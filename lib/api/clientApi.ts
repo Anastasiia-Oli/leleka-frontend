@@ -46,11 +46,15 @@ export const getJourneyDetailsByWeek = async (
   weekNumber: number
 ): Promise<JourneyDetails> => {
   try {
-    const responce = await nextServer<JourneyDetailResponce>(
+    const response = await nextServer<JourneyDetailResponce>(
       `/weeks/${weekNumber}`
     );
-    return responce.data.data;
+    if (!response?.data?.data) {
+      throw new Error("No journey data returned from API");
+    }
+    return response.data.data;
   } catch (error) {
+    console.error("Failed to fetch journey details:", error);
     throw error;
   }
 };

@@ -1,18 +1,10 @@
 import type { Metadata } from "next";
-import { Comfortaa, Lato } from "next/font/google";
+import { Comfortaa } from "next/font/google";
 import "./globals.css";
-import css from "./page.module.css";
 import TanStackProvider from "@/components/TanStackProvider/TanStackProvider";
-// import Breadcrumbs from "@/components/Breadcrumbs/Breadcrumbs";
-// import SideBar from "@/components/SideBar/SideBar";
+import Header from "@/components/Header/Header";
 import AuthProvider from "@/components/AuthProvider/AuthProvider";
-import SideBar from "@/components/SideBar/SideBar";
-
-const lato = Lato({
-  subsets: ["latin"],
-  weight: ["400", "700"],
-  variable: "--font-family",
-});
+import { lato } from "./fonts";
 
 const comfortaa = Comfortaa({
   subsets: ["latin", "cyrillic"],
@@ -40,13 +32,9 @@ export default function RootLayout({
       <body className={`${lato.variable} ${comfortaa.variable}`}>
         <TanStackProvider>
           <AuthProvider>
-            <main style={{ display: 'flex', minHeight: '100vh' }}>
-              <SideBar isOpen={true} />
-              <div className={css.mainContent}>
-                {children}
-                {modal}
-              </div>
-            </main>
+            <Header />
+            {children}
+            {modal}
           </AuthProvider>
         </TanStackProvider>
       </body>
