@@ -157,7 +157,7 @@
 /* Кнопка */
 .btnPink{
 
-  width: 480px;
+  width: 335px;
   height: 46px;
 
  
@@ -232,6 +232,7 @@
   .formWrap{ width:100%; max-width:480px; margin:0 auto; }
   .leftInner{ max-width:480px; margin:0 auto; }
   .regTitle{ width:480px; height:43px; margin:0 auto 20px; font-size:clamp(32px,4.2vw,40px); }
+  .btnPink{width: 480px;}
 }
 
 /* ===== DESKTOP (>=1440px) ===== */
