@@ -27,7 +27,7 @@ export interface LoginRequest {
 export interface LoginUserResponse {
   status: number;
   message: string;
-  data: User; 
+  data: User;
 }
 
 export type LogoutResponse = { message?: string };
@@ -42,9 +42,7 @@ export async function registerUser(
   return data;
 }
 
-export async function login(
-  params: LoginRequest
-): Promise<LoginUserResponse> {
+export async function login(params: LoginRequest): Promise<LoginUserResponse> {
   const { data } = await nextServer.post<LoginUserResponse>(
     "/auth/login",
     params
@@ -60,11 +58,11 @@ export async function logout(): Promise<LogoutResponse> {
 type CheckSessionResponse = { success: boolean };
 
 export const checkSession = async () => {
-  const { data } = await nextServer.get<CheckSessionResponse>("/auth/session");
+  const { data } = await nextServer.get<CheckSessionResponse>("/auth/refresh");
   return data.success;
 };
 
 export const getMe = async () => {
-  const { data } = await nextServer.get<User>("/auth/session");
+  const { data } = await nextServer.get<User>("/auth/refresh");
   return data;
 };
