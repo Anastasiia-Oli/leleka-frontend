@@ -21,7 +21,7 @@ interface AddDiaryEntryFormProps {
 const initialValues: DiaryEntryValues = {
   title: "",
   description: "",
-  date: new Date().toISOString().slice(0, 10), // yyyy-mm-dd
+  date: new Date().toISOString().slice(0, 10),
   emotions: [],
 };
 
@@ -31,7 +31,7 @@ export default function AddDiaryEntryForm({
   onSuccess,
 }: AddDiaryEntryFormProps) {
   const [emotions, setEmotions] = useState<Emotion[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
   useEffect(() => {
     const fetchEmotions = async () => {
@@ -40,27 +40,17 @@ export default function AddDiaryEntryForm({
         setEmotions(data);
       } catch (error) {
         console.error("Помилка при завантаженні емоцій:", error);
-      } finally {
-        setLoading(false);
       }
     };
-
     fetchEmotions();
   }, []);
 
   const handleSubmit = (values: DiaryEntryValues) => {
     console.log("Форма відправлена:", values, { mode, entryId });
-
-    // тут можна відрізняти "create" і "edit"
-    if (mode === "create") {
-      // створення запису
-    } else {
-      // редагування запису за entryId
-    }
-
-    // закриваємо модалку після успішного сабміту
     onSuccess();
   };
+
+  const topEmotions = emotions.slice(0, 2); // ✨ найчастіші
 
   return (
     <Formik initialValues={initialValues} onSubmit={handleSubmit}>
@@ -73,43 +63,83 @@ export default function AddDiaryEntryForm({
             <ErrorMessage name="title" component="div" className={css.error} />
           </div>
 
-          {/* Категорії */}
+          {/* 📂 Категорії */}
           <div className={css.fieldWrapper}>
             <label className={css.label}>Категорії</label>
-            {loading ? (
-              <p>Завантаження...</p>
-            ) : (
-              <div className={css.selectWrapper}>
-                <Field
-                  as="select"
-                  name="emotions"
-                  multiple
-                  className={css.select}
-                  value={values.emotions}
-                  onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
-                    const selected = Array.from(
-                      e.target.selectedOptions,
-                      (option) => option.value
-                    );
-                    setFieldValue("emotions", selected);
-                  }}
+
+            <div className={css.dropdownWrapper}>
+              {/* 📍 Закритий стан */}
+              {!dropdownOpen && (
+                <div
+                  className={css.selectedEmotions}
+                  onClick={() => setDropdownOpen(true)}
                 >
+                  {values.emotions.length > 0
+                    ? values.emotions.map((id) => {
+                        const emotion = emotions.find((e) => e._id === id);
+                        return (
+                          <span key={id} className={css.chip}>
+                            {emotion?.title}
+                          </span>
+                        );
+                      })
+                    : topEmotions.map((emotion) => (
+                        <span key={emotion._id} className={css.chip}>
+                          {emotion.title}
+                        </span>
+                      ))}
+
+                  {/* 📉 Іконка вниз (закрито) */}
+                  <svg
+                    className={css.selectIcon}
+                    viewBox="0 0 32 32"
+                    width="24"
+                    height="24"
+                  >
+                    <use href="/leleka-sprite.svg#icon-keyboard_arrow_down" />
+                  </svg>
+                </div>
+              )}
+
+              {/* 📂 Відкритий стан */}
+              {dropdownOpen && (
+                <div className={css.dropdown}>
+                  <div className={css.dropdownHeader}>
+                    Оберіть категорію
+                    {/* 📈 Іконка вгору (відкрито) */}
+                    <svg
+                      className={css.selectIcon}
+                      viewBox="0 0 32 32"
+                      width="24"
+                      height="24"
+                      onClick={() => setDropdownOpen(false)}
+                    >
+                      <use href="/leleka-sprite.svg#icon-keyboard_arrow_up" />
+                    </svg>
+                  </div>
+
                   {emotions.map((emotion) => (
-                    <option key={emotion._id} value={emotion._id}>
+                    <label key={emotion._id} className={css.option}>
+                      <input
+                        type="checkbox"
+                        value={emotion._id}
+                        checked={values.emotions.includes(emotion._id)}
+                        onChange={(e) => {
+                          const updated = e.target.checked
+                            ? [...values.emotions, emotion._id]
+                            : values.emotions.filter(
+                                (id) => id !== emotion._id
+                              );
+                          setFieldValue("emotions", updated);
+                        }}
+                      />
                       {emotion.title}
-                    </option>
+                    </label>
                   ))}
-                </Field>
-                <svg
-                  className={css.selectIcon}
-                  viewBox="0 0 32 32"
-                  width="20"
-                  height="20"
-                >
-                  <use href="/leleka-sprite.svg#icon-arrow-down" />
-                </svg>
-              </div>
-            )}
+                </div>
+              )}
+            </div>
+
             <ErrorMessage
               name="emotions"
               component="div"
@@ -117,7 +147,7 @@ export default function AddDiaryEntryForm({
             />
           </div>
 
-          {/* Запис */}
+          {/* ✏️ Запис */}
           <div className={css.fieldWrapper}>
             <label className={css.label}>Запис</label>
             <Field as="textarea" name="description" className={css.textarea} />
@@ -128,7 +158,7 @@ export default function AddDiaryEntryForm({
             />
           </div>
 
-          {/* Кнопка */}
+          {/* 📤 Кнопка */}
           <button type="submit" className={css.submitBtn}>
             {mode === "create" ? "Створити" : "Зберегти зміни"}
           </button>

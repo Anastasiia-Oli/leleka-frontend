@@ -15,7 +15,7 @@
 .label {
   font-family: "Lato", sans-serif;
   font-weight: 400;
-  font-size: 16px;
+  font-size: 14px;
   line-height: 1.5;
   color: #000;
 }
@@ -27,7 +27,10 @@
   border: 2px solid rgba(255, 255, 255, 0);
   border-radius: 12px;
   background: #f5f5f5;
-  font-size: 16px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.5;
+  color: rgba(0, 0, 0, 0.6);
   width: 100%;
   background-color: rgba(0, 0, 0, 0.05);
 }
@@ -37,21 +40,82 @@
   resize: vertical;
 }
 
-.selectWrapper {
+.dropdownWrapper {
   position: relative;
-  display: flex;
-  align-items: center;
 }
 
-.select {
-  appearance: none; /* прибирає стандартну стрілку */
+.selectedEmotions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  min-height: 48px;
+  padding: 8px 40px 8px 12px;
+  border-radius: 12px;
+  background: #f5f5f5;
+  cursor: pointer;
+}
+
+.chip {
+  background: rgba(0, 0, 0, 0.08);
+  border-radius: 16px;
+  padding: 4px 10px;
+  font-size: 14px;
+  margin: 2px;
+}
+
+.placeholder {
+  color: rgba(0, 0, 0, 0.4);
 }
 
 .selectIcon {
   position: absolute;
   right: 16px;
-  pointer-events: none;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: transform 0.2s ease;
   fill: #555;
+}
+
+.iconOpen {
+  transform: translateY(-50%) rotate(180deg);
+}
+
+.dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  width: 100%;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.dropdownHeader {
+  padding: 10px 16px;
+  font-weight: 500;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.6);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  background: #fff;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  cursor: pointer;
+}
+
+.option:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.option input {
+  accent-color: #000;
 }
 
 .error {
