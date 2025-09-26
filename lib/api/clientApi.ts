@@ -78,19 +78,8 @@ export const checkSession = async () => {
 };
 
 export const getMe = async () => {
-  // const { data } = await nextServer.post<User>("/users/current");
-  // return data;
-
-  return {
-      _id: "1",
-      name: 'Test User',
-      email: 'Test User',
-      childSex: "Ще не знаю",
-      dueDate: '',
-      photo: '',
-      createdAt: '2024-01-01T00:00:00.000Z',
-      updatedAt: '2024-01-01T00:00:00.000Z',
-    } as User;
+  const { data } = await nextServer.get<User>("/users/current");
+  return data;
 };
 
 export async function submitOnboarding(payload: OnboardingPayload) {
