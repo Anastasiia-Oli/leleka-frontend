@@ -151,11 +151,11 @@
 
 /* Desktop fixed height with scroll */
 @media (min-width: 1024px) {
-    .container {
+    /* .diarycontainer { */
         /* height: 450px; */
         /* Fixed height for desktop */
     }
-}
+/* } */
 
 /* Mobile/Tablet styles */
 @media (max-width: 1023px) {
@@ -180,7 +180,7 @@
 }
 
 @media (max-width: 767px) {
-    .diaryContainer {
+    .diaryontainer {
         gap: 16px;
         padding: 16px;
     }

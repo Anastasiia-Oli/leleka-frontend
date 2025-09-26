@@ -5,6 +5,7 @@
     padding: 24px 16px;
     background: var(--pastel-pink-lighter);
     border-radius: 16px;
+    box-sizing: border-box;
 }
 
 .diaryHeader {
@@ -23,7 +24,6 @@
     line-height: 140%;
 }
 
-
 .addButton {
     display: flex;
     border: none;
@@ -41,7 +41,6 @@
 }
 
 .addText {
-    /* font-family: var(--font-family); */
     font-weight: var(--medium);
     font-size: 14px;
     line-height: 160%;
@@ -54,12 +53,12 @@
     align-items: center;
     justify-content: right;
 }
+
 .editIcon {
     fill: var(--black);
     transition: fill 0.2s ease;
     width: 24px;
     height: 24px;
-    
 }
 
 .entriesList {
@@ -68,6 +67,25 @@
     flex-direction: column;
     gap: 16px;
     overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--gray-lighter) transparent;
+}
+
+.entriesList::-webkit-scrollbar {
+    width: 6px;
+}
+
+.entriesList::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.entriesList::-webkit-scrollbar-thumb {
+    background: var(--gray-lighter);
+    border-radius: 3px;
+}
+
+.entriesList::-webkit-scrollbar-thumb:hover {
+    background: var(--gray-light);
 }
 
 .placeholder {
@@ -79,9 +97,46 @@
     text-align: center;
 }
 
-/* Mobile/Tablet styles */
+/* Десктопна версія з фіксованою висотою */
+@media (min-width: 1024px) {
+    /* .diaryContainer {
+        height: 500px;
+        max-height: 500px;
+    } */
 
+    .entriesList {
+        overflow-y: auto;
+
+        /* Віднімаємо висоту заголовка та відступів */
+    }
+}
+
+/* Планшети */
+@media (min-width: 768px) and (max-width: 1023px) {
+    .diaryContainer {
+        height: auto;
+        min-height: 300px;
+    }
+
+    .entriesList {
+        overflow-y: visible;
+        max-height: none;
+    }
+}
+
+/* Мобільні пристрої */
 @media screen and (max-width: 767px) {
+    .diaryContainer {
+        padding: 16px;
+        height: auto;
+        min-height: 300px;
+    }
+
+    .entriesList {
+        overflow-y: visible;
+        max-height: none;
+    }
+
     .addText {
         font-size: 14px;
     }
@@ -91,20 +146,3 @@
         height: 20px;
     }
 }
-
-@media (mmin-width: 1023px) {
-    .diaryHeader {
-        flex-direction: column;
-
-        gap: 16px;
-        align-items: flex-start;
-    }
-
-    .addButton {
-
-        justify-content: center;
-    }
-    
-
-}
-

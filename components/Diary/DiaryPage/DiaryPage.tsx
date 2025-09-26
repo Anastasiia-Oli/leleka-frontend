@@ -9,7 +9,7 @@ import {
 } from "../Diary.types";
 import { mockEntries, mockNotes } from "../Diary.mock";
 import DiaryList from "../DiaryList/DiaryList";
-// import DiaryEntryDetails from "../DiaryEntryDetails/DiaryEntryDetails";
+import DiaryEntryDetails from "../DiaryEntryDetails/DiaryEntryDetails";
 // import NotesList from "../NotesList/NotesList";
 import { useDiaryEntries, useDeleteDiaryEntry } from "@/hooks/useDiary";
 import css from "./DiaryPage.module.css";
@@ -41,20 +41,35 @@ const DiaryPage: React.FC = () => {
   const [notes] = useState<Note[]>(mockNotes);
   const [selectedEntry, setSelectedEntry] = useState<LegacyDiaryEntry | null>(null);
   const [selectedNote, setSelectedNote] = useState<Note | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
 
-  // Видаляємо логіку автоматичного вибору запису, оскільки тепер відкриваємо на новій сторінці
-  // React.useEffect(() => {
-  //   if (entries.length > 0 && !selectedEntry) {
-  //     // Перевіряємо чи це десктоп
-  //     if (typeof window !== 'undefined' && window.matchMedia('(min-width: 1024px)').matches) {
-  //       setSelectedEntry(entries[0]);
-  //     }
-  //   }
-  // }, [entries, selectedEntry]);
+  // Перевіряємо розмір екрану
+  React.useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 1024);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // Автоматично вибираємо перший запис на десктопі
+  React.useEffect(() => {
+    if (entries.length > 0 && !selectedEntry && !isMobile) {
+      setSelectedEntry(entries[0]);
+    }
+  }, [entries, selectedEntry, isMobile]);
 
   const handleEntryClick = (entry: LegacyDiaryEntry) => {
-    // На всіх пристроях переходимо на окрему сторінку
-    window.location.href = `/diary/${entry.id}`;
+    if (isMobile) {
+      // На мобільних переходимо на окрему сторінку
+      window.location.href = `/diary/${entry.id}`;
+    } else {
+      // На десктопі показуємо в правій колонці
+      setSelectedEntry(entry);
+      setSelectedNote(null);
+    }
   };
 
   const handleNoteClick = (note: Note) => {
@@ -136,13 +151,35 @@ const DiaryPage: React.FC = () => {
         </div>
       )}
       
-      {/* Mobile and Desktop version - only DiaryList */}
-      <DiaryList 
-        entries={entries}
-        onEntryClick={handleEntryClick}
-        selectedEntryId={selectedEntry?.id}
-        onAddEntry={handleAddEntry}
-      />
+      {/* Mobile Layout */}
+      <div className={css.mobileLayout}>
+        <DiaryList 
+          entries={entries}
+          onEntryClick={handleEntryClick}
+          selectedEntryId={selectedEntry?.id}
+          onAddEntry={handleAddEntry}
+        />
+      </div>
+
+      {/* Desktop Layout */}
+      <div className={css.desktopLayout}>
+        <div className={css.desktopGrid}>
+          {/* Ліва колонка - список записів */}
+          <DiaryList 
+            entries={entries}
+            onEntryClick={handleEntryClick}
+            selectedEntryId={selectedEntry?.id}
+            onAddEntry={handleAddEntry}
+          />
+          
+          {/* Права колонка - деталі запису */}
+          <DiaryEntryDetails 
+            entry={selectedEntry}
+            onEdit={handleEditEntry}
+            onDelete={handleDeleteEntry}
+          />
+        </div>
+      </div>
     </div>
   );
 };
