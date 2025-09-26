@@ -1,5 +1,8 @@
 import { User } from "@/types/user";
 import nextServer from "./api";
+import type { ChildSex } from "../../types/types";
+import axios, { AxiosError } from "axios";
+
 
 export interface RegisterRequest {
   name: string;
@@ -29,6 +32,18 @@ export interface LoginUserResponse {
   message: string;
   data: User;
 }
+
+export type ApiResponse<T> = {
+    status: number;
+    message: string;
+    data: T;
+};
+
+type OnboardingPayload = {
+  childSex: ChildSex;
+  dueDate: string;
+  photo?: File;
+}; 
 
 export type LogoutResponse = { message?: string };
 
@@ -63,6 +78,44 @@ export const checkSession = async () => {
 };
 
 export const getMe = async () => {
-  const { data } = await nextServer.post<User>("/auth/refresh");
-  return data;
+  // const { data } = await nextServer.post<User>("/users/current");
+  // return data;
+
+  return {
+      _id: "1",
+      name: 'Test User',
+      email: 'Test User',
+      childSex: "Ще не знаю",
+      dueDate: '',
+      photo: '',
+      createdAt: '2024-01-01T00:00:00.000Z',
+      updatedAt: '2024-01-01T00:00:00.000Z',
+    } as User;
 };
+
+export async function submitOnboarding(payload: OnboardingPayload) {
+  const { childSex, dueDate, photo } = payload;
+
+  try {
+    if (photo) {
+      const fd = new FormData();
+      fd.append("avatar", photo); // ім’я поля має збігатися з бекендом
+
+      await nextServer.patch("/users/avatar", fd, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+    }
+
+    const res = await nextServer.patch(`/users`, { childSex, dueDate });
+    return res.data;
+  } catch (e) {
+    const status = (e as AxiosError)?.response?.status;
+    if (status === 404) {
+      console.warn(
+        "[submitOnboarding] /users або /users/avatar не знайдено (404). Повертаю мок-відповідь."
+      );
+      return { ok: true } as const;
+    }
+    throw e;
+  }
+}

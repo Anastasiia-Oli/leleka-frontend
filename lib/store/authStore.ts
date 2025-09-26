@@ -6,6 +6,7 @@ type AuthUserStore = {
   user: User;
   isAuthenticated: boolean;
   setUser: (user: User) => void;
+   setIsAuthenticated: (value: boolean) => void;
   clearIsAuthenticated: () => void;
 };
 
@@ -25,6 +26,7 @@ export const useAuthUserStore = create<AuthUserStore>()(
     (set) => ({
       user: initialUser,
       isAuthenticated: false,
+      setIsAuthenticated: (value) => set({ isAuthenticated: value }),
       setUser: (user) =>
         set(() => ({
           user: user,
@@ -38,10 +40,10 @@ export const useAuthUserStore = create<AuthUserStore>()(
     }),
     {
       name: "user-draft",
-      partialize: (state) => ({
-        user: state.user,
-        isAuthenticated: state.isAuthenticated,
-      }),
+      // partialize: (state) => ({
+      //   user: state.user,
+      //   isAuthenticated: state.isAuthenticated,
+      // }),
     }
   )
 );
