@@ -68,3 +68,7 @@ export const getMe = async () => {
   const { data } = await nextServer.get<User>("/auth/session");
   return data;
 };
+export async function getMomDailyTips(weekNumber: number): Promise<{ momDailyTips: string[] }> {
+  const { data } = await nextServer.get(`/weeks/${weekNumber}`);
+  return data;
+}

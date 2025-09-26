@@ -1,32 +1,31 @@
+/* components/MomTipCard/MomTipCard.module.css */
 .tipSection {
-  background-color: #fff6f7;
-  border-radius: 20px;
-  padding: 20px;
-  margin-top: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  background: #fff8f0;
+  border-radius: 10px;
+  padding: 16px;
+  margin: 16px 0;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
 .tipHeader {
   display: flex;
   align-items: center;
-  gap: 10px;
+  margin-bottom: 8px;
 }
 
 .icon {
+  margin-right: 8px;
   fill: #ff6b81;
 }
 
 .tipTitle {
   font-size: 18px;
   font-weight: 600;
-  color: #222;
+  color: #333;
 }
 
 .tipText {
   font-size: 16px;
+  color: #555;
   line-height: 1.5;
-  color: #444;
 }

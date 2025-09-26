@@ -11,7 +11,7 @@ export default function Home() {
       <GreetingBlock />
       <StatusBlock />
       <BabyTodayCard />
-      <MomTipCard />
+      <MomTipCard weekNumber={1} />
       <TasksReminderCard />
       <FeelingCheckCard />
     </section>
