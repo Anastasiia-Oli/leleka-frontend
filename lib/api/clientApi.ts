@@ -63,6 +63,6 @@ export const checkSession = async () => {
 };
 
 export const getMe = async () => {
-  const { data } = await nextServer.post<User>("/auth/refresh");
+  const { data } = await nextServer.get<User>("/users/current");
   return data;
 };
