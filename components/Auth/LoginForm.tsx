@@ -40,14 +40,9 @@ export default function LoginForm() {
 
           if (user) {
             setUser(user);
-            router.push("/profile");
-            console.log("vce horosho");
-          } else {
-            console.log("problemaaa");
+            toast.success("Вхід успішний!");
+            router.push(AFTER_LOGIN);
           }
-
-          toast.success("Вхід успішний!");
-          router.push(AFTER_LOGIN);
         } catch (err: unknown) {
           const msg = axios.isAxiosError(err)
             ? (err.response?.data as { message?: string })?.message ||
