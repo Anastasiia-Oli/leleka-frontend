@@ -3,29 +3,34 @@ export const dynamic = "force-dynamic";
 import { NextResponse } from "next/server";
 import { api } from "../api";
 import { cookies } from "next/headers";
+import { logErrorResponse } from "../_utils/utils";
+import { isAxiosError } from "axios";
 
 export async function PATCH(request: Request) {
   try {
     const cookieStore = await cookies();
     const body = await request.json();
 
-    const { data } = await api.patch("/", body, {
+
+    const res = await api.patch("/api/users", body, {
       headers: {
         Cookie: cookieStore.toString(),
       },
     });
-
-    if (data) return NextResponse.json(data);
-
-    return NextResponse.json(
-      { error: "Failed to update user" },
-      { status: 500 }
-    );
+    return NextResponse.json(res.data, { status: res.status });
   } catch (error) {
-    console.log(error);
+    if (isAxiosError(error)) {
+      logErrorResponse(error.response?.data);
+      return NextResponse.json(
+        { error: error.message, response: error.response?.data },
+        { status: error.status }
+      );
+    }
+    logErrorResponse({ message: (error as Error).message });
     return NextResponse.json(
-      { error: "Failed to update user" },
+      { error: "Internal Server Error" },
       { status: 500 }
     );
   }
 }
+
