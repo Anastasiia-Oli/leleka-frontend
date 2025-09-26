@@ -4,6 +4,7 @@ import css from "./SideBar.module.css";
 // import AuthNavigation from "../AuthNavigation/AuthNavigation";
 
 const SideBar = () => {
+  
   return (
     <>
       <section className={css.container}>

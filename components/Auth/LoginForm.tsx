@@ -3,11 +3,12 @@
 import axios from "axios";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { login } from "@/lib/api/clientApi"; 
+import { getMe, login } from "@/lib/api/clientApi"; 
 import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
 import styles from "./AuthPage.module.css";
 import Link from "next/link";
+import { useAuthUserStore } from "@/lib/store/authStore";
 
 type FormValues = { email: string; password: string };
 
@@ -19,6 +20,8 @@ const Schema = Yup.object({
 const AFTER_LOGIN = "/";
 
 export default function LoginForm() {
+  const { setIsAuthenticated, setUser } = useAuthUserStore.getState();
+  
   const router = useRouter();
 
   return (
@@ -31,16 +34,22 @@ export default function LoginForm() {
           password: values.password,
         };
         try {
+          console.log(2);
           await login(payload); 
+          const user = await getMe()
           toast.success("Вхід успішний!");
+          setIsAuthenticated(true);
+          setUser(user);
           router.push(AFTER_LOGIN);
         } catch (err: unknown) {
-          const msg = axios.isAxiosError(err)
-            ? (err.response?.data as { message?: string })?.message || "Помилка входу"
-            : err instanceof Error
-            ? err.message
-            : "Помилка входу";
-          toast.error(msg);
+          // const msg = axios.isAxiosError(err)
+          //   ? (err.response?.data as { message?: string })?.message || "Помилка входу"
+          //   : err instanceof Error
+          //   ? err.message
+          //   : "Помилка входу";
+          // toast.error(msg);
+          console.log(err);
+          
         } finally {
           setSubmitting(false);
         }
