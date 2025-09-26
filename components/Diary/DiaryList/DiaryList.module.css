@@ -1,4 +1,4 @@
-.container {
+.diaryContainer {
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -7,7 +7,7 @@
     border-radius: 16px;
 }
 
-.header {
+.diaryHeader {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -15,7 +15,7 @@
     margin-bottom: 16px;
 }
 
-.title {
+.diaryTitle {
     margin: 0;
     color: var(--black);
     font-weight: var(--bold);
@@ -80,18 +80,6 @@
 }
 
 /* Mobile/Tablet styles */
-@media (max-width: 1023px) {
-    .header {
-        /* flex-direction: column; */
-        gap: 16px;
-        align-items: flex-start;
-    }
-
-    .addButton {
-
-        justify-content: center;
-    }
-}
 
 @media screen and (max-width: 767px) {
     .addText {
@@ -103,3 +91,20 @@
         height: 20px;
     }
 }
+
+@media (mmin-width: 1023px) {
+    .diaryHeader {
+        flex-direction: column;
+
+        gap: 16px;
+        align-items: flex-start;
+    }
+
+    .addButton {
+
+        justify-content: center;
+    }
+    
+
+}
+

@@ -31,9 +31,9 @@ const DiaryList: React.FC<DiaryListProps> = ({
   onAddEntry 
 }) => {
   return (
-    <div className={css.container}>
-      <div className={css.header}>
-        <h2 className={`${css.title} header-third`}>Ваші записи</h2>
+    <div className={css.diaryContainer}>
+      <div className={css.diaryHeader}>
+        <h2 className={`${css.diaryTitle} header-third`}>Ваші записи</h2>
         <button
           className={css.addButton}
           onClick={onAddEntry}

@@ -9,8 +9,8 @@ import {
 } from "../Diary.types";
 import { mockEntries, mockNotes } from "../Diary.mock";
 import DiaryList from "../DiaryList/DiaryList";
-import DiaryEntryDetails from "../DiaryEntryDetails/DiaryEntryDetails";
-import NotesList from "../NotesList/NotesList";
+// import DiaryEntryDetails from "../DiaryEntryDetails/DiaryEntryDetails";
+// import NotesList from "../NotesList/NotesList";
 import { useDiaryEntries, useDeleteDiaryEntry } from "@/hooks/useDiary";
 import css from "./DiaryPage.module.css";
 
@@ -103,7 +103,7 @@ const DiaryPage: React.FC = () => {
 
   if (isLoading) {
     return (
-      <div className={css.container}>
+      <div className={css.diaryContainer}>
         <GreetingBlock />
         <div style={{ 
           display: 'flex', 
@@ -118,7 +118,7 @@ const DiaryPage: React.FC = () => {
   }
 
   return (
-    <div className={css.container}>
+    <div className={css.diaryContainer}>
       <GreetingBlock />
       
       {/* Показуємо попередження, якщо використовуємо mock дані */}

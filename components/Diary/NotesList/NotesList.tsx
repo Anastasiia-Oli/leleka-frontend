@@ -2,7 +2,7 @@ import React from "react";
 import NoteCard from "../NoteCard/NoteCard";
 import { Note } from "../Diary.types";
 import { BookOpen as BookIcon, Plus as PlusIcon } from "lucide-react";
-import css from "./NotesList.module.css";
+// import css from "./NotesList.module.css";
 
 interface NotesListProps {
   notes: Note[];

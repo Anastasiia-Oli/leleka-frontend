@@ -1,5 +1,5 @@
 import React from "react";
-import { Edit, X } from "lucide-react";
+// import { Edit, X } from "lucide-react";
 import { LegacyDiaryEntry } from "../Diary.types";
 import { EMOTIONS } from "../Diary.constants";
 import css from "./DiaryEntryDetails.module.css";
@@ -25,7 +25,7 @@ const DiaryEntryDetails: React.FC<DiaryEntryDetailsProps> = ({
 
   if (!entry) {
     return (
-      <div className={css.container}>
+      <div className={css.diaryContainer}>
         <div className={css.placeholder}>
           <div>
             <h3 className="header-third">Наразі записи у щоденнику відсутні</h3>
@@ -39,7 +39,7 @@ const DiaryEntryDetails: React.FC<DiaryEntryDetailsProps> = ({
   }
 
   return (
-    <div className={css.container}>
+    <div className={css.diaryContainer}>
       {onBack && (
         <button 
           className={css.backButton}
@@ -49,11 +49,11 @@ const DiaryEntryDetails: React.FC<DiaryEntryDetailsProps> = ({
         </button>
       )}
       
-      <div className={css.header}>
+      <div className={css.diaryHeader}>
         <div className={css.headerTop}>
           <div className={css.headerActions}>
             <div className={css.headerRow}>
-              <h2 className={`${css.title} header-third`}>{entry.title}</h2>
+              <h2 className={`${css.diaryTitle} header-third`}>{entry.title}</h2>
                 {onEdit && (
                   <button 
                     className={css.actionButton}
@@ -86,7 +86,7 @@ const DiaryEntryDetails: React.FC<DiaryEntryDetailsProps> = ({
         </div>
       </div>
         
-      <div className={css.content}>
+      <div className={css.diaryContent}>
         <p className="text-primary">{entry.content}</p>
         <div className={css.emotions}>
           {entry.emotions.map((emotion, index) => (

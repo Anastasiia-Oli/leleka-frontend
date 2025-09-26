@@ -14,7 +14,7 @@ const GreetingBlock: React.FC = () => {
         // const data = await response.json();
         // setUserName(data.name);
         
-        // Поки що використовуємо моковані дані
+
         setTimeout(() => {
           setUserName('Ганна');
         }, 100);
