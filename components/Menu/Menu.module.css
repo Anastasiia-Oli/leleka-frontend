@@ -1,0 +1,47 @@
+.backdrop {
+    width:100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.backgroundSideBar {
+    width: 300px;
+    height: 100vh;
+    background: var(--background);
+}
+
+.menuComponents {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+}
+
+.logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 105px;
+  height: 45px;
+}
+
+.logoIcon {
+  width: 95px;
+  height: 29px;
+}
+
+.closeBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.closeIcon {
+  width: 32px;
+  height: 32px;
+  fill: #000;
+}
