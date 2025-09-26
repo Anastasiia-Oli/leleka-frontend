@@ -73,13 +73,24 @@ export async function logout(): Promise<LogoutResponse> {
 type CheckSessionResponse = { success: boolean };
 
 export const checkSession = async () => {
-  const { data } = await nextServer.get<CheckSessionResponse>("/auth/refresh");
+  const { data } = await nextServer.post<CheckSessionResponse>("/auth/refresh");
   return data.success;
 };
 
 export const getMe = async () => {
-  const { data } = await nextServer.get<User>("/auth/refresh");
-  return data;
+  // const { data } = await nextServer.post<User>("/users/current");
+  // return data;
+
+  return {
+      _id: "1",
+      name: 'Test User',
+      email: 'Test User',
+      childSex: "Ще не знаю",
+      dueDate: '',
+      photo: '',
+      createdAt: '2024-01-01T00:00:00.000Z',
+      updatedAt: '2024-01-01T00:00:00.000Z',
+    } as User;
 };
 
 export async function submitOnboarding(payload: OnboardingPayload) {

@@ -1,6 +1,6 @@
 "use client";
 
-import axios from "axios";
+// import axios from "axios";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { getMe, login } from "@/lib/api/clientApi"; 
@@ -34,12 +34,13 @@ export default function LoginForm() {
           password: values.password,
         };
         try {
-          console.log(2);
           await login(payload); 
           const user = await getMe()
           toast.success("Вхід успішний!");
           setIsAuthenticated(true);
           setUser(user);
+          console.log(user);
+          
           router.push(AFTER_LOGIN);
         } catch (err: unknown) {
           // const msg = axios.isAxiosError(err)

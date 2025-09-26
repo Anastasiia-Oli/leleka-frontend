@@ -10,6 +10,7 @@ import { ChildSex } from "@/types/types";
 import * as Yup from "yup";
 import { submitOnboarding } from "@/lib/api/clientApi";
 import dynamic from "next/dynamic";
+import { useAuthUserStore } from "@/lib/store/authStore";
 const Select = dynamic(() => import("../ui/Select"), { ssr: false });
 
 
@@ -37,6 +38,9 @@ const OnboardingForm = () => {
     gender: "Ще не знаю",
     dueDate: "",
   };
+
+  const a = useAuthUserStore.getState();
+console.log(a);
 
   return (
     <Formik<FormValues>
