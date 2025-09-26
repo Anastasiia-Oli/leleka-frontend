@@ -27,47 +27,45 @@ export interface LoginRequest {
 export interface LoginUserResponse {
   status: number;
   message: string;
-  data: User;
+  data: User; 
 }
 
-export type LogoutResponse = {
-  message?: string;
-};
+export type LogoutResponse = { message?: string };
 
 export async function registerUser(
   params: RegisterRequest
 ): Promise<RegisterUserResponse> {
-  const response = await nextServer.post<RegisterUserResponse>(
+  const { data } = await nextServer.post<RegisterUserResponse>(
     "/auth/register",
     params
   );
-  return response.data;
+  return data;
 }
 
-export async function login(params: LoginRequest): Promise<LoginUserResponse> {
-  const response = await nextServer.post<LoginUserResponse>(
+export async function login(
+  params: LoginRequest
+): Promise<LoginUserResponse> {
+  const { data } = await nextServer.post<LoginUserResponse>(
     "/auth/login",
     params
   );
-  return response.data;
+  return data;
 }
 
 export async function logout(): Promise<LogoutResponse> {
-  const response = await nextServer.post<LogoutResponse>("/auth/logout");
-  return response.data;
+  const { data } = await nextServer.post<LogoutResponse>("/auth/logout");
+  return data;
 }
 
-type CheckSessionRequest = {
-  success: boolean;
-};
+type CheckSessionResponse = { success: boolean };
 
 export const checkSession = async () => {
-  const response = await nextServer.post<CheckSessionRequest>("/auth/refresh");
-  return response.data.success;
+  const { data } = await nextServer.get<CheckSessionResponse>("/auth/session");
+  return data.success;
 };
 
 export const getMe = async () => {
-  const { data } = await nextServer.get<User>("/users/current");
+  const { data } = await nextServer.get<User>("/auth/session");
   return data;
 };
 

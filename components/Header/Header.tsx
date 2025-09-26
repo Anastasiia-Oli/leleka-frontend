@@ -4,7 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { useState } from "react";
 import css from "./Header.module.css";
-// import Menu from "../Menu/Menu";
+import Menu from "../Menu/Menu";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -24,7 +24,7 @@ const Header = () => {
         </button>
       </div>
       <div>
-        {/* <Menu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)}></Menu> */}
+        <Menu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)}></Menu>
       </div>
     </header>
   );

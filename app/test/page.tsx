@@ -1,15 +1,16 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import ConfirmationModal from '@/components/ConfirmationModal/ConfirmationModal';
-import { useRouter } from 'next/navigation';
+//  DELETE LATER
+import { useState } from "react";
+import ConfirmationModal from "@/components/ConfirmationModal/ConfirmationModal";
+import { useRouter } from "next/navigation";
 
 export default function TestPage() {
   const [isOpen, setIsOpen] = useState(false);
-const router = useRouter();
+  const router = useRouter();
 
   const handleConfirm = () => {
-    router.push('/');
+    router.push("/");
   };
 
   const handleCancel = () => {
@@ -17,7 +18,7 @@ const router = useRouter();
   };
 
   return (
-    <div style={{ padding: '40px' }}>
+    <div style={{ padding: "40px" }}>
       <h1>Тестова сторінка для модалки</h1>
       <button onClick={() => setIsOpen(true)}>Відкрити модалку</button>
 
