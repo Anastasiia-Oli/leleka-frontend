@@ -16,9 +16,9 @@ export async function PATCH(request: Request) {
 
     // Готуємо новий FormData для бекенду
     const backendFormData = new FormData();
-    backendFormData.append("avatar", Buffer.from(await file.arrayBuffer()), file.name);
+    backendFormData.append("photo", Buffer.from(await file.arrayBuffer()), file.name);
 
-    const { data } = await api.patch("/avatar", backendFormData, {
+    const { data } = await api.patch("/api/users/avatar", backendFormData, {
       headers: {
         ...backendFormData.getHeaders(),
         Cookie: cookieStore.toString(),
