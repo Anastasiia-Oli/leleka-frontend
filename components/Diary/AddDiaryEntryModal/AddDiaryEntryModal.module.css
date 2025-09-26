@@ -10,15 +10,14 @@
 
 .modal {
   position: relative;
-
+  width: 100%;
   max-width: 334px;
-  max-height: 90vh;
+  height: 695px;
   border-radius: 40px;
   background-color: #fff;
   padding: 32px 20px;
   overflow-y: auto;
   font-size: 16px;
-  zoom: 1;
 }
 
 .closeBtn {
@@ -50,6 +49,7 @@
 @media (min-width: 768px) {
   .modal {
     padding: 48px 32px;
+    width: 100%;
     max-width: 704px;
     font-size: 18px;
   }
@@ -70,6 +70,7 @@
 @media (min-width: 1440px) {
   .modal {
     padding: 64px;
+    width: 100%;
     max-width: 768px;
     font-size: 20px;
   }
