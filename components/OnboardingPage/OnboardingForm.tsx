@@ -2,12 +2,27 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Select from "../ui/Select";
+import * as Yup from "yup";
 import css from "./OnboardingForm.module.css";
+import { useRouter } from "next/router";
 
 const OPTIONS = ["Хлопчик", "Дівчинка", "Ще не знаю"];
 
+const Schema = Yup.object({
+  gender: Yup.string().required("Оберіть стать дитини"),
+  dueDate: Yup.string().required("Оберіть приблизну дату пологів"),
+  photo: Yup.mixed<File>().notRequired(),
+});
+
+const FormValues = {
+  photo: File,
+  gender: OPTIONS,
+  dueDate: 
+};
+
 const OnboardingForm = () => {
-    const [preview, setPreview] = useState<string>("");
+  const router = useRouter();
+  const [preview, setPreview] = useState<string>("");
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
