@@ -10,7 +10,6 @@ import {
 import { mockEntries, mockNotes } from "../Diary.mock";
 import DiaryList from "../DiaryList/DiaryList";
 import DiaryEntryDetails from "../DiaryEntryDetails/DiaryEntryDetails";
-// import AddDiaryEntryModal from "../AddDiaryEntryModal/AddDiaryEntryModal";
 import { useDiaryEntries, useDeleteDiaryEntry } from "@/hooks/useDiary";
 import css from "./DiaryPage.module.css";
 
