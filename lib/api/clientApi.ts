@@ -84,11 +84,11 @@ export async function logout(): Promise<LogoutResponse> {
 type CheckSessionResponse = { success: boolean };
 
 export const checkSession = async () => {
-  const { data } = await nextServer.get<CheckSessionResponse>("/auth/session");
+  const { data } = await nextServer.post<CheckSessionResponse>("/auth/refresh");
   return data.success;
 };
 
 export const getMe = async () => {
-  const { data } = await nextServer.get<User>("/auth/session");
+  const { data } = await nextServer.get<User>("/users/current");
   return data;
 };

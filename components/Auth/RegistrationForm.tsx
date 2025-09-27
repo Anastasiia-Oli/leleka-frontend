@@ -3,24 +3,28 @@
 import axios from "axios";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { registerUser, login } from "@/lib/api/clientApi"; 
+import { registerUser } from "@/lib/api/clientApi";
 import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
 import styles from "./AuthPage.module.css";
 import Link from "next/link";
+import { useAuthUserStore } from "@/lib/store/authStore";
 
 type FormValues = { name: string; email: string; password: string };
 
 const Schema = Yup.object({
   name: Yup.string().required("Вкажіть ім’я"),
   email: Yup.string().email("Некоректний email").required("Вкажіть email"),
-  password: Yup.string().min(8, "Мінімум 8 символів").required("Вкажіть пароль"),
+  password: Yup.string()
+    .min(8, "Мінімум 8 символів")
+    .required("Вкажіть пароль"),
 });
 
-const AFTER_REGISTER = "/";
+const AFTER_REGISTER = "/profile/edit";
 
 export default function RegistrationForm() {
   const router = useRouter();
+  const setUser = useAuthUserStore((state) => state.setUser);
 
   return (
     <Formik<FormValues>
@@ -34,19 +38,30 @@ export default function RegistrationForm() {
         };
 
         try {
-          await registerUser(payload);
-          await login({ email: payload.email, password: payload.password });
-          toast.success("Реєстрація успішна!");
-          router.push(AFTER_REGISTER);
+          const res = await registerUser(payload);
+          const user = res.data;
+
+          if (user) {
+            setUser(user);
+            toast.success("Реєстрація успішна!");
+            router.push(AFTER_REGISTER);
+          }
+
+          // await login({ email: payload.email, password: payload.password });
         } catch (err: unknown) {
           if (axios.isAxiosError(err)) {
             if (err.response?.status === 409) {
               toast.error("Такий email вже використовується");
             } else {
-              toast.error((err.response?.data as { message?: string })?.message || "Помилка реєстрації");
+              toast.error(
+                (err.response?.data as { message?: string })?.message ||
+                  "Помилка реєстрації"
+              );
             }
           } else {
-            toast.error(err instanceof Error ? err.message : "Помилка реєстрації");
+            toast.error(
+              err instanceof Error ? err.message : "Помилка реєстрації"
+            );
           }
         } finally {
           setSubmitting(false);
@@ -61,7 +76,11 @@ export default function RegistrationForm() {
         return (
           <Form>
             <label className={styles.label}>
-              <span className={`${styles.labelText} ${nameHasError ? styles.labelTextError : ""}`}>Ім’я*</span>
+              <span
+                className={`${styles.labelText} ${nameHasError ? styles.labelTextError : ""}`}
+              >
+                Ім’я*
+              </span>
               <Field
                 type="text"
                 name="name"
@@ -70,11 +89,19 @@ export default function RegistrationForm() {
                 aria-invalid={nameHasError}
                 autoComplete="name"
               />
-              <ErrorMessage name="name" component="div" className={styles.error} />
+              <ErrorMessage
+                name="name"
+                component="div"
+                className={styles.error}
+              />
             </label>
 
             <label className={styles.label}>
-              <span className={`${styles.labelText} ${emailHasError ? styles.labelTextError : ""}`}>Пошта*</span>
+              <span
+                className={`${styles.labelText} ${emailHasError ? styles.labelTextError : ""}`}
+              >
+                Пошта*
+              </span>
               <Field
                 type="email"
                 name="email"
@@ -84,11 +111,19 @@ export default function RegistrationForm() {
                 autoComplete="email"
                 inputMode="email"
               />
-              <ErrorMessage name="email" component="div" className={styles.error} />
+              <ErrorMessage
+                name="email"
+                component="div"
+                className={styles.error}
+              />
             </label>
 
             <label className={styles.label}>
-              <span className={`${styles.labelText} ${passwordHasError ? styles.labelTextError : ""}`}>Пароль*</span>
+              <span
+                className={`${styles.labelText} ${passwordHasError ? styles.labelTextError : ""}`}
+              >
+                Пароль*
+              </span>
               <Field
                 type="password"
                 name="password"
@@ -97,15 +132,26 @@ export default function RegistrationForm() {
                 aria-invalid={passwordHasError}
                 autoComplete="new-password"
               />
-              <ErrorMessage name="password" component="div" className={styles.error} />
+              <ErrorMessage
+                name="password"
+                component="div"
+                className={styles.error}
+              />
             </label>
 
-            <button type="submit" disabled={isSubmitting} className={styles.btnPink}>
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className={styles.btnPink}
+            >
               Зареєструватись
             </button>
 
             <p className={styles.helper}>
-              Вже маєте акаунт? <Link href="/auth/login" className={styles.helperLink}>Увійти</Link>
+              Вже маєте акаунт?{" "}
+              <Link href="/auth/login" className={styles.helperLink}>
+                Увійти
+              </Link>
             </p>
           </Form>
         );

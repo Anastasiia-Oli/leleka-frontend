@@ -1,5 +1,5 @@
 import Image from "next/image";
-import styles from "./page.module.css";           
+import styles from "./page.module.css";
 import LoginForm from "@/components/Auth/LoginForm";
 
 export default function SignInPage() {
@@ -21,7 +21,13 @@ export default function SignInPage() {
         </div>
 
         <div className={styles.regRight}>
-          <Image src="/images/eggs.png" alt="Ілюстрація" fill className={styles.regImg} priority />
+          <Image
+            src="/images/eggs.png"
+            alt="Ілюстрація"
+            fill
+            className={styles.regImg}
+            priority
+          />
         </div>
       </div>
     </div>

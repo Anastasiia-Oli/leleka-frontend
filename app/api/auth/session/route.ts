@@ -1,28 +1,55 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
+import { cookies } from "next/headers";
 import { api } from "../../api";
+import { parse } from "cookie";
 import { isAxiosError } from "axios";
+import { logErrorResponse } from "../../_utils/utils";
 
-async function handle(req: NextRequest) {
+export async function POST() {
   try {
-    const backendRes = await api.post("/api/auth/refresh", null, {
-      headers: { Cookie: req.headers.get("cookie") ?? "" },
-    });
+    const cookieStore = await cookies();
+    const accessToken = cookieStore.get("accessToken")?.value;
+    const refreshToken = cookieStore.get("refreshToken")?.value;
 
-    const res = NextResponse.json({ success: true }, { status: 200 });
-    const setCookies = backendRes.headers["set-cookie"];
-    if (setCookies) {
-      (Array.isArray(setCookies) ? setCookies : [setCookies]).forEach((c) =>
-        res.headers.append("set-cookie", c)
-      );
+    if (accessToken) {
+      return NextResponse.json({ success: true });
     }
-    return res;
-  } catch (err) {
-    if (isAxiosError(err) && err.response) {
+
+    if (refreshToken) {
+      const apiRes = await api.post("api/auth/refresh", {
+        headers: {
+          Cookie: cookieStore.toString(),
+        },
+      });
+
+      const setCookie = apiRes.headers["set-cookie"];
+
+      if (setCookie) {
+        const cookieArray = Array.isArray(setCookie) ? setCookie : [setCookie];
+        for (const cookieStr of cookieArray) {
+          const parsed = parse(cookieStr);
+
+          const options = {
+            expires: parsed.Expires ? new Date(parsed.Expires) : undefined,
+            path: parsed.Path,
+            maxAge: Number(parsed["Max-Age"]),
+          };
+
+          if (parsed.accessToken)
+            cookieStore.set("accessToken", parsed.accessToken, options);
+          if (parsed.refreshToken)
+            cookieStore.set("refreshToken", parsed.refreshToken, options);
+        }
+        return NextResponse.json({ success: true }, { status: 200 });
+      }
+    }
+    return NextResponse.json({ success: false }, { status: 200 });
+  } catch (error) {
+    if (isAxiosError(error)) {
+      logErrorResponse(error.response?.data);
       return NextResponse.json({ success: false }, { status: 200 });
     }
+    logErrorResponse({ message: (error as Error).message });
     return NextResponse.json({ success: false }, { status: 200 });
   }
 }
-
-export const GET = handle;
-export const POST = handle;
