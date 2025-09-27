@@ -3,7 +3,6 @@
   flex-direction: column;
   gap: 24px;
   width: 294px;
-  height: 536px;
 }
 
 .fieldWrapper {
@@ -46,21 +45,51 @@
 
 .selectedEmotions {
   display: flex;
+  flex-direction: row;
   align-items: center;
-  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 10px;
+
   min-height: 48px;
   padding: 8px 40px 8px 12px;
   border-radius: 12px;
   background: #f5f5f5;
+  border: 2px solid transparent;
   cursor: pointer;
+  transition: border 0.2s ease-in-out;
+
+  /* ✨ головне для горизонтального скролу */
+  overflow-x: auto;
+  white-space: nowrap;
+  scrollbar-width: thin; /* для Firefox */
+}
+
+/* 👇 Стиль скролбару для Chrome/Edge */
+.selectedEmotions::-webkit-scrollbar {
+  height: 6px;
+}
+
+.selectedEmotions::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+}
+
+.selectedEmotions::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.35);
 }
 
 .chip {
-  background: rgba(0, 0, 0, 0.08);
-  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0);
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 100px;
   padding: 4px 10px;
+  font-family: "Lato", sans-serif;
+  font-weight: 400;
   font-size: 14px;
-  margin: 2px;
+  line-height: 1.5;
+  color: #000;
+  flex-shrink: 0;
+  cursor: default;
 }
 
 .placeholder {
@@ -86,47 +115,111 @@
   top: calc(100% + 4px);
   left: 0;
   width: 100%;
-  background: #fff;
+  background-color: #fff;
+  border-left: 1px solid rgba(0, 0, 0, 0.15);
+  border-right: 1px solid rgba(0, 0, 0, 0.15);
+  border-top: 1px solid rgba(0, 0, 0, 0.15);
   border-radius: 12px;
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
   z-index: 10;
-  max-height: 200px;
-  overflow-y: auto;
+  overflow: hidden;
 }
 
 .dropdownHeader {
   position: relative;
-  padding: 10px 16px;
-  font-weight: 500;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-bottom: none;
+  border-radius: 12px 12px 0 0;
+  padding: 8px 12px;
+  font-family: "Lato", sans-serif;
   font-size: 14px;
-  color: rgba(0, 0, 0, 0.6);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  background: #fff;
+  background-color: rgba(0, 0, 0, 0.05);
 }
 
-.dropdownHeader .selectIcon {
-  position: absolute;
-  right: 16px;
-  top: 50%;
-  transform: translateY(-50%);
-  fill: #555;
-  cursor: pointer;
+/* 📜 Контейнер для опцій */
+.optionsList {
+  height: 220px;
+  overflow-y: auto;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 0 0 12px 12px;
+  padding: 8px 0px;
+  background-color: #f2f2f2;
+
+  /* Firefox */
+  scrollbar-width: thin;
+  scrollbar-color: #ffcbd3 rgba(0, 0, 0, 0.2);
 }
 
+/* 👇 Стилізація скролу */
+.optionsList::-webkit-scrollbar {
+  border-radius: 4px;
+  width: 10px;
+  height: 56px;
+}
+
+.optionsList::-webkit-scrollbar {
+  width: 10px; /* ← це вирішальне */
+}
+
+.optionsList::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  width: 6px;
+  height: 204px;
+}
+
+.optionsList::-webkit-scrollbar-thumb {
+  background: #ffcbd3;
+  border-radius: 4px;
+  min-height: 56px;
+}
+
+.optionsList::-webkit-scrollbar-thumb:hover {
+  background: #f8aebb;
+}
+
+/* 🗂️ Окремі опції */
 .option {
   display: flex;
   align-items: center;
   gap: 8px;
   padding: 10px 16px;
   cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
 }
 
 .option:hover {
   background: rgba(0, 0, 0, 0.05);
 }
 
-.option input {
-  accent-color: #000;
+.option input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  background-color: rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+  position: relative;
+}
+
+/* ✅ Стиль коли чекбокс вибраний */
+.option input[type="checkbox"]:checked {
+  background-color: #000;
+  border-color: #000;
+}
+
+.option input[type="checkbox"]:checked::after {
+  content: "✔";
+  color: #fff;
+  font-size: 14px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .error {

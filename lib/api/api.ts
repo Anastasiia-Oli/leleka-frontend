@@ -9,7 +9,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://localhost:3000/api", // 👈 твій бекенд
+  baseURL: "http://localhost:3000", // 👈 твій бекенд
   withCredentials: true, // 👈 дозволяє передавати cookies і токен
 });
 
