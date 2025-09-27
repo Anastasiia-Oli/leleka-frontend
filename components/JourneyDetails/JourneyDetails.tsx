@@ -7,6 +7,7 @@ import { useState } from "react";
 import { getJourneyDetailsByWeek } from "@/lib/api/clientApi";
 import { JourneyDetails } from "@/types/journeyType";
 import TasksReminderCard from "../TasksReminderCard/TasksReminderCard";
+import LoaderScreen from "../ClipLoader/ClipLoader";
 
 export default function JourneyDetailsComponent({
   weekNumber,
@@ -25,7 +26,7 @@ export default function JourneyDetailsComponent({
     refetchOnMount: false,
   });
 
-  if (isLoading) return <p>loading...</p>;
+  if (isLoading) return <LoaderScreen />;
   if (error) return <p>Error while getting details.Please try again</p>;
 
   return (
@@ -37,13 +38,14 @@ export default function JourneyDetailsComponent({
       {selectedTab === 0 && data ? (
         <div className={css.journeyDetailsContainer}>
           <div>
-            <Image
-              alt="Baby Size"
-              src={`${data.baby.image}`}
-              width={287}
-              height={379}
-              className={css.babySizeImage}
-            />
+            <div className={css.imgAnalogContainer}>
+              <Image
+                alt="Baby Size"
+                src={`${data.baby.image}`}
+                fill
+                className={css.babySizeImage}
+              />
+            </div>
             <p>{data.baby.analogy}</p>
           </div>
           <div className={css.journeyTextInfo}>

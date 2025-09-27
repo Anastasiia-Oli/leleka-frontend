@@ -13,7 +13,7 @@
   position: absolute;
   top: 4px;
   bottom: 4px;
-  background: #ffc9d6; /* active tab background */
+  background: #ffc9d6;
   border-radius: 999px;
   transition: all 0.3s ease;
 }
@@ -23,9 +23,9 @@
   padding: 10px 16px;
   text-align: center;
   font-family: inherit;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 1.5;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.6;
   color: #000;
   color: #444;
   background: transparent;
@@ -38,4 +38,12 @@
 
 .toggleTab.active {
   color: #000;
+}
+
+@media screen and (min-width: 1440px) {
+  .toggleTab {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.5;
+  }
 }

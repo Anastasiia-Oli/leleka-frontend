@@ -1,11 +1,14 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { api, ApiError } from "../../api";
 
-export async function GET({ params }: { params: { weekNumber: string } }) {
+type Props = { params: Promise<{ weekNumber: string }> };
+
+export async function GET(request: NextRequest, { params }: Props) {
+  const { weekNumber } = await params;
   try {
-    const { data } = await api(`/api/weeks/${params.weekNumber}`, {
+    const { data } = await api(`/api/weeks/${weekNumber}`, {
       headers: {
-        Authorization: "SV1UI1g6oB1kh3YqHNe2kR31ztls3jl7yaSheIZp",
+        Authorization: "Bearer 5iT52km5HvYfq07yTSGyviy6uZg+pSUV4J9YN9CH",
       },
     });
     return NextResponse.json(data);

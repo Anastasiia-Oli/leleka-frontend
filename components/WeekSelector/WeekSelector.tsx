@@ -33,7 +33,7 @@ const WeekSelector = ({ weeks, onButtonClick }: WeekSelectorProps) => {
                 }}
               >
                 <p className={css.weekNumbers}>{week}</p>
-                <p className={css.weekText}>тиждень</p>
+                <p className={css.weekText}>Тиждень</p>
               </Link>
             </li>
           );

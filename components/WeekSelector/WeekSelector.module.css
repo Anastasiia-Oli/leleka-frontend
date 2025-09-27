@@ -1,7 +1,5 @@
 .weekButton {
   display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
   flex-direction: column;
   border: 0px solid rgba(0, 0, 0, 0.15);
   border-radius: 32px;
@@ -14,14 +12,13 @@
   border-radius: 32px;
   background-color: #ffcbd3;
   display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
   flex-direction: column;
+  padding: 12px;
 }
 
 .weekNumbers {
   font-weight: 700;
-  font-size: 32px;
+  font-size: 24px;
   line-height: 1.4;
   letter-spacing: 0.01em;
   text-align: center;
@@ -32,11 +29,21 @@
 
 .weekText {
   font-weight: 400;
-  font-size: 16px;
+  font-size: 14px;
   line-height: 1.5;
   text-align: center;
   color: #000;
   font-family: "Lato", sans-serif;
+}
+
+@media screen and (min-width: 1440px) {
+  .weekText {
+    font-size: 16px;
+  }
+
+  .weekNumbers {
+    font-size: 32px;
+  }
 }
 
 .weeksList {
@@ -75,7 +82,7 @@
   width: 100%;
   overflow-x: auto;
   overflow-y: hidden;
-  margin: 16px 0;
+  margin-top: 24px;
   scrollbar-width: none;
 }
 
