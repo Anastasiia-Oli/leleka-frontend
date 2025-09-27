@@ -1,47 +1,35 @@
 "use client";
 
+//  DELETE LATER
 import { useState } from "react";
-import AddTaskModal, { Task } from "@/components/AddTaskModal/AddTaskModal";
+import ConfirmationModal from "@/components/ConfirmationModal/ConfirmationModal";
+import { useRouter } from "next/navigation";
 
 export default function TestPage() {
-  const [isModalOpen, setModalOpen] = useState(false);
-  const [tasks, setTasks] = useState<Task[]>([]);
+  const [isOpen, setIsOpen] = useState(false);
+  const router = useRouter();
 
-  const handleTaskSaved = (task: Task) => {
-    // Додаємо нове завдання або оновлюємо існуюче
-    setTasks((prev) => {
-      const exists = prev.find((t) => t._id === task._id);
-      if (exists) {
-        return prev.map((t) => (t._id === task._id ? task : t));
-      }
-      return [...prev, task];
-    });
-    console.log("Збережено завдання:", task);
+  const handleConfirm = () => {
+    router.push("/");
+  };
+
+  const handleCancel = () => {
+    setIsOpen(false);
   };
 
   return (
-    <section style={{ padding: "2rem" }}>
-      <h1>Тест модалки</h1>
-      <button onClick={() => setModalOpen(true)}>+ Додати завдання</button>
+    <div style={{ padding: "40px" }}>
+      <h1>Тестова сторінка для модалки</h1>
+      <button onClick={() => setIsOpen(true)}>Відкрити модалку</button>
 
-      <AddTaskModal
-        isOpen={isModalOpen}
-        onClose={() => setModalOpen(false)}
-        onTaskSaved={handleTaskSaved}
+      <ConfirmationModal
+        title="Ви точно хочете вийти?"
+        confirmButtonText="Так"
+        cancelButtonText="Ні"
+        onConfirm={handleConfirm}
+        onCancel={handleCancel}
+        isOpen={isOpen}
       />
-
-      <h2>Список завдань:</h2>
-      <ul>
-        {tasks
-          .sort(
-            (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
-          )
-          .map((task) => (
-            <li key={task._id}>
-              {task.title} — {task.date}
-            </li>
-          ))}
-      </ul>
-    </section>
+    </div>
   );
 }

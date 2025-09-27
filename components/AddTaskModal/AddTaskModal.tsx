@@ -5,8 +5,6 @@ import css from "./AddTaskModal.module.css";
 import AddTaskForm from "../AddTaskForm/AddTaskForm";
 import { toast } from "react-toastify";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
-
 export interface Task {
   _id?: string;
   title: string;
@@ -35,14 +33,13 @@ export default function AddTaskModal({
   }, [onClose]);
 
   if (!isOpen) return null;
+
   const handleSubmit = async (values: Task) => {
     try {
-      const url = values._id
-        ? `${API_URL}/tasks/${values._id}`
-        : `${API_URL}/tasks`;
+      const url = initialData ? `/api/tasks/${initialData._id}` : `/api/tasks`;
 
       const response = await fetch(url, {
-        method: values._id ? "PATCH" : "POST",
+        method: initialData ? "PATCH" : "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(values),
       });
@@ -54,7 +51,7 @@ export default function AddTaskModal({
 
       const savedTask: Task = await response.json();
       onTaskSaved(savedTask);
-      toast.success(values._id ? "Завдання оновлено!" : "Завдання створено!");
+      toast.success(initialData ? "Завдання оновлено!" : "Завдання створено!");
       onClose();
     } catch (error: unknown) {
       if (error instanceof Error) toast.error(error.message);
