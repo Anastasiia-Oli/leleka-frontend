@@ -4,9 +4,9 @@ export interface User {
   _id: string;
   name: string;
   email: string;
-  childSex: ChildSex;
-  dueDate: string;
-  photo: string;
+  childSex?: ChildSex;
+  dueDate?: string;
+  photo?: string;
   createdAt: string;
   updatedAt: string;
 }
