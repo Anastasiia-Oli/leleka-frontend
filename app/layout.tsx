@@ -1,21 +1,23 @@
 import type { Metadata } from "next";
-import {Comfortaa, Lato} from "next/font/google";
+import { Comfortaa, Lato } from "next/font/google";
 import "./globals.css";
 import TanStackProvider from "@/components/TanStackProvider/TanStackProvider";
 import Header from "@/components/Header/Header";
 import Breadcrumbs from "@/components/Breadcrumbs/Breadcrumbs";
 import SideBar from "@/components/SideBar/SideBar";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const lato = Lato({
   subsets: ["latin"],
   weight: ["400", "700"],
-  variable: "--font-family"
+  variable: "--font-family",
 });
 
 const comfortaa = Comfortaa({
   subsets: ["latin"],
   weight: ["700"],
-  variable: "--second-family"
+  variable: "--second-family",
 });
 
 export const metadata: Metadata = {
@@ -44,6 +46,7 @@ export default function RootLayout({
             </div>
           </main>
         </TanStackProvider>
+        <ToastContainer position="top-right" autoClose={3000} />
       </body>
     </html>
   );
