@@ -6,10 +6,11 @@ import { useGetCurrentWeek } from "@/lib/store/getCurrentWeekStore";
 
 const StatusBlock = () => {
   const user = useAuthUserStore((state) => state.user);
-  const getCurrWeek = useGetCurrentWeek((state) => state.getCurrWeek);
-  const dueDate = new Date(user.dueDate ? user.dueDate + "T00:00:00" : "");
-  console.log(dueDate);
-  const isValidDate = dueDate instanceof Date && !isNaN(dueDate.getTime());
+  const { getCurrWeek } = useGetCurrentWeek();
+
+  const dueDateM = new Date(user.dueDate ? user.dueDate + "T00:00:00" : "");
+  const isValidDate = dueDateM instanceof Date && !isNaN(dueDateM.getTime());
+  console.log(isValidDate);
   if (!isValidDate) {
     return (
       <div className={css.wrapper}>
@@ -22,13 +23,15 @@ const StatusBlock = () => {
   }
 
   const today = new Date();
-  const pregancyStart = new Date(dueDate.getTime() - 280 * 24 * 60 * 60 * 1000);
+  const pregancyStart = new Date(
+    dueDateM.getTime() - 280 * 24 * 60 * 60 * 1000
+  );
   const week = Math.floor(
     (today.getTime() - pregancyStart.getTime()) / (7 * 24 * 60 * 60 * 1000)
   );
   getCurrWeek(week);
   const daysLeft = Math.ceil(
-    (dueDate.getTime() - today.getTime()) / (24 * 60 * 60 * 1000)
+    (dueDateM.getTime() - today.getTime()) / (24 * 60 * 60 * 1000)
   );
 
   return (
