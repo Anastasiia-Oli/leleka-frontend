@@ -31,8 +31,12 @@ export const useCreateDiaryEntry = () => {
   
   return useMutation<DiaryEntry, Error, CreateDiaryEntryData>({
     mutationFn: diaryApi.createDiaryEntry,
-    onSuccess: () => {
-      // Оновлюємо кеш після успішного створення
+    onSuccess: (newEntry) => {
+      // Додаємо новий запис до кешу
+      queryClient.setQueryData<DiaryEntry[]>(['diaryEntries'], (oldEntries = []) => {
+        return [newEntry, ...oldEntries];
+      });
+      // Також інвалідуємо запити для повного оновлення
       queryClient.invalidateQueries({ queryKey: ['diaryEntries'] });
     },
     onError: (error) => {
@@ -48,7 +52,17 @@ export const useUpdateDiaryEntry = () => {
   return useMutation<DiaryEntry, Error, { id: string; data: UpdateDiaryEntryData }>({
     mutationFn: ({ id, data }) => diaryApi.updateDiaryEntry(id, data),
     onSuccess: (updatedEntry) => {
-      // Оновлюємо кеш після успішного оновлення
+      // Оновлюємо конкретний запис у списку
+      queryClient.setQueryData<DiaryEntry[]>(['diaryEntries'], (oldEntries = []) => {
+        return oldEntries.map(entry => 
+          entry._id === updatedEntry._id ? updatedEntry : entry
+        );
+      });
+      
+      // Також оновлюємо окремий запис, якщо він є в кеші
+      queryClient.setQueryData(['diaryEntry', updatedEntry._id], updatedEntry);
+      
+      // Інвалідуємо для повного оновлення
       queryClient.invalidateQueries({ queryKey: ['diaryEntries'] });
       queryClient.invalidateQueries({ queryKey: ['diaryEntry', updatedEntry._id] });
     },
@@ -64,8 +78,16 @@ export const useDeleteDiaryEntry = () => {
   
   return useMutation<void, Error, string>({
     mutationFn: diaryApi.deleteDiaryEntry,
-    onSuccess: () => {
-      // Оновлюємо кеш після успішного видалення
+    onSuccess: (_, deletedId) => {
+      // Видаляємо запис з кешу
+      queryClient.setQueryData<DiaryEntry[]>(['diaryEntries'], (oldEntries = []) => {
+        return oldEntries.filter(entry => entry._id !== deletedId);
+      });
+      
+      // Видаляємо окремий запис з кешу
+      queryClient.removeQueries({ queryKey: ['diaryEntry', deletedId] });
+      
+      // Інвалідуємо список для повного оновлення
       queryClient.invalidateQueries({ queryKey: ['diaryEntries'] });
     },
     onError: (error) => {
