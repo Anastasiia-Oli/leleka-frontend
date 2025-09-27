@@ -7,7 +7,7 @@ export interface Emotion {
 
 export const getEmotions = async () => {
   try {
-    const token = "x6c0liZ1NwA02AaLo6pRCCQfvxbMd3mTniPQ8X51"; // сюди тимчасово встав свій токен вручну
+    const token = "moXcGpzqpuznLrL8zSo1f5pN7Ii2g/rERb0Mp1ML"; // сюди тимчасово встав свій токен вручну
     const { data } = await api.get("/emotions", {
       headers: {
         Authorization: `Bearer ${token}`,

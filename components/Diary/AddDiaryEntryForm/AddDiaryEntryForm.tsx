@@ -1,6 +1,7 @@
 "use client";
 
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form, Field } from "formik";
+import * as Yup from "yup";
 import { useState } from "react";
 import { useDiaryForm } from "@/hooks/useDiaryForm";
 import css from "./AddDiaryEntryForm.module.css";
@@ -25,6 +26,13 @@ const initialValues: DiaryEntryValues = {
   emotions: [],
 };
 
+// ✅ Схема валідації
+const validationSchema = Yup.object({
+  title: Yup.string().required("Заголовок є обов’язковим"),
+  description: Yup.string().required("Запис не може бути порожнім"),
+  emotions: Yup.array().min(1, "Оберіть хоча б одну категорію"),
+});
+
 export default function AddDiaryEntryForm({
   mode,
   entryId,
@@ -32,7 +40,6 @@ export default function AddDiaryEntryForm({
 }: AddDiaryEntryFormProps) {
   const { emotions, loading, error, topCount } = useDiaryForm();
   const [dropdownOpen, setDropdownOpen] = useState(false);
-
   const topEmotions = emotions.slice(0, topCount);
 
   const handleSubmit = (values: DiaryEntryValues) => {
@@ -41,18 +48,27 @@ export default function AddDiaryEntryForm({
   };
 
   return (
-    <Formik initialValues={initialValues} onSubmit={handleSubmit}>
-      {({ values, setFieldValue }) => (
+    <Formik
+      initialValues={initialValues}
+      validationSchema={validationSchema}
+      onSubmit={handleSubmit}
+    >
+      {({ values, setFieldValue, errors, touched, submitCount }) => (
         <Form className={css.form}>
           {/* 📝 Заголовок */}
           <div className={css.fieldWrapper}>
             <label className={css.label}>Заголовок</label>
             <Field
               name="title"
-              className={css.input}
+              className={`${css.input} 
+    ${errors.title && (touched.title || submitCount > 0) ? css.inputError : ""} 
+    ${errors.title && (touched.title || submitCount > 0) ? css.placeholderError : ""}
+  `}
               placeholder="Введіть заголовок запису"
             />
-            <ErrorMessage name="title" component="div" className={css.error} />
+            {errors.title && touched.title && (
+              <div className={css.error}>{errors.title}</div>
+            )}
           </div>
 
           {/* 📂 Категорії */}
@@ -130,11 +146,9 @@ export default function AddDiaryEntryForm({
               )}
             </div>
 
-            <ErrorMessage
-              name="emotions"
-              component="div"
-              className={css.error}
-            />
+            {(touched.emotions || submitCount > 0) && errors.emotions && (
+              <div className={css.error}>{errors.emotions as string}</div>
+            )}
           </div>
 
           {/* ✏️ Запис */}
@@ -143,14 +157,15 @@ export default function AddDiaryEntryForm({
             <Field
               as="textarea"
               name="description"
-              className={css.textarea}
               placeholder="Запишіть, як ви себе відчуваєте"
+              className={`${css.textarea} 
+    ${(touched.description || submitCount > 0) && errors.description ? css.inputError : ""} 
+    ${(touched.description || submitCount > 0) && errors.description ? css.placeholderError : ""}
+  `}
             />
-            <ErrorMessage
-              name="description"
-              component="div"
-              className={css.error}
-            />
+            {(touched.description || submitCount > 0) && errors.description && (
+              <div className={css.error}>{errors.description}</div>
+            )}
           </div>
 
           <button type="submit" className={css.submitBtn}>
