@@ -28,7 +28,7 @@ const DiaryEntryPage = ({ params }: PageProps) => {
     if (entry && window.confirm('Ви впевнені, що хочете видалити цей запис?')) {
       try {
         // Тут буде API виклик для видалення
-        console.log('Видалення запису:', entry.id);
+        console.log('Видалення запису:', entry._id);
         // Після успішного видалення повертаємось до списку
         router.push('/diary');
       } catch (error) {
