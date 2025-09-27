@@ -9,7 +9,7 @@ export function ClientJourney({ currentWeek }: { currentWeek: number }) {
 
   const pregnacyWeeks = useMemo(() => {
     const weekNumbers: number[] = [];
-    for (let i = 1; i <= 36; i++) {
+    for (let i = 1; i <= 42; i++) {
       weekNumbers.push(i);
     }
     return weekNumbers;

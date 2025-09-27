@@ -46,7 +46,7 @@ export default function JourneyDetailsComponent({
                 className={css.babySizeImage}
               />
             </div>
-            <p>{data.baby.analogy}</p>
+            <p>Ваш малюк розміром як {data.baby.analogy}</p>
           </div>
           <div className={css.journeyTextInfo}>
             <div className={css.descriptionContainer}>
