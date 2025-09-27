@@ -4,7 +4,7 @@ import React from "react";
 import { useRouter } from "next/navigation";
 import DiaryEntryDetails from "@/components/Diary/DiaryEntryDetails/DiaryEntryDetails";
 import GreetingBlock from "@/components/GreetingBlock/GreetingBlock";
-import { mockEntries } from "@/components/Diary/Diary.mock";
+// import { mockEntries } from "@/components/Diary/Diary.mock";
 
 interface PageProps {
   params: {
@@ -14,7 +14,7 @@ interface PageProps {
 
 const DiaryEntryPage = ({ params }: PageProps) => {
   const router = useRouter();
-  const entry = mockEntries.find(e => e.id === params.entryId);
+  // const entry = mockEntries.find(e => e.id === params.entryId);
 
   const handleBack = () => {
     router.push('/diary');
@@ -39,23 +39,23 @@ const DiaryEntryPage = ({ params }: PageProps) => {
   };
 
   return (
-    <div style={{ 
-      minHeight: "100vh", 
-      background: "var(--pastel-pink-lighter)", 
+    <div style={{
+      minHeight: "100vh",
+      background: "var(--pastel-pink-lighter)",
       padding: "0"
     }}>
-      <div style={{ 
+      <div style={{
         padding: "16px",
         paddingBottom: "0"
       }}>
-        <GreetingBlock />
+        {/* <GreetingBlock /> */}
       </div>
-      
-      <div style={{ 
+
+      <div style={{
         padding: "0 16px 16px 16px",
         height: "calc(100vh - 120px)"
       }}>
-        <DiaryEntryDetails 
+        <DiaryEntryDetails
           entry={entry || null}
           onEdit={handleEdit}
           onDelete={handleDelete}

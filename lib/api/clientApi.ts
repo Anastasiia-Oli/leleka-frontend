@@ -1,6 +1,10 @@
-// lib/api/clientApis.ts
+
 import { User } from "@/types/user";
 import nextServer from "./api";
+import { DiaryEntry } from "@/types/dairy";
+import { title } from "process";
+import { Emotion } from "@/types/dairy";
+import { CreateDiaryEntryData } from "@/types/dairy";
 
 export interface RegisterRequest {
   name: string;
@@ -119,3 +123,21 @@ export const getMe = async () => {
   const { data } = await nextServer.get<User>("/users/current");
   return data;
 };
+
+export async function fetchDiary(): Promise<DiaryEntry[]> {
+  const res = await nextServer.get<DiaryEntry[]>("/diaries");
+  return res.data;
+}
+
+export async function fetchEmotions(): Promise<Emotion[]> {
+  const res = await nextServer.get<Emotion[]>("/emotions");
+  return res.data;
+}
+
+export async function CreateNote(
+  params: CreateDiaryEntryData
+): Promise<DiaryEntry> {
+  const res = await nextServer.post<DiaryEntry>("/diaries", params);
+  return res.data;
+}
+//поміняти на post<CreateDiaryEntryData>

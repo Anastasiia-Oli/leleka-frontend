@@ -1,27 +1,27 @@
 import React from "react";
 // import { Edit, X } from "lucide-react";
-import { LegacyDiaryEntry } from "../Diary.types";
-import { EMOTIONS } from "../Diary.constants";
+import { DiaryEntry } from "@/types/dairy";
+import { EMOTIONS } from "../../../types/dairy";
 import css from "./DiaryEntryDetails.module.css";
 
 interface DiaryEntryDetailsProps {
-  entry: LegacyDiaryEntry | null;
+  entry: DiaryEntry | null;
   onEdit?: () => void;
   onDelete?: () => void;
   onBack?: () => void;
 }
 
-const DiaryEntryDetails: React.FC<DiaryEntryDetailsProps> = ({ 
-  entry, 
-  onEdit, 
+const DiaryEntryDetails: React.FC<DiaryEntryDetailsProps> = ({
+  entry,
+  onEdit,
   onDelete,
-  onBack 
+  onBack
 }) => {
-  const getEmotionStyle = (emotionName: string) => {
-    const emotion = EMOTIONS.find(e => e.name === emotionName);
-    return emotion ? { bgColor: emotion.bgColor, textColor: emotion.textColor } : 
-           { bgColor: "var(--gray-lightest)", textColor: "var(--gray-dark)" };
-  };
+  // const getEmotionStyle = (emotionName: string) => {
+  //   const emotion = EMOTIONS.find(e => e.name === emotionName);
+  //   return emotion ? { bgColor: emotion.bgColor, textColor: emotion.textColor } : 
+  //          { bgColor: "var(--gray-lightest)", textColor: "var(--gray-dark)" };
+  // };
 
   if (!entry) {
     return (
@@ -41,51 +41,51 @@ const DiaryEntryDetails: React.FC<DiaryEntryDetailsProps> = ({
   return (
     <div className={css.diaryContainer}>
       {onBack && (
-        <button 
+        <button
           className={css.backButton}
           onClick={onBack}
         >
           ← Назад до списку
         </button>
       )}
-      
+
       <div className={css.diaryHeader}>
         <div className={css.headerTop}>
           <div className={css.headerActions}>
             <div className={css.headerRow}>
               <h2 className={`${css.diaryTitle} header-third`}>{entry.title}</h2>
-                {onEdit && (
-                  <button 
-                    className={css.actionButton}
-                    onClick={onEdit}
-                    title="Редагувати"
-                  >
-                    <svg className={css.editIcon} viewBox="0 0 32 32" width="24" height="24">
-                      <use href="/leleka-sprite.svg#icon-edit_square" />
-                    </svg>
-                  </button>
-                  )}
+              {onEdit && (
+                <button
+                  className={css.actionButton}
+                  onClick={onEdit}
+                  title="Редагувати"
+                >
+                  <svg className={css.editIcon} viewBox="0 0 32 32" width="24" height="24">
+                    <use href="/leleka-sprite.svg#icon-edit_square" />
+                  </svg>
+                </button>
+              )}
             </div>
-          
-          <div className={css.headerInfo}>
+
+            <div className={css.headerInfo}>
               <div className={`${css.date} text-primary`}>{entry.date}</div>
-                          {onDelete && (
-              <button 
-                className={css.closeButton}
-                onClick={onDelete}
-                title="Видалити"
-              >
-                <svg className={css.deleteIcon} viewBox="0 0 32 32" width="24" height="24">
-                  <use href="/leleka-sprite.svg#icon-delete_forever" />
-                </svg>
-              </button>
-            )}
-          </div>
+              {onDelete && (
+                <button
+                  className={css.closeButton}
+                  onClick={onDelete}
+                  title="Видалити"
+                >
+                  <svg className={css.deleteIcon} viewBox="0 0 32 32" width="24" height="24">
+                    <use href="/leleka-sprite.svg#icon-delete_forever" />
+                  </svg>
+                </button>
+              )}
+            </div>
 
           </div>
         </div>
       </div>
-        
+
       <div className={css.diaryContent}>
         <p className="text-primary">{entry.content}</p>
         <div className={css.emotions}>

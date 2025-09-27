@@ -1,26 +1,31 @@
 'use client';
 
 import React from "react";
-import { LegacyDiaryEntry } from "../Diary.types";
-import { EMOTIONS } from "../Diary.constants";
+import { DiaryEntry } from "@/types/dairy";
+// import { EMOTIONS } from "../Diary.constants";
 import css from "./DiaryEntryCard.module.css";
 
 interface DiaryEntryCardProps {
-  entry: LegacyDiaryEntry;
+  entry: DiaryEntry;
   onClick?: () => void;
   isSelected?: boolean;
 }
 
 const DiaryEntryCard: React.FC<DiaryEntryCardProps> = ({ entry, onClick, isSelected }) => {
-  const getEmotionStyle = (emotionName: string) => {
-    const emotion = EMOTIONS.find(e => e.name === emotionName);
-    return emotion ? { bgColor: emotion.bgColor, textColor: emotion.textColor } : 
-           { bgColor: "var(--gray-lightest)", textColor: "var(--gray-dark)" };
-  };
-
+  //   const getEmotionStyle = (emotionName: string) => {
+  //     const emotion = EMOTIONS.find(e => e.name === emotionName);
+  //     return emotion ? { bgColor: emotion.bgColor, textColor: emotion.textColor } :
+  //       { bgColor: "var(--gray-lightest)", textColor: "var(--gray-dark)" };
+  // };
+  // if (entry) {
   // Показуємо максимум 3 емоції, решту ховаємо під "+N"
-  const visibleEmotions = entry.emotions.slice(0, 3);
-  const hiddenEmotionsCount = entry.emotions.length - 3;
+  const visibleEmotions = entry.emotions?.slice(0, 3) || [];
+  const hiddenEmotionsCount = Math.max((entry.emotions?.length ?? 0) - 3, 0);
+
+  //   return (visibleEmotions)
+  // }
+
+
 
   // Функція форматування дати
   const formatDate = (dateString: string) => {
@@ -32,7 +37,7 @@ const DiaryEntryCard: React.FC<DiaryEntryCardProps> = ({ entry, onClick, isSelec
     try {
       // Спробуємо створити дату з рядка
       const date = new Date(dateString);
-      
+
       // Перевіряємо, чи дата валідна
       if (isNaN(date.getTime())) {
         // Якщо дата невалідна, повертаємо оригінальний рядок
@@ -62,11 +67,11 @@ const DiaryEntryCard: React.FC<DiaryEntryCardProps> = ({ entry, onClick, isSelec
           {formatDate(entry.date)}
         </span>
       </div>
-      
+
       <div className={css.emotions}>
-        {visibleEmotions.map((emotion, index) => (
-          <span key={index} className={css.emotionTag}>
-            {emotion}
+        {visibleEmotions.map((emotion) => (
+          <span key={emotion._id} className={css.emotionTag}>
+            {emotion.title}
           </span>
         ))}
         {hiddenEmotionsCount > 0 && (
@@ -78,5 +83,7 @@ const DiaryEntryCard: React.FC<DiaryEntryCardProps> = ({ entry, onClick, isSelec
     </div>
   );
 };
+
+
 
 export default DiaryEntryCard;
