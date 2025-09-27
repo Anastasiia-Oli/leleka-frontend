@@ -10,20 +10,6 @@ interface DiaryListProps {
   onAddEntry?: () => void;
 }
 
-// const formatDate = (dateString: string) => {
-//     try {
-//       const date = new Date(dateString);
-//       return date.toLocaleDateString('uk-UA', {
-//         day: 'numeric',
-//         month: 'long',
-//         year: 'numeric'
-//       });
-//     } catch (error) {
-//       return dateString;
-//     }
-//   };
-
-
 const DiaryList: React.FC<DiaryListProps> = ({ 
   entries, 
   onEntryClick, 

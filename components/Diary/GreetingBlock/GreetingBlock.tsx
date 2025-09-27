@@ -1,36 +1,18 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import { useCurrentUser, useGreeting } from '@/hooks/useUsers';
 
 const GreetingBlock: React.FC = () => {
-  const [userName, setUserName] = useState<string | null>(null);
+  const { data: user, isLoading, error } = useCurrentUser();
+  const greeting = useGreeting();
 
-  useEffect(() => {
-    // Симуляція API запиту для отримання імені користувача
-    const fetchUserName = async () => {
-      try {
-        // Тут буде реальний API запит
-        // const response = await fetch('/api/user');
-        // const data = await response.json();
-        // setUserName(data.name);
-        
-
-        setTimeout(() => {
-          setUserName('Ганна');
-        }, 100);
-      } catch (error) {
-        console.error('Помилка при отриманні імені:', error);
-        setUserName('користувач');
-      }
-    };
-
-    fetchUserName();
-  }, []);
+  const userName = error ? 'користувач' : (user?.name || 'користувач');
 
   return (
     <div style={{ marginBottom: "32px" }}>
       <h1 className="header-first" style={{ margin: 0 }}>
-        Доброго ранку, {userName ?? 'користувачу'}!
+        {greeting}{isLoading ? '' : `, ${userName}`}!
       </h1>
     </div>
   );
