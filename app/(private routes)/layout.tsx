@@ -9,7 +9,7 @@ const PrivateRoutesLayout = ({ children }: Props) => {
   return (
     <section className={css.container}>
       <aside className={css.sidebar}>
-        <SideBar/>
+        <SideBar />
       </aside>
       <div className={css.privateRoutesWrapper}>{children}</div>
     </section>

@@ -6,12 +6,14 @@ type ToggleTabsProps = {
   options: string[];
   defaultIndex?: number;
   onChange?: (value: string) => void;
+  getSelectedTab: (value: number) => void;
 };
 
 export default function ToggleTabs({
   options,
   defaultIndex = 0,
   onChange,
+  getSelectedTab,
 }: ToggleTabsProps) {
   const [activeIndex, setActiveIndex] = useState(defaultIndex);
 
@@ -35,7 +37,10 @@ export default function ToggleTabs({
           className={`${css.toggleTab} ${
             activeIndex === index ? `${css.active}` : ""
           }`}
-          onClick={() => handleClick(index)}
+          onClick={() => {
+            handleClick(index);
+            getSelectedTab(index);
+          }}
         >
           {option}
         </button>

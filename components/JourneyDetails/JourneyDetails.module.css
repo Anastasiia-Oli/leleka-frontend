@@ -1,0 +1,281 @@
+.journeyDetailsSection {
+  font-family: var(--font-family);
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-inline: 16px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.journeyDetailsSection p {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #000;
+}
+
+/* #region Baby Developing */
+.journeyDetailsContainer {
+  padding: 24px;
+  background: #fff4f6;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  border-radius: 24px;
+  height: auto;
+}
+
+/*Image*/
+
+.imgAnalogContainer {
+  position: relative;
+  width: 100%;
+  min-height: 379px;
+  aspect-ratio: 3 / 2;
+  margin-bottom: 16px;
+}
+
+.babySizeImage {
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 24px;
+  object-fit: cover;
+}
+
+/* Текстовий блок */
+.journeyTextInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  /* height: 280px; */
+  width: auto;
+}
+
+/* Цікавий факт */
+.interestingFacts {
+  border-radius: 12px;
+  padding: 12px;
+  background-color: #ffdae0;
+}
+
+.titleLogoFacts {
+  display: flex;
+  gap: 8px;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #000;
+}
+
+/* Опис */
+.journeyDescription {
+  display: inline-flex;
+  overflow-y: auto;
+  scrollbar-width: none;
+  max-height: none;
+}
+/* #endregion */
+
+/* #region For Moms */
+.journeyDetails {
+}
+/* Mobile
+font-weight: 700;
+font-size: 18px;
+line-height: 1.4;
+letter-spacing: 0.01em;
+color: #000;
+ Tablet
+ width: 656px;
+height: 379px;
+  Desktop
+  width: 461px;
+height: 379px; */
+.journeyDetails {
+  display: grid;
+  grid-template-columns: 2fr;
+  gap: 24px;
+  margin-top: 24px;
+}
+
+.howYouCanFeel,
+.advices,
+.taskBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  border-radius: 24px;
+  background-color: #fff4f6;
+}
+
+.howYouCanFeel ul {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  list-style: none;
+}
+
+.infoForMomBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.howYouCanFeel,
+.advices {
+  background-color: #fff4f6;
+  border-radius: 16px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.howYouCanFeel {
+  height: 194px;
+}
+.advicesTitle {
+  font-family: "Comfortaa", sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 1.4;
+  letter-spacing: 0.01em;
+  color: #000;
+}
+
+.howYouCanFeel ul {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.howYouCanFeel li {
+  background-color: #e5d8dc;
+  color: #000;
+  padding: 6px 12px;
+  border-radius: 12px;
+  font-weight: 500;
+}
+
+.howYouCanFeel p {
+  color: #333;
+  overflow-y: scroll;
+}
+
+.advicesList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.iconTitleAdvice {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.iconTitleAdvice h5 {
+  margin: 0;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.advicesList p {
+  color: #333;
+  margin-left: 32px;
+}
+/* #endregion */
+
+/* Tablet styles */
+@media screen and (min-width: 768px) {
+  .journeyDetailsContainer {
+    padding: 16px;
+  }
+
+  .imgAnalogContainer {
+    max-height: 379px;
+  }
+
+  .journeyDetailsContainer {
+    padding: 24px;
+    gap: 32px;
+  }
+
+  .howYouCanFeel,
+  .advices,
+  .taskBlock {
+    padding: 24px;
+    border-radius: 32px;
+  }
+}
+
+/* Desktop Styles */
+@media screen and (min-width: 1440px) {
+  .imgAnalogContainer {
+    max-width: 461px;
+  }
+
+  .journeyDetailsSection {
+    width: calc(100% - 300px);
+  }
+
+  .journeyDetailsSection p {
+    font-size: 16px;
+  }
+
+  .journeyDetailsContainer {
+    gap: 16px;
+  }
+
+  .journeyDetailsContainer {
+    flex-direction: row;
+    align-items: flex-start;
+    height: 467px;
+    gap: 32px;
+  }
+
+  .journeyDescription {
+    max-height: 280px;
+  }
+
+  .journeyDetails {
+    flex-direction: row;
+    align-items: flex-start;
+    grid-template-columns: 2fr 1fr;
+  }
+
+  .titleLogoFacts {
+    font-size: 16px;
+  }
+
+  .descriptionContainer {
+    min-height: 280px;
+    overflow-y: scroll;
+    scrollbar-width: none;
+  }
+
+  .advicesTitle {
+    font-size: 20px;
+    font-weight: 600;
+  }
+
+  .infoForMomBlock {
+    flex: 1;
+    max-width: 602px;
+  }
+
+  .iconTitleAdvice h5 {
+    font-size: 16px;
+    font-weight: 600;
+  }
+}
