@@ -10,7 +10,6 @@ const StatusBlock = () => {
 
   const dueDateM = new Date(user.dueDate ? user.dueDate + "T00:00:00" : "");
   const isValidDate = dueDateM instanceof Date && !isNaN(dueDateM.getTime());
-  console.log(isValidDate);
   if (!isValidDate) {
     return (
       <div className={css.wrapper}>
