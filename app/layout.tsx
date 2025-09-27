@@ -5,6 +5,9 @@ import TanStackProvider from "@/components/TanStackProvider/TanStackProvider";
 import Header from "@/components/Header/Header";
 import Breadcrumbs from "@/components/Breadcrumbs/Breadcrumbs";
 import SideBar from "@/components/SideBar/SideBar";
+import AuthProvider from "@/components/AuthProvider/AuthProvider";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const lato = Lato({
   subsets: ["latin"],

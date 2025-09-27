@@ -5,7 +5,7 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL;
 export async function POST(req: Request) {
   const body = await req.json();
 
-  const res = await fetch(`${API_URL}/api/tasks`, {
+  const res = await fetch(`${API_URL}/tasks`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(body),
@@ -16,7 +16,7 @@ export async function POST(req: Request) {
 }
 
 export async function GET() {
-  const res = await fetch(`${API_URL}/api/tasks`);
+  const res = await fetch(`${API_URL}/tasks`);
   const data = await res.json();
   return NextResponse.json(data, { status: res.status });
 }
