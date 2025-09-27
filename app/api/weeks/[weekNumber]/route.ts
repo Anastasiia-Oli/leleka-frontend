@@ -1,15 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
 import { api, ApiError } from "../../api";
+import { cookies } from "next/headers";
 
 type Props = { params: Promise<{ weekNumber: string }> };
 
 export async function GET(request: NextRequest, { params }: Props) {
   const { weekNumber } = await params;
   try {
+    const cookieStore = await cookies();
     const { data } = await api(`/api/weeks/${weekNumber}`, {
-      headers: {
-        Authorization: "Bearer 5iT52km5HvYfq07yTSGyviy6uZg+pSUV4J9YN9CH",
-      },
+      headers: { Cookie: cookieStore.toString() },
     });
     return NextResponse.json(data);
   } catch (error) {
