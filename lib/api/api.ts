@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseURL = process.env.NEXT_PUBLIC_SERVER || "https://leleka-backend-1.onrender.com/api";
+const baseURL = `${process.env.NEXT_PUBLIC_API_URL}/api`;
 
 const nextServer = axios.create({ 
   baseURL, 
