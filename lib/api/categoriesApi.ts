@@ -1,4 +1,4 @@
-import nextServer from "./api";
+import api from "./api";
 
 export interface Emotion {
   _id: string;
@@ -7,15 +7,12 @@ export interface Emotion {
 
 export const getEmotions = async () => {
   try {
-    const token = "Jc2RoHeWf8djjjhKikPgPU/j0rfsPk2iiMVOjpE4"; // сюди тимчасово встав свій токен вручну
-    const { data } = await nextServer.get(
-      "http://localhost:3000/api/emotions",
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const token = "5hhVNK2Aq8rd/6/Ub1RkR+T+H8VfONdVi+38QVyb"; // сюди тимчасово встав свій токен вручну
+    const { data } = await api.get("/emotions", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     return data;
   } catch (error) {
     console.error("Помилка при завантаженні емоцій:", error);
