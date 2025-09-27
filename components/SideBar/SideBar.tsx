@@ -2,8 +2,10 @@
 import Link from "next/link";
 import css from "./SideBar.module.css";
 import AuthNavigation from "../AuthNavigation/AuthNavigation";
+import { useGetCurrentWeek } from "@/lib/store/currentWeekState";
 
 const SideBar = () => {
+  const { initialWeek } = useGetCurrentWeek();
   return (
     <>
       <section className={css.container}>
@@ -19,7 +21,7 @@ const SideBar = () => {
               <svg width={24} height={24} className={css.factsIcon}>
                 <use href="/leleka-sprite.svg#icon-conversion_path"></use>
               </svg>
-              <Link href={"/journey/1"}>Подорож</Link>
+              <Link href={`/journey/${initialWeek}`}>Подорож</Link>
             </li>
             <li>
               <svg width={24} height={24} className={css.factsIcon}>
