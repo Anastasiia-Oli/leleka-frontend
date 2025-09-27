@@ -2,7 +2,7 @@
 import Link from "next/link";
 import css from "./SideBar.module.css";
 import AuthNavigation from "../AuthNavigation/AuthNavigation";
-import { useGetCurrentWeek } from "@/lib/store/currentWeekState";
+import { useGetCurrentWeek } from "@/lib/store/getCurrentWeekStore";
 
 const SideBar = () => {
   const { initialWeek } = useGetCurrentWeek();

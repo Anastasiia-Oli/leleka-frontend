@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import css from "./WeekSelector.module.css";
-import { useGetCurrentWeek } from "@/lib/store/currentWeekState";
+import { useGetCurrentWeek } from "@/lib/store/getCurrentWeekStore";
 
 type WeekSelectorProps = {
   weeks: number[];
