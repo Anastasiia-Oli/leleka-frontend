@@ -10,7 +10,7 @@ import {
 import { mockEntries, mockNotes } from "../Diary.mock";
 import DiaryList from "../DiaryList/DiaryList";
 import DiaryEntryDetails from "../DiaryEntryDetails/DiaryEntryDetails";
-// import NotesList from "../NotesList/NotesList";
+// import AddDiaryEntryModal from "../AddDiaryEntryModal/AddDiaryEntryModal";
 import { useDiaryEntries, useDeleteDiaryEntry } from "@/hooks/useDiary";
 import css from "./DiaryPage.module.css";
 
@@ -42,6 +42,8 @@ const DiaryPage: React.FC = () => {
   const [selectedEntry, setSelectedEntry] = useState<LegacyDiaryEntry | null>(null);
   const [selectedNote, setSelectedNote] = useState<Note | null>(null);
   const [isMobile, setIsMobile] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editingEntry, setEditingEntry] = useState<LegacyDiaryEntry | null>(null);
 
   // Перевіряємо розмір екрану
   React.useEffect(() => {
@@ -78,7 +80,8 @@ const DiaryPage: React.FC = () => {
   };
 
   const handleAddEntry = () => {
-    console.log('Open AddDiaryEntryModal');
+    setEditingEntry(null);
+    setIsModalOpen(true);
   };
 
   const handleAddNote = () => {
@@ -86,7 +89,10 @@ const DiaryPage: React.FC = () => {
   };
 
   const handleEditEntry = () => {
-    console.log('Open AddDiaryEntryModal for editing', selectedEntry);
+    if (selectedEntry) {
+      setEditingEntry(selectedEntry);
+      setIsModalOpen(true);
+    }
   };
 
   const handleDeleteEntry = async () => {
@@ -114,6 +120,11 @@ const DiaryPage: React.FC = () => {
         alert('Помилка при видаленні запису');
       }
     }
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setEditingEntry(null);
   };
 
   if (isLoading) {
@@ -180,6 +191,13 @@ const DiaryPage: React.FC = () => {
           />
         </div>
       </div>
+
+      {/* Модальне вікно для додавання/редагування
+      <AddDiaryEntryModal 
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        editEntry={editingEntry}
+      /> */}
     </div>
   );
 };

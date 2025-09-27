@@ -1,10 +1,10 @@
 import axios from "axios";
 
-const baseURL = process.env.NEXT_PUBLIC_SERVER || "https://leleka-backend-1.onrender.com";
+const baseURL = process.env.NEXT_PUBLIC_SERVER || "https://leleka-backend-1.onrender.com/api";
 
 const nextServer = axios.create({ 
   baseURL, 
-  withCredentials: false, // Змінено з true на false
+  withCredentials: true,
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json',
@@ -21,6 +21,12 @@ nextServer.interceptors.request.use(
         config.headers.Authorization = `Bearer ${token}`;
       }
     }
+    
+    // Для серверних запитів додаємо cookies з headers
+    if (typeof window === 'undefined' && config.headers.Cookie) {
+      // Cookies вже налаштовані в serverApi.ts
+    }
+    
     return config;
   },
   (error) => {
@@ -33,12 +39,32 @@ nextServer.interceptors.response.use(
   (response) => {
     return response;
   },
-  (error) => {
-    if (error.response?.status === 401) {
+  async (error) => {
+    const originalRequest = error.config;
+    
+    if (error.response?.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+      
       if (typeof window !== 'undefined') {
-        localStorage.removeItem('accessToken');
+        // Спробуємо оновити токен
+        try {
+          const refreshResponse = await nextServer.post('/auth/refresh');
+          const newToken = refreshResponse.data?.data?.accessToken;
+          
+          if (newToken) {
+            localStorage.setItem('accessToken', newToken);
+            nextServer.defaults.headers.common['Authorization'] = `Bearer ${newToken}`;
+            originalRequest.headers['Authorization'] = `Bearer ${newToken}`;
+            return nextServer(originalRequest);
+          }
+        } catch (refreshError) {
+          // Якщо оновлення токену не вдалося
+          localStorage.removeItem('accessToken');
+          window.location.href = '/sign-in';
+        }
       }
     }
+    
     return Promise.reject(error);
   }
 );
