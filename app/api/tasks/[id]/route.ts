@@ -1,13 +1,20 @@
-import { NextResponse } from "next/server";
-import { api } from "../api";
+import { NextRequest, NextResponse } from "next/server";
+import { api } from "../../api";
 import { cookies } from "next/headers";
 import { isAxiosError } from "axios";
-import { logErrorResponse } from "../_utils/utils";
+import { logErrorResponse } from "../../_utils/utils";
 
-export async function GET() {
+type Props = {
+  params: Promise<{ id: string }>;
+};
+
+export async function PATCH({ params }: Props, request: NextRequest) {
   try {
     const cookieStore = await cookies();
-    const res = await api("/tasks", {
+    const { id } = await params;
+    const body = await request.json();
+
+    const res = await api.patch(`/tasks/${id}`, body, {
       headers: { Cookie: cookieStore.toString() },
     });
     return NextResponse.json(res.data, { status: res.status });
