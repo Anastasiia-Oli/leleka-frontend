@@ -8,7 +8,6 @@ const publicRoutes = ["/auth/login", "/auth/register"];
 
 export async function middleware(request: NextRequest) {
   const cookieStore = await cookies();
-  console.log(cookieStore);
   const accessToken = cookieStore.get("accessToken")?.value;
   const refreshToken = cookieStore.get("refreshToken")?.value;
 
