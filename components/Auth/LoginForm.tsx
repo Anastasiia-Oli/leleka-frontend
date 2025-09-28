@@ -37,6 +37,12 @@ export default function LoginForm() {
         try {
           const res = await login(payload);
           const user = res.data;
+          // const userData = res.data.data;
+
+          // if(userData?.user && userData?.accessToken) {
+          //   localStorage.setItem("accessToken", userData.accessToken);
+          //   setUser(userData.user);
+          // }
 
           if (user) {
             setUser(user);

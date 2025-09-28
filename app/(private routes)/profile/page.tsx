@@ -4,9 +4,11 @@ import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import styles from "./userProfile.module.css";
 import Breadcrumbs from "../../../components/Breadcrumbs/Breadcrumbs";
+import Cookies from 'js-cookie';
 
 // --- УВАГА: Замініть цей URL на реальний URL вашого бекенду ---
-const API_URL = "https://leleka-backend-1.onrender.com/api";
+// const API_URL = "https://leleka-backend-1.onrender.com/api";
+const API_URL = `/api`;
 
 // Створюємо інтерфейс для даних, які оновлюються
 interface UpdatedProfileData {
@@ -39,7 +41,8 @@ export default function UserProfilePage() {
 
   useEffect(() => {
     const fetchUserData = async () => {
-      const token = localStorage.getItem("authToken");
+      const token = Cookies.get("accessToken");
+
       if (!token) {
         setIsLoggedIn(false);
         setLoading(false);
@@ -52,6 +55,7 @@ export default function UserProfilePage() {
       try {
         const response = await fetch(`${API_URL}/users/current`, {
           method: "GET",
+          // credentials: "include",
           headers: {
             "Authorization": `Bearer ${token}`,
             "Content-Type": "application/json",
@@ -62,7 +66,8 @@ export default function UserProfilePage() {
           throw new Error("Не вдалося завантажити дані профілю");
         }
 
-        const userData = await response.json();
+        const userDataWrapper = await response.json();
+        const userData = userDataWrapper.data;
         console.log("Дані користувача отримано:", userData);
 
         setInitialName(userData.name || "");
@@ -104,11 +109,7 @@ export default function UserProfilePage() {
 
   const handleSave = async () => {
     setLoading(true);
-    const token = localStorage.getItem("authToken");
-    if (!token) {
-        setLoading(false);
-        return;
-    }
+    
 
     // Використовуємо наш новий тип для updatedFields
     const updatedFields: UpdatedProfileData = {};
@@ -147,11 +148,9 @@ export default function UserProfilePage() {
     }
 
     try {
-      const response = await fetch(`${API_URL}/user/profile`, {
+      const response = await fetch(`${API_URL}/users/current`, {
         method: "PATCH",
-        headers: {
-          "Authorization": `Bearer ${token}`,
-        },
+        credentials: "include",
         body: formData,
       });
 
@@ -194,21 +193,6 @@ export default function UserProfilePage() {
     return <div className={styles.loadingMessage}>Завантаження даних профілю...</div>;
   }
 
-  if (!isLoggedIn) {
-    const handleTestLogin = () => {
-      const fakeToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEyMyIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNTE2MjM5MDIyfQ.2O1XkYJ-pS2XQ5iG8rF6pS-E5mGg-jP8Y8z8b2M4";
-      localStorage.setItem("authToken", fakeToken);
-      window.location.reload(); 
-    };
-
-    return (
-      <div className={styles.notLoggedInMessage}>
-        <p>Будь ласка, увійдіть у свій акаунт.</p>
-        <button onClick={handleTestLogin} className={styles.loginBtn}>Імітувати вхід</button>
-      </div>
-    );
-  }
-
   return (
     <div className={styles.container}>
       <Breadcrumbs />
@@ -237,7 +221,7 @@ export default function UserProfilePage() {
           </div>
 
           <label className={styles.label}>
-            Ім’я
+            Ім`&apos;`я
             <input type="text" value={name} onChange={(e) => setName(e.target.value)} className={styles.input} />
           </label>
 
