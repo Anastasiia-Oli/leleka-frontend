@@ -1,4 +1,5 @@
 import { User } from "@/types/user";
+import { JourneyDetails } from "@/types/journeyType";
 import nextServer from "./api";
 
 export interface RegisterRequest {
@@ -6,6 +7,13 @@ export interface RegisterRequest {
   email: string;
   password: string;
 }
+
+type JourneyDetailResponce = {
+  message: string;
+  status: number;
+  weekNumber: number;
+  data: JourneyDetails;
+};
 
 export interface RegisterUserResponse {
   status: number;
@@ -30,40 +38,53 @@ export interface LoginUserResponse {
   data: User;
 }
 
-export type LogoutResponse = {
-  message?: string;
+export type LogoutResponse = { message?: string };
+
+export const getJourneyDetailsByWeek = async (
+  weekNumber: number
+): Promise<JourneyDetails> => {
+  try {
+    const response = await nextServer<JourneyDetailResponce>(
+      `/weeks/${weekNumber}`
+    );
+    if (!response?.data?.data) {
+      throw new Error("No journey data returned from API");
+    }
+    return response.data.data;
+  } catch (error) {
+    console.error("Failed to fetch journey details:", error);
+    throw error;
+  }
 };
 
 export async function registerUser(
   params: RegisterRequest
 ): Promise<RegisterUserResponse> {
-  const response = await nextServer.post<RegisterUserResponse>(
+  const { data } = await nextServer.post<RegisterUserResponse>(
     "/auth/register",
     params
   );
-  return response.data;
+  return data;
 }
 
 export async function login(params: LoginRequest): Promise<LoginUserResponse> {
-  const response = await nextServer.post<LoginUserResponse>(
+  const { data } = await nextServer.post<LoginUserResponse>(
     "/auth/login",
     params
   );
-  return response.data;
+  return data;
 }
 
 export async function logout(): Promise<LogoutResponse> {
-  const response = await nextServer.post<LogoutResponse>("/auth/logout");
-  return response.data;
+  const { data } = await nextServer.post<LogoutResponse>("/auth/logout");
+  return data;
 }
 
-type CheckSessionRequest = {
-  success: boolean;
-};
+type CheckSessionResponse = { success: boolean };
 
 export const checkSession = async () => {
-  const response = await nextServer.post<CheckSessionRequest>("/auth/refresh");
-  return response.data.success;
+  const { data } = await nextServer.post<CheckSessionResponse>("/auth/refresh");
+  return data.success;
 };
 
 export const getMe = async () => {
