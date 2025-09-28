@@ -10,3 +10,13 @@ export interface User {
   createdAt: string;
   updatedAt: string;
 }
+
+export type Baby = {
+  weekNumber: number;
+  babySize: number;
+  babyWeight: number;
+  image: string;
+  babyActivity: string;
+  babyDevelopment: string;
+  interestingFact: string;
+};

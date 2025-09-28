@@ -1,4 +1,4 @@
-import { User } from "@/types/user";
+import { Baby, User } from "@/types/user";
 import nextServer from "./api";
 
 export interface RegisterRequest {
@@ -65,4 +65,15 @@ export const checkSession = async () => {
 export const getMe = async () => {
   const { data } = await nextServer.get<User>("/users/current");
   return data;
+};
+
+interface BabyResponse {
+  data: {
+    baby: Baby;
+  };
+}
+
+export const getBabyClient = async (week: number): Promise<Baby> => {
+  const { data } = await nextServer.get<BabyResponse>(`/weeks/${week}`);
+  return data.data.baby;
 };
