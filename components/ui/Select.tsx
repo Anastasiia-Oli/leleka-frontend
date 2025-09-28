@@ -7,6 +7,7 @@ type SelectProps = {
   name?: string;
   id?: string;
   height?: number | string;
+  instanceId?: string;
 };
 
 export default function CustomSelect({
@@ -15,6 +16,7 @@ export default function CustomSelect({
   name,
   id,
   height = 40,
+  instanceId,
 }: SelectProps) {
   const formattedOptions = options.map((opt) => ({
     value: opt,
@@ -28,12 +30,13 @@ export default function CustomSelect({
         placeholder={placeholder}
         classNamePrefix="custom-select"
         name={name}
-        id={id}
+        inputId={id}
+        instanceId={instanceId}
         styles={{
           container: (base) => ({
-              ...base,
-              width: "100%", // ← контейнер займає всю ширину батьківського
-            }),
+            ...base,
+            width: "100%", // ← контейнер займає всю ширину батьківського
+          }),
           control: (base, state) => ({
             ...base,
             backgroundColor: "#f2f2f2",
@@ -44,7 +47,7 @@ export default function CustomSelect({
             cursor: "pointer",
             height: height,
             width: "100%",
-            "&:hover" : { border: "1px solid rgba(0,0,0,0.15)" },
+            "&:hover": { border: "1px solid rgba(0,0,0,0.15)" },
           }),
           placeholder: (base) => ({
             ...base,
@@ -78,8 +81,8 @@ export default function CustomSelect({
             backgroundColor: state.isSelected
               ? "#e6e6e6"
               : state.isFocused
-              ? "rgba(0,0,0,0.05)"
-              : "transparent",
+                ? "rgba(0,0,0,0.05)"
+                : "transparent",
             color: "#000",
             "&:active": {
               backgroundColor: "rgba(0,0,0,0.1)",

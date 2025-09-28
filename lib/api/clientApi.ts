@@ -1,4 +1,5 @@
 import { User } from "@/types/user";
+import { JourneyDetails } from "@/types/journeyType";
 import nextServer from "./api";
 
 export interface RegisterRequest {
@@ -6,6 +7,13 @@ export interface RegisterRequest {
   email: string;
   password: string;
 }
+
+type JourneyDetailResponce = {
+  message: string;
+  status: number;
+  weekNumber: number;
+  data: JourneyDetails;
+};
 
 export interface RegisterUserResponse {
   status: number;
@@ -31,6 +39,23 @@ export interface LoginUserResponse {
 }
 
 export type LogoutResponse = { message?: string };
+
+export const getJourneyDetailsByWeek = async (
+  weekNumber: number
+): Promise<JourneyDetails> => {
+  try {
+    const response = await nextServer<JourneyDetailResponce>(
+      `/weeks/${weekNumber}`
+    );
+    if (!response?.data?.data) {
+      throw new Error("No journey data returned from API");
+    }
+    return response.data.data;
+  } catch (error) {
+    console.error("Failed to fetch journey details:", error);
+    throw error;
+  }
+};
 
 export async function registerUser(
   params: RegisterRequest
