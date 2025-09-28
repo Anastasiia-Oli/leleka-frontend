@@ -2,7 +2,6 @@
 import { User } from "@/types/user";
 import nextServer from "./api";
 import { DiaryEntry } from "@/types/dairy";
-import { title } from "process";
 import { Emotion } from "@/types/dairy";
 import { CreateDiaryEntryData } from "@/types/dairy";
 
@@ -89,3 +88,8 @@ export async function CreateNote(
   return res.data;
 }
 //поміняти на post<CreateDiaryEntryData>
+
+export async function DeleteNote(id: string): Promise<{ message: string }> {
+  const res = await nextServer.delete<{ message: string }>(`/diaries/${id}`);
+  return res.data;
+}

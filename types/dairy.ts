@@ -17,11 +17,9 @@ export interface Emotion {
 export interface CreateDiaryEntryData {
     title: string;
     description: string;
-    // date?: string;
     emotions: Emotion[];
 }
 
-// export interface UpdateDiaryEntryData extends CreateDiaryEntryData { }
 
 export interface getEmotionStyle {
     bgColor: string;

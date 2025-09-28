@@ -3,9 +3,6 @@
 import React from "react";
 import { useRouter } from "next/navigation";
 import DiaryEntryCard from "@/components/Diary/DiaryEntryCard/DiaryEntryCard"
-// import DiaryEntryDetails from "@/components/Diary/DiaryEntryDetails/DiaryEntryDetails";
-// import GreetingBlock from "@/components/Diary/GreetingBlock/GreetingBlock";
-// import { mockEntries } from "@/components/Diary/Diary.mock";
 
 interface PageProps {
     params: {
@@ -15,19 +12,10 @@ interface PageProps {
 
 const DiaryEntryPage = ({ params }: PageProps) => {
     const router = useRouter();
-    //   const entry = mockEntries.find(e => e.id === params.entryId);
 
     const handleBack = () => {
         router.push('/diary');
     };
-
-    //   const handleEdit = () => {
-    //     console.log('Open AddDiaryEntryModal for editing', entry);
-    //   };
-
-    //   const handleDelete = () => {
-    //     console.log('Open ConfirmationModal for deletion', entry);
-    //   };
 
     return (
         <div style={{
