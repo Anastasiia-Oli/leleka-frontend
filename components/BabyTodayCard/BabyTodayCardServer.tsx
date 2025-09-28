@@ -6,16 +6,21 @@ import {
 } from "@tanstack/react-query";
 import BabyTodayCard from "./BabyTodayCard";
 
-const BabyTodayCardServer = async ({ week }: { week: number }) => {
+const BabyTodayCardServer = async ({
+  params,
+}: {
+  params: Promise<{ weekNumber: number }>;
+}) => {
+  const { weekNumber } = await params;
   const queryClient = new QueryClient();
 
   queryClient.prefetchQuery({
-    queryKey: ["weeks", week],
-    queryFn: () => getBabyInfo(week),
+    queryKey: ["weeks", weekNumber],
+    queryFn: () => getBabyInfo(weekNumber),
   });
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <BabyTodayCard week={week} />
+      <BabyTodayCard week={weekNumber} />
     </HydrationBoundary>
   );
 };
