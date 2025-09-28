@@ -12,7 +12,6 @@ interface DiaryListProps {
 }
 
 
-
 const DiaryList: React.FC<DiaryListProps> = ({
   onEntryClick,
   selectedEntryId,

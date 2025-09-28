@@ -1,7 +1,5 @@
 import React from "react";
-// import { Edit, X } from "lucide-react";
 import { DiaryEntry } from "@/types/dairy";
-// import { EMOTIONS } from "../../../types/dairy";
 import css from "./DiaryEntryDetails.module.css";
 
 interface DiaryEntryDetailsProps {

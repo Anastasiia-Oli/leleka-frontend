@@ -2,7 +2,6 @@
 import React, { useState } from "react";
 import dynamic from 'next/dynamic';
 import {
-  // convertApiEntryToLegacy,
   DiaryEntry
 } from "@/types/dairy";
 
@@ -13,17 +12,6 @@ import { fetchDiary } from "@/lib/api/clientApi";
 import { useQuery } from "@tanstack/react-query";
 import { removeListener } from "process";
 
-// // Динамічний імпорт GreetingBlock без SSR
-// const GreetingBlock = dynamic(() => import("../../GreetingBlock/GreetingBlock"), {
-//   ssr: false,
-//   loading: () => (
-//     <div style={{ marginBottom: "32px" }}>
-//       <h1 className="header-first" style={{ margin: 0 }}>
-//         Доброго ранку!
-//       </h1>
-//     </div>
-//   )
-// });
 
 const DiaryPage: React.FC = () => {
 
@@ -32,23 +20,12 @@ const DiaryPage: React.FC = () => {
     queryFn: fetchDiary,
   });
 
-  // const { data: apiEntries = [], isLoading, error } = useDiaryEntries();
-  // const deleteEntryMutation = useDeleteDiaryEntry();
-
-  // Fallback на mock дані, якщо API не працює
-  // const entries: LegacyDiaryEntry[] = React.useMemo(() => {
-  //   if (error || apiEntries.length === 0) {
-  //     // return mockEntries; // Використовуємо mock дані
-  //   }
-  //   return apiEntries.map(convertApiEntryToLegacy);
-  // }, [apiEntries, error]);
-
-  // const [notes] = useState<Note[]>(mockNotes);
   const [selectedEntry, setSelectedEntry] = useState<DiaryEntry | null>(null);
   const [selectedNote, setSelectedNote] = useState<DiaryEntry | null>(null);
   const [isMobile, setIsMobile] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingEntry, setEditingEntry] = useState<DiaryEntry | null>(null);
+};
 
   // Перевіряємо розмір екрану
   React.useEffect(() => {
@@ -60,7 +37,7 @@ const DiaryPage: React.FC = () => {
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
-  if (data) {
+  // if (data) {
 
     // Автоматично вибираємо перший запис на десктопі
 
@@ -79,14 +56,9 @@ const DiaryPage: React.FC = () => {
       setSelectedEntry(entry);
       setSelectedNote(null);
     }
-    return
-    entry._id;
+    return entry._id;
   };
 
-  // const handleNoteClick = (note: DiaryEntry) => {
-  //   setSelectedNote(note);
-  //   setSelectedEntry(null);
-  // };
 
   const handleAddEntry = () => {
     setEditingEntry(null);
@@ -104,79 +76,24 @@ const DiaryPage: React.FC = () => {
     }
   };
 
-  // const handleDeleteEntry = async () => {
-  //   if (selectedEntry && window.confirm('Ви впевнені, що хочете видалити цей запис?')) {
-  //     try {
-  //       // Якщо це mock дані, просто видаляємо локально
-  //       // if (error || !apiEntries.length) {
-  //         // console.log('Видалення mock запису:', selectedEntry.id);
-  //         // Знаходимо наступний запис для вибору або очищуємо вибір
-  //         const currentIndex = entries.findIndex(e => e.id === selectedEntry.id);
-  //         if (entries.length > 1) {
-  //           const nextEntry = entries[currentIndex + 1] || entries[currentIndex - 1];
-  //           setSelectedEntry(nextEntry);
-  //         } else {
-  //           setSelectedEntry(null);
-  //         }
-  //         return;
-  //       }
-
-  //   await deleteEntryMutation.mutateAsync(selectedEntry.id);
-  //   setSelectedEntry(null);
-  //   console.log('Entry deleted successfully');
-  // } catch (error) {
-  //   console.error('Error deleting entry:', error);
-  //   alert('Помилка при видаленні запису');
-  // }
-  //     }
-  //   };
-
+ 
   const handleCloseModal = () => {
     setIsModalOpen(false);
     setEditingEntry(null);
   };
 
-  // if (isLoading) {
-  //   return (
-  //     <div className={css.diaryContainer}>
-  //       {/* <GreetingBlock /> */}
-  //       <div style={{
-  //         display: 'flex',
-  //         justifyContent: 'center',
-  //         alignItems: 'center',
-  //         height: '200px'
-  //       }}>
-  //         <p>Завантаження...</p>
-  //       </div>
-  //     </div>
-  //   );
-  // }
+    const handleDeleteEntry = (id: string) => {
+    console.log(`Delete entry with id: ${id}`);
+  };
 
   return (
     <div className={css.diaryContainer}>
-      {/* <GreetingBlock /> */}
-
-      {/* Показуємо попередження, якщо використовуємо mock дані */}
-      {/* {error && (
-        <div style={{
-          padding: '16px',
-          backgroundColor: 'var(--sand-light)',
-          borderRadius: '8px',
-          marginBottom: '24px',
-          textAlign: 'center'
-        }}>
-          <p style={{ margin: 0, color: 'var(--gray-dark)' }}>
-            Сервер недоступний. Показані тестові дані.
-          </p>
-        </div>
-      )} */}
-
       {/* Mobile Layout */}
       <div className={css.mobileLayout}>
         <DiaryList
           data={data || []}
           onEntryClick={handleEntryClick}
-          // selectedEntryId={selectedEntry?._id}
+          selectedEntryId={selectedEntry?._id}
           onAddEntry={handleAddEntry}
         />
       </div>
@@ -196,7 +113,7 @@ const DiaryPage: React.FC = () => {
           <DiaryEntryDetails
             entry={selectedEntry}
             onEdit={handleEditEntry}
-          // onDelete={handleDeleteEntry}
+            onDelete={handleDeleteEntry}
           />
         </div>
       </div>
@@ -209,6 +126,6 @@ const DiaryPage: React.FC = () => {
       /> */}
     </div>
   );
-};
+// };
 
 export default DiaryPage;

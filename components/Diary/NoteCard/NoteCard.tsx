@@ -1,8 +1,8 @@
 import React from "react";
-import { Note } from "../Diary.types";
+import { DiaryEntry } from "@/types/dairy";
 
 interface NoteCardProps {
-  note: Note;
+  note: DiaryEntry;
   onClick?: () => void;
   isSelected?: boolean;
 }

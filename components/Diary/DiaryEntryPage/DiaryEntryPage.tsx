@@ -3,8 +3,7 @@
 import React from "react";
 import { useRouter } from "next/navigation";
 import DiaryEntryDetails from "@/components/Diary/DiaryEntryDetails/DiaryEntryDetails";
-import GreetingBlock from "@/components/GreetingBlock/GreetingBlock";
-// import { mockEntries } from "@/components/Diary/Diary.mock";
+
 
 interface PageProps {
   params: {
@@ -48,7 +47,6 @@ const DiaryEntryPage = ({ params }: PageProps) => {
         padding: "16px",
         paddingBottom: "0"
       }}>
-        {/* <GreetingBlock /> */}
       </div>
 
       <div style={{
