@@ -1,7 +1,7 @@
 import { User } from "@/types/user";
 import { JourneyDetails } from "@/types/journeyType";
 import nextServer from "./api";
-import type { ChildSex } from "../../types/types";
+import type { ChildSex } from "../../types/user";
 
 
 export interface RegisterRequest {
