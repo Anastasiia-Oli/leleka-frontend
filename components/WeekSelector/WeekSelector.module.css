@@ -100,12 +100,12 @@
   padding: 16px;
   background: #f2f2f2;
   opacity: 0.6;
+  cursor: not-allowed;
 }
 
 .disabledBtn:disabled {
   background: #f2f2f2;
   opacity: 0.6;
-  cursor: not-allowed;
 }
 
 @media screen and (min-width: 1440px) {
