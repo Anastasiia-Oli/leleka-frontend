@@ -55,7 +55,7 @@ console.log(a);
           });
 
           toast.success("Дані збережено!");
-          router.push("/my-day");
+          router.push("/");
         } catch (err: unknown) {
           if (err instanceof Error) {
             toast.error(err?.message || "Сталася помилка");

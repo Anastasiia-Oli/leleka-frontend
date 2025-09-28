@@ -58,6 +58,7 @@ export async function registerUser(
 }
 
 export async function login(params: LoginRequest): Promise<LoginUserResponse> {
+  console.log(12);
   const { data } = await nextServer.post<LoginUserResponse>(
     "/auth/login",
     params
@@ -73,7 +74,9 @@ export async function logout(): Promise<LogoutResponse> {
 type CheckSessionResponse = { success: boolean };
 
 export const checkSession = async () => {
-  const { data } = await nextServer.post<CheckSessionResponse>("/auth/refresh");
+  const { data } = await nextServer.post<CheckSessionResponse>("/auth/session");
+  console.log(15, data);
+  
   return data.success;
 };
 
@@ -85,26 +88,23 @@ export const getMe = async () => {
 export async function submitOnboarding(payload: OnboardingPayload) {
   const { childSex, dueDate, photo } = payload;
 
-  try {
-    if (photo) {
-      const fd = new FormData();
-      fd.append("avatar", photo); // ім’я поля має збігатися з бекендом
+  // 1. Фото
+  if (photo) {
+    const fd = new FormData();
+    fd.append("photo", photo);
 
-      await nextServer.patch("/users/avatar", fd, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
-    }
-
-    const res = await nextServer.patch(`/users`, { childSex, dueDate });
-    return res.data;
-  } catch (e) {
-    const status = (e as AxiosError)?.response?.status;
-    if (status === 404) {
-      console.warn(
-        "[submitOnboarding] /users або /users/avatar не знайдено (404). Повертаю мок-відповідь."
-      );
-      return { ok: true } as const;
-    }
-    throw e;
+    await nextServer.patch("/api/users/avatar", fd, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
   }
+
+  // 2. Інші дані
+  const { data } = await nextServer.patch(
+    "/api/users",
+    { childSex, dueDate },
+    { headers: { "Content-Type": "application/json" } }
+  );
+
+  return data;
 }
+
