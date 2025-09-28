@@ -2,6 +2,8 @@ import { User, Task } from "@/types/user";
 import { JourneyDetails } from "@/types/journeyType";
 
 import nextServer from "./api";
+import type { ChildSex } from "../../types/user";
+
 
 export interface RegisterRequest {
   name: string;
@@ -38,6 +40,18 @@ export interface LoginUserResponse {
   message: string;
   data: User;
 }
+
+export type ApiResponse<T> = {
+    status: number;
+    message: string;
+    data: T;
+};
+
+type OnboardingPayload = {
+  childSex: ChildSex;
+  dueDate: string;
+  photo?: File;
+}; 
 
 export type LogoutResponse = { message?: string };
 
@@ -84,7 +98,8 @@ export async function logout(): Promise<LogoutResponse> {
 type CheckSessionResponse = { success: boolean };
 
 export const checkSession = async () => {
-  const { data } = await nextServer.post<CheckSessionResponse>("/auth/refresh");
+  const { data } = await nextServer.post<CheckSessionResponse>("/auth/session");
+  
   return data.success;
 };
 
@@ -92,6 +107,7 @@ export const getMe = async () => {
   const { data } = await nextServer.get<User>("/users/current");
   return data;
 };
+
 
 export type SetTaskState = { id: string; isDone: boolean };
 
@@ -112,3 +128,23 @@ export async function changeStateTask(
   );
   return data;
 }
+
+export async function submitOnboarding(payload: OnboardingPayload) {
+  const { childSex, dueDate, photo } = payload;
+
+  if (photo) {
+    const fd = new FormData();
+    fd.append("photo", photo);
+
+    await nextServer.patch("/users/avatar", fd);
+  }
+
+  const { data } = await nextServer.patch(
+    "/users",
+    { childSex, dueDate }
+  );
+
+  return data;
+}
+
+
