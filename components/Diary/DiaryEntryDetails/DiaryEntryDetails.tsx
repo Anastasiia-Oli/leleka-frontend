@@ -31,6 +31,23 @@ const DiaryEntryDetails: React.FC<DiaryEntryDetailsProps> = ({
     );
   }
 
+  // Функція форматування дати
+  const formatDate = (dateString: string) => {
+    try {
+      const date = new Date(dateString);
+      if (isNaN(date.getTime())) {
+        return dateString;
+      }
+      return date.toLocaleDateString('uk-UA', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric'
+      });
+    } catch (error) {
+      return dateString;
+    }
+  };
+
   return (
     <div className={css.diaryContainer}>
       {onBack && (
@@ -61,7 +78,7 @@ const DiaryEntryDetails: React.FC<DiaryEntryDetailsProps> = ({
             </div>
 
             <div className={css.headerInfo}>
-              <div className={`${css.date} text-primary`}>{entry.date}</div>
+              <div className={`${css.date} text-primary`}>{formatDate(entry.date)}</div>
               {onDelete && (
                 <button
                   className={css.closeButton}
@@ -80,14 +97,16 @@ const DiaryEntryDetails: React.FC<DiaryEntryDetailsProps> = ({
       </div>
 
       <div className={css.diaryContent}>
-        <p className="text-primary">{entry.content}</p>
-        <div className={css.emotions}>
-          {entry.emotions.map((emotion, index) => (
-            <span key={index} className={css.emotionTag}>
-              {emotion}
-            </span>
-          ))}
-        </div>
+        <p className="text-primary">{entry.description}</p>
+        {entry.emotions && entry.emotions.length > 0 && (
+          <div className={css.emotions}>
+            {entry.emotions.map((emotion) => (
+              <span key={emotion._id} className={css.emotionTag}>
+                {emotion.title}
+              </span>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

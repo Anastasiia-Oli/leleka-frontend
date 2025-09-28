@@ -2,7 +2,6 @@
 
 import React from "react";
 import { DiaryEntry } from "@/types/dairy";
-// import { EMOTIONS } from "../Diary.constants";
 import css from "./DiaryEntryCard.module.css";
 
 interface DiaryEntryCardProps {
@@ -12,20 +11,10 @@ interface DiaryEntryCardProps {
 }
 
 const DiaryEntryCard: React.FC<DiaryEntryCardProps> = ({ entry, onClick, isSelected }) => {
-  //   const getEmotionStyle = (emotionName: string) => {
-  //     const emotion = EMOTIONS.find(e => e.name === emotionName);
-  //     return emotion ? { bgColor: emotion.bgColor, textColor: emotion.textColor } :
-  //       { bgColor: "var(--gray-lightest)", textColor: "var(--gray-dark)" };
-  // };
-  // if (entry) {
+  
   // Показуємо максимум 3 емоції, решту ховаємо під "+N"
   const visibleEmotions = entry.emotions?.slice(0, 3) || [];
   const hiddenEmotionsCount = Math.max((entry.emotions?.length ?? 0) - 3, 0);
-
-  //   return (visibleEmotions)
-  // }
-
-
 
   // Функція форматування дати
   const formatDate = (dateString: string) => {
@@ -83,7 +72,5 @@ const DiaryEntryCard: React.FC<DiaryEntryCardProps> = ({ entry, onClick, isSelec
     </div>
   );
 };
-
-
 
 export default DiaryEntryCard;

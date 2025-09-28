@@ -1,6 +1,5 @@
-"use "
+"use client";
 import React, { useState } from "react";
-import dynamic from 'next/dynamic';
 import {
   DiaryEntry
 } from "@/types/dairy";
@@ -10,8 +9,6 @@ import DiaryEntryDetails from "../DiaryEntryDetails/DiaryEntryDetails";
 import css from "./DiaryPage.module.css";
 import { fetchDiary } from "@/lib/api/clientApi";
 import { useQuery } from "@tanstack/react-query";
-import { removeListener } from "process";
-
 
 const DiaryPage: React.FC = () => {
 
@@ -25,7 +22,6 @@ const DiaryPage: React.FC = () => {
   const [isMobile, setIsMobile] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingEntry, setEditingEntry] = useState<DiaryEntry | null>(null);
-};
 
   // Перевіряємо розмір екрану
   React.useEffect(() => {
@@ -37,16 +33,14 @@ const DiaryPage: React.FC = () => {
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
-  // if (data) {
 
-    // Автоматично вибираємо перший запис на десктопі
+  // Автоматично вибираємо перший запис на десктопі
+  React.useEffect(() => {
+    if (data && data.length > 0 && !selectedEntry && !isMobile) {
+      setSelectedEntry(data[0]);
+    }
+  }, [data, selectedEntry, isMobile]);
 
-    React.useEffect(() => {
-      if (data?.length > 0 && !selectedEntry && !isMobile) {
-        setSelectedEntry(data?.[0]);
-      }
-    }, [data, selectedEntry, isMobile]);
-  }
   const handleEntryClick = (entry: DiaryEntry) => {
     if (isMobile) {
       // На мобільних переходимо на окрему сторінку
@@ -58,7 +52,6 @@ const DiaryPage: React.FC = () => {
     }
     return entry._id;
   };
-
 
   const handleAddEntry = () => {
     setEditingEntry(null);
@@ -76,14 +69,23 @@ const DiaryPage: React.FC = () => {
     }
   };
 
- 
   const handleCloseModal = () => {
     setIsModalOpen(false);
     setEditingEntry(null);
   };
 
-    const handleDeleteEntry = (id: string) => {
-    console.log(`Delete entry with id: ${id}`);
+  const handleDeleteEntry = () => {
+    if (selectedEntry && window.confirm('Ви впевнені, що хочете видалити цей запис?')) {
+      try {
+        // Тут буде API виклик для видалення
+        console.log('Видалення запису:', selectedEntry._id);
+        // Після успішного видалення очищаємо вибраний запис
+        setSelectedEntry(null);
+      } catch (error) {
+        console.error('Error deleting entry:', error);
+        alert('Помилка при видаленні запису');
+      }
+    }
   };
 
   return (
@@ -126,6 +128,6 @@ const DiaryPage: React.FC = () => {
       /> */}
     </div>
   );
-// };
+};
 
 export default DiaryPage;
