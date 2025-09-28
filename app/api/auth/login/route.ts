@@ -7,7 +7,6 @@ import { logErrorResponse } from "../../_utils/utils";
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-
     const apiRes = await api.post("api/auth/login", body, {
       headers: { Cookie: request.headers.get("cookie") ?? "" },
     });
