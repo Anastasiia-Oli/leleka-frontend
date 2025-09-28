@@ -1,23 +1,32 @@
-"use client";
-import ToggleTabs from "@/components/ui/Tabs";
-// import WeekSelector from "@/components/WeekSelector/WeekSelector";
-import React, { useMemo } from "react";
 
-const page = () => {
-  // const pregnacyWeeks = useMemo(() => {
-  //   let weekNumbers: number[] = [];
-  //   for (let i = 0; i <= 11; i++) {
-  //     weekNumbers.push(i);
-  //   }
-  //   return weekNumbers;
-  // }, []);
-  // return (
-  //   <div>
-  //     <h1>Доброго ранку, Галина!</h1>
-  //     <WeekSelector weeks={pregnacyWeeks} />
-  //     <ToggleTabs options={["Розвиток малюка", "Тіло мами"]} />
-  //   </div>
-  // );
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+} from "@tanstack/react-query";
+import { ClientJourney } from "./ClientJourney";
+import { getJourneyDetailsByWeek } from "@/lib/api/clientApi";
+
+const page = async ({
+  params,
+}: {
+  params: Promise<{ weekNumber: number }>;
+}) => {
+  const { weekNumber } = await params;
+  const queryClient = new QueryClient();
+
+  queryClient.prefetchQuery({
+    queryKey: ["journey", weekNumber],
+    queryFn: () => getJourneyDetailsByWeek(weekNumber),
+  });
+
+  return (
+    <>
+      <HydrationBoundary state={dehydrate(queryClient)}>
+        <ClientJourney currentWeek={weekNumber} />
+      </HydrationBoundary>
+    </>
+  );
 };
 
 export default page;
