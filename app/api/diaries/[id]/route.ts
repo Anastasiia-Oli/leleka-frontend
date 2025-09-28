@@ -64,11 +64,11 @@ export async function DELETE(
             );
         }
 
-        const res = await api.delete(`api/diaries/${id}`, {
-            headers: {
-                Cookie: cookieStore.toString(),
-            },
-        });
+        // const res = await api.delete(`api/diaries/${id}`, {
+        //     headers: {
+        //         Cookie: cookieStore.toString(),
+        //     },
+        // });
 
         return NextResponse.json(
             { message: 'Запис успішно видалено' },
@@ -99,61 +99,61 @@ export async function DELETE(
     }
 }
 
-// PUT - оновити запис за ID
-export async function PUT(
-    request: NextRequest,
-    { params }: { params: { id: string } }
-) {
-    try {
-        const cookieStore = await cookies();
-        const { id } = params;
-        const body = await request.json();
+// // PUT - оновити запис за ID
+// export async function PUT(
+//     request: NextRequest,
+//     { params }: { params: { id: string } }
+// ) {
+//     try {
+//         const cookieStore = await cookies();
+//         const { id } = params;
+//         const body = await request.json();
 
-        if (!id) {
-            return NextResponse.json(
-                { error: 'ID запису обов\'язковий' },
-                { status: 400 }
-            );
-        }
+//         if (!id) {
+//             return NextResponse.json(
+//                 { error: 'ID запису обов\'язковий' },
+//                 { status: 400 }
+//             );
+//         }
 
-        // Валідація основних полів
-        if (!body.title || !body.description) {
-            return NextResponse.json(
-                { error: 'Заголовок та опис обов\'язкові' },
-                { status: 400 }
-            );
-        }
+//         // Валідація основних полів
+//         if (!body.title || !body.description) {
+//             return NextResponse.json(
+//                 { error: 'Заголовок та опис обов\'язкові' },
+//                 { status: 400 }
+//             );
+//         }
 
-        const res = await api.put(`api/diaries/${id}`, body, {
-            headers: {
-                Cookie: cookieStore.toString(),
-            },
-        });
+//         const res = await api.put(`api/diaries/${id}`, body, {
+//             headers: {
+//                 Cookie: cookieStore.toString(),
+//             },
+//         });
 
-        return NextResponse.json(res.data, { status: res.status });
-    } catch (error) {
-        if (isAxiosError(error)) {
-            logErrorResponse(error.response?.data);
-            const status = error.response?.status ?? 500;
-            let message = 'Помилка оновлення запису';
+//         return NextResponse.json(res.data, { status: res.status });
+//     } catch (error) {
+//         if (isAxiosError(error)) {
+//             logErrorResponse(error.response?.data);
+//             const status = error.response?.status ?? 500;
+//             let message = 'Помилка оновлення запису';
             
-            if (error.response?.status === 404) {
-                message = 'Запис не знайдено';
-            } else if (error.response?.status === 403) {
-                message = 'Немає прав для редагування цього запису';
-            } else if (error.response?.status === 400) {
-                message = 'Невірні дані для оновлення';
-            }
+//             if (error.response?.status === 404) {
+//                 message = 'Запис не знайдено';
+//             } else if (error.response?.status === 403) {
+//                 message = 'Немає прав для редагування цього запису';
+//             } else if (error.response?.status === 400) {
+//                 message = 'Невірні дані для оновлення';
+//             }
             
-            return NextResponse.json(
-                { error: message, response: error.response?.data },
-                { status }
-            );
-        }
-        logErrorResponse({ message: (error as Error).message });
-        return NextResponse.json(
-            { error: 'Внутрішня помилка сервера' },
-            { status: 500 }
-        );
-    }
-}
+//             return NextResponse.json(
+//                 { error: message, response: error.response?.data },
+//                 { status }
+//             );
+//         }
+//         logErrorResponse({ message: (error as Error).message });
+//         return NextResponse.json(
+//             { error: 'Внутрішня помилка сервера' },
+//             { status: 500 }
+//         );
+    // }
+// }

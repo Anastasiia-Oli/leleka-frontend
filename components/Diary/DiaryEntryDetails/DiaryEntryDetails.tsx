@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { DiaryEntry } from "@/types/dairy";
 import css from "./DiaryEntryDetails.module.css";
+import { toast } from "react-hot-toast";
 
 interface DiaryEntryDetailsProps {
   entry: DiaryEntry | null;
   onEdit?: () => void;
-  onDelete?: () => void;
+  onDelete?: (entryId: string) => void; // Змінили тип для передачі ID
   onBack?: () => void;
   isDeleting?: boolean;
 }
@@ -17,6 +18,8 @@ const DiaryEntryDetails: React.FC<DiaryEntryDetailsProps> = ({
   onBack,
   isDeleting = false
 }) => {
+  const [isConfirmingDelete, setIsConfirmingDelete] = useState(false);
+  const [isDeletingEntry, setIsDeletingEntry] = useState(false);
 
   if (!entry) {
     return (
@@ -50,13 +53,97 @@ const DiaryEntryDetails: React.FC<DiaryEntryDetailsProps> = ({
     }
   };
 
+  // Функція видалення нотатки
+  const handleDeleteEntry = async () => {
+    if (!entry?._id) {
+      toast.error("Помилка: ID запису не знайдено");
+      return;
+    }
+
+    setIsDeletingEntry(true);
+
+    try {
+      const response = await fetch(`/api/diaries/${entry._id}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || 'Помилка видалення запису');
+      }
+
+      toast.success("Запис успішно видалено");
+
+      // Викликаємо callback для оновлення списку на батьківському компоненті
+      if (onDelete) {
+        onDelete(entry._id);
+      }
+
+      // Закриваємо модальне вікно підтвердження
+      setIsConfirmingDelete(false);
+
+    } catch (error) {
+      console.error("Error deleting diary entry:", error);
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : "Не вдалося видалити запис"
+      );
+    } finally {
+      setIsDeletingEntry(false);
+    }
+  };
+
+  // Обробник кліку на кнопку видалення
+  const handleDeleteClick = () => {
+    setIsConfirmingDelete(true);
+  };
+
+  // Скасування видалення
+  const handleCancelDelete = () => {
+    setIsConfirmingDelete(false);
+  };
+
+  const isProcessing = isDeleting || isDeletingEntry;
+
   return (
     <div className={css.diaryContainer}>
-
-      {isDeleting && (
+      {/* Overlay для завантаження */}
+      {isProcessing && (
         <div className={css.loadingOverlay}>
           <div className={css.loadingSpinner}>
             <p>Видалення запису...</p>
+          </div>
+        </div>
+      )}
+
+      {/* Модальне вікно підтвердження видалення */}
+      {isConfirmingDelete && (
+        <div className={css.confirmModal}>
+          <div className={css.confirmContent}>
+            <h3>Підтвердження видалення</h3>
+            <p>Ви впевнені, що хочете видалити запис?</p>
+            <p className={css.warningText}>Цю дію неможливо скасувати.</p>
+            <div className={css.confirmButtons}>
+              <button
+                className={css.cancelButton}
+                onClick={handleCancelDelete}
+                disabled={isDeletingEntry}
+              >
+                Скасувати
+              </button>
+              <button
+                className={css.confirmDeleteButton}
+                onClick={handleDeleteEntry}
+                disabled={isDeletingEntry}
+              >
+                {isDeletingEntry ? "Видаляю..." : "Видалити"}
+              </button>
+            </div>
           </div>
         </div>
       )}
@@ -65,7 +152,7 @@ const DiaryEntryDetails: React.FC<DiaryEntryDetailsProps> = ({
         <button
           className={css.backButton}
           onClick={onBack}
-          disabled={isDeleting}
+          disabled={isProcessing}
         >
           ← Назад до списку
         </button>
@@ -81,6 +168,7 @@ const DiaryEntryDetails: React.FC<DiaryEntryDetailsProps> = ({
                   className={css.actionButton}
                   onClick={onEdit}
                   title="Редагувати"
+                  disabled={isProcessing}
                 >
                   <svg className={css.editIcon} viewBox="0 0 32 32" width="24" height="24">
                     <use href="/leleka-sprite.svg#icon-edit_square" />
@@ -91,19 +179,17 @@ const DiaryEntryDetails: React.FC<DiaryEntryDetailsProps> = ({
 
             <div className={css.headerInfo}>
               <div className={`${css.date} text-primary`}>{formatDate(entry.date)}</div>
-              {onDelete && (
-                <button
-                  className={css.closeButton}
-                  onClick={onDelete}
-                  title="Видалити"
-                >
-                  <svg className={css.deleteIcon} viewBox="0 0 32 32" width="24" height="24">
-                    <use href="/leleka-sprite.svg#icon-delete_forever" />
-                  </svg>
-                </button>
-              )}
+              <button
+                className={css.closeButton}
+                onClick={handleDeleteClick}
+                title="Видалити"
+                disabled={isProcessing}
+              >
+                <svg className={css.deleteIcon} viewBox="0 0 32 32" width="24" height="24">
+                  <use href="/leleka-sprite.svg#icon-delete_forever" />
+                </svg>
+              </button>
             </div>
-
           </div>
         </div>
       </div>

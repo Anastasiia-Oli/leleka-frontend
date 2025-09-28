@@ -21,8 +21,4 @@ export interface CreateDiaryEntryData {
 }
 
 
-export interface getEmotionStyle {
-    bgColor: string;
-    textColor: string;
-}
 

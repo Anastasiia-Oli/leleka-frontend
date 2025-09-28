@@ -6,6 +6,7 @@ import { DiaryEntry } from "@/types/dairy";
 import { Emotion } from "@/types/dairy";
 import { CreateDiaryEntryData } from "@/types/dairy";
 
+
 export interface RegisterRequest {
   name: string;
   email: string;
@@ -114,11 +115,6 @@ export async function CreateNote(
 }
 //поміняти на post<CreateDiaryEntryData>
 
-// Отримати конкретний запис щоденника за ID
-export async function getDiaryEntry(id: string): Promise<DiaryEntry> {
-  const res = await nextServer.get<DiaryEntry>(`/diaries/${id}`);
-  return res.data;
-}
 
 // Видалити запис щоденника
 export async function deleteDiaryEntry(id: string): Promise<{ message: string }> {
@@ -126,31 +122,17 @@ export async function deleteDiaryEntry(id: string): Promise<{ message: string }>
   return res.data;
 }
 
-// Оновити запис щоденника
-export async function updateDiaryEntry(
-  id: string,
-  data: Partial<CreateDiaryEntryData>
-): Promise<DiaryEntry> {
-  const res = await nextServer.put<DiaryEntry>(`/diaries/${id}`, data);
-  return res.data;
-}
+// Отримати обрану нотатку
+const getSelectedNote = async (id: string) => {
+  const response = await fetch(`/api/diaries/${id}`);
+  return response.json();
+};
 
-// Додати емоцію до запису
-export async function addEmotionToEntry(
-  entryId: string,
-  emotionId: string
-): Promise<DiaryEntry> {
-  const res = await nextServer.patch<DiaryEntry>(`/diaries/${entryId}/emotions`, {
-    emotionId: emotionId
+// Видалити обрану нотатку
+const deleteSelectedNote = async (id: string) => {
+  const response = await fetch(`/api/diaries/${id}`, {
+    method: 'DELETE'
   });
-  return res.data;
-}
+  return response.json();
+};
 
-// Видалити емоцію з запису
-export async function removeEmotionFromEntry(
-  entryId: string,
-  emotionId: string
-): Promise<DiaryEntry> {
-  const res = await nextServer.delete<DiaryEntry>(`/diaries/${entryId}/emotions/${emotionId}`);
-  return res.data;
-}

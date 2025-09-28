@@ -12,7 +12,7 @@ import { useQuery } from "@tanstack/react-query";
 
 const DiaryPage: React.FC = () => {
 
-  const { data } = useQuery<DiaryEntry[]>({
+  const { data, refetch } = useQuery<DiaryEntry[]>({
     queryKey: ['diary'],
     queryFn: fetchDiary,
   });
@@ -74,18 +74,12 @@ const DiaryPage: React.FC = () => {
     setEditingEntry(null);
   };
 
-  const handleDeleteEntry = () => {
-    if (selectedEntry && window.confirm('Ви впевнені, що хочете видалити цей запис?')) {
-      try {
-        // Тут буде API виклик для видалення
-        console.log('Видалення запису:', selectedEntry._id);
-        // Після успішного видалення очищаємо вибраний запис
-        setSelectedEntry(null);
-      } catch (error) {
-        console.error('Error deleting entry:', error);
-        alert('Помилка при видаленні запису');
-      }
-    }
+  // Обробник видалення запису - викликається з DiaryEntryDetails
+  const handleEntryDelete = (deletedEntryId: string) => {
+    // Очищаємо обраний запис
+    setSelectedEntry(null);
+    // Оновлюємо дані в списку
+    refetch();
   };
 
   return (
@@ -115,7 +109,7 @@ const DiaryPage: React.FC = () => {
           <DiaryEntryDetails
             entry={selectedEntry}
             onEdit={handleEditEntry}
-            onDelete={handleDeleteEntry}
+            onDelete={handleEntryDelete}
           />
         </div>
       </div>
