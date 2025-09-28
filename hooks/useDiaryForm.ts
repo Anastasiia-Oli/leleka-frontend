@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { getEmotions, Emotion } from "@/lib/api/categoriesApi";
+import { getEmotions, Emotion } from "@/lib/api/clientApi";
 
 interface UseDiaryFormReturn {
   emotions: Emotion[];

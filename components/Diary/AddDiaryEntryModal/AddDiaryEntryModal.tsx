@@ -4,12 +4,15 @@ import AddDiaryEntryForm from "../AddDiaryEntryForm/AddDiaryEntryForm";
 import css from "./AddDiaryEntryModal.module.css";
 import { useDiaryModal } from "@/hooks/useDiaryModal";
 
-interface Props {
+interface AddDiaryEntryModalProps {
   mode: "create" | "edit";
   entryId?: string;
 }
 
-export default function AddDiaryEntryModal({ mode, entryId }: Props) {
+export default function AddDiaryEntryModal({
+  mode,
+  entryId,
+}: AddDiaryEntryModalProps) {
   const { closeModal } = useDiaryModal();
 
   return (

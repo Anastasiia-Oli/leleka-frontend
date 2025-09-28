@@ -32,6 +32,18 @@ export interface LoginUserResponse {
 
 export type LogoutResponse = { message?: string };
 
+export interface DiaryEntryData {
+  title: string;
+  description: string;
+  date?: string;
+  emotions: string[];
+}
+
+export interface Emotion {
+  _id: string;
+  title: string;
+}
+
 export async function registerUser(
   params: RegisterRequest
 ): Promise<RegisterUserResponse> {
@@ -64,5 +76,30 @@ export const checkSession = async () => {
 
 export const getMe = async () => {
   const { data } = await nextServer.get<User>("/users/current");
+  return data;
+};
+
+export async function createDiaryEntry(data: DiaryEntryData) {
+  const { data: res } = await nextServer.post("/diaries", data);
+  return res;
+}
+
+export async function updateDiaryEntry(id: string, data: DiaryEntryData) {
+  const { data: res } = await nextServer.patch(`/diaries/${id}`, data);
+  return res;
+}
+
+export async function getDiaryEntries() {
+  const { data } = await nextServer.get("/diaries");
+  return data;
+}
+
+export async function getDiaryEntryById(id: string) {
+  const { data } = await nextServer.get(`/diaries/${id}`);
+  return data;
+}
+
+export const getEmotions = async () => {
+  const { data } = await nextServer.get("/emotions");
   return data;
 };

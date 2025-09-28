@@ -1,10 +1,14 @@
 "use client";
 
-import { Formik, Form, Field } from "formik";
-import * as Yup from "yup";
-import { useState } from "react";
+import { Formik, Form, Field, FormikHelpers } from "formik";
+import { useState, useEffect } from "react";
 import { useDiaryForm } from "@/hooks/useDiaryForm";
 import css from "./AddDiaryEntryForm.module.css";
+import { createDiaryEntry, updateDiaryEntry } from "@/lib/api/clientApi";
+import { createDiaryEntrySchema } from "@/lib/validation/diaryValidation";
+import { ObjectSchema } from "yup";
+import { useRouter } from "next/navigation";
+import { toast } from "react-hot-toast";
 
 interface DiaryEntryValues {
   title: string;
@@ -26,26 +30,58 @@ const initialValues: DiaryEntryValues = {
   emotions: [],
 };
 
-// ✅ Схема валідації
-const validationSchema = Yup.object({
-  title: Yup.string().required("Заголовок є обов’язковим"),
-  description: Yup.string().required("Запис не може бути порожнім"),
-  emotions: Yup.array().min(1, "Оберіть хоча б одну категорію"),
-});
-
 export default function AddDiaryEntryForm({
   mode,
   entryId,
   onSuccess,
 }: AddDiaryEntryFormProps) {
+  const router = useRouter();
   const { emotions, loading, error, topCount } = useDiaryForm();
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [validationSchema, setValidationSchema] =
+    useState<ObjectSchema<DiaryEntryValues> | null>(null);
+
   const topEmotions = emotions.slice(0, topCount);
 
-  const handleSubmit = (values: DiaryEntryValues) => {
-    console.log("Форма відправлена:", values, { mode, entryId });
-    onSuccess();
+  // ✅ Отримуємо динамічну схему валідації на основі емоцій з бази
+  useEffect(() => {
+    if (emotions.length > 0) {
+      createDiaryEntrySchema().then((schema) =>
+        setValidationSchema(schema as ObjectSchema<DiaryEntryValues>)
+      );
+    }
+  }, [emotions]);
+
+  // ✅ Сабміт з пуш-помилкою і оновленням сторінки
+  const handleSubmit = async (
+    values: DiaryEntryValues,
+    helpers: FormikHelpers<DiaryEntryValues>
+  ) => {
+    try {
+      if (mode === "create") {
+        await createDiaryEntry(values);
+        toast.success("Запис успішно створено!");
+      } else if (mode === "edit" && entryId) {
+        await updateDiaryEntry(entryId, values);
+        toast.success("Запис оновлено!");
+      }
+      helpers.resetForm();
+      onSuccess();
+      router.refresh(); // ✅ оновлює список записів
+    } catch (err: unknown) {
+      console.error("Помилка при збереженні запису:", err);
+
+      const message =
+        err && typeof err === "object" && "response" in err
+          ? (err as { response?: { data?: { message?: string } } }).response
+              ?.data?.message
+          : undefined;
+
+      toast.error(message || "Не вдалося зберегти запис. Спробуйте ще раз.");
+    }
   };
+
+  if (!validationSchema) return <div>Завантаження форми...</div>;
 
   return (
     <Formik
@@ -60,10 +96,11 @@ export default function AddDiaryEntryForm({
             <label className={css.label}>Заголовок</label>
             <Field
               name="title"
-              className={`${css.input} 
-    ${errors.title && (touched.title || submitCount > 0) ? css.inputError : ""} 
-    ${errors.title && (touched.title || submitCount > 0) ? css.placeholderError : ""}
-  `}
+              className={`${css.input} ${
+                errors.title && (touched.title || submitCount > 0)
+                  ? css.inputError
+                  : ""
+              }`}
               placeholder="Введіть заголовок запису"
             />
             {errors.title && touched.title && (
@@ -158,10 +195,11 @@ export default function AddDiaryEntryForm({
               as="textarea"
               name="description"
               placeholder="Запишіть, як ви себе відчуваєте"
-              className={`${css.textarea} 
-    ${(touched.description || submitCount > 0) && errors.description ? css.inputError : ""} 
-    ${(touched.description || submitCount > 0) && errors.description ? css.placeholderError : ""}
-  `}
+              className={`${css.textarea} ${
+                (touched.description || submitCount > 0) && errors.description
+                  ? css.inputError
+                  : ""
+              }`}
             />
             {(touched.description || submitCount > 0) && errors.description && (
               <div className={css.error}>{errors.description}</div>
@@ -169,7 +207,7 @@ export default function AddDiaryEntryForm({
           </div>
 
           <button type="submit" className={css.submitBtn}>
-            Зберегти
+            {mode === "create" ? "Зберегти" : "Оновити"}
           </button>
         </Form>
       )}

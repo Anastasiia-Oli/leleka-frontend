@@ -151,27 +151,22 @@
   border-radius: 0 0 12px 12px;
 
   /* Firefox */
-  scrollbar-width: thin;
+
   scrollbar-color: #ffcbd3 rgba(0, 0, 0, 0.2);
 }
 
-/* 👇 Chrome, Safari, Edge */
-.optionsList::-webkit-scrollbar {
-  width: 10px; /* ← ширина скролу */
+div[class*="optionsList"]::-webkit-scrollbar {
+  width: 14px;
 }
 
-.optionsList::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.2); /* ← світло-сіра доріжка */
-  border-radius: 4px;
-  width: 6px;
-  height: 204px;
+div[class*="optionsList"]::-webkit-scrollbar-thumb {
+  background: #ffcbd3;
+  border-radius: 12px;
 }
 
-.optionsList::-webkit-scrollbar-thumb {
-  background-color: #ffcbd3; /* ← рожевий бігунок */
-  border-radius: 4px;
-  width: 10px;
-  height: 56px;
+div[class*="optionsList"]::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
 }
 
 .optionsList::-webkit-scrollbar-thumb:hover {
