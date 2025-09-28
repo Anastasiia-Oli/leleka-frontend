@@ -98,9 +98,14 @@
   border: 0px solid rgba(0, 0, 0, 0.15);
   border-radius: 32px;
   padding: 16px;
-  disabled: true;
   background: #f2f2f2;
   opacity: 0.6;
+}
+
+.disabledBtn:disabled {
+  background: #f2f2f2;
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 @media screen and (min-width: 1440px) {
