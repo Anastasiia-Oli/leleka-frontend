@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
-import { api } from "../../api";
 import { cookies } from "next/headers";
 import { isAxiosError } from "axios";
-import { logErrorResponse } from "../../_utils/utils";
+import { api } from "@/app/api/api";
+import { logErrorResponse } from "@/app/api/_utils/utils";
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -14,7 +14,7 @@ export async function PATCH({ params }: Props, request: NextRequest) {
     const { id } = await params;
     const body = await request.json();
 
-    const res = await api.patch(`/tasks/${id}`, body, {
+    const res = await api.patch(`api/tasks/${id}/status`, body, {
       headers: { Cookie: cookieStore.toString() },
     });
     return NextResponse.json(res.data, { status: res.status });
