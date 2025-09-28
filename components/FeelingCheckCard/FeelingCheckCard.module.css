@@ -2,7 +2,7 @@
   min-width: 315px;
   max-width: 335px;
   height: 193px;
-  background-color: var(--sand-lighter);
+  background-color: var(--pastel-pink-lighter);
   border-radius: 32px;
   padding: 24px;
   display: flex;
@@ -41,8 +41,8 @@
   line-height: 160%;
   color: var(--black);
   margin-top: 24px;
-  background-color: var(--sand-light);
-  border-bottom: 4px solid var(--sand-dark);
+  background-color: var(--pastel-pink-light);
+  border-bottom: 4px solid var(--pastel-pink-dark);
   border-radius: 100px;
   padding: 10px 24px;
   width: 225px;
@@ -51,7 +51,7 @@
 }
 
 .btn:hover {
-  background-color: var(--sand);
+  background-color: var(--pastel-pink-lightest);
 }
 
 @media screen and (min-width: 768px) {
