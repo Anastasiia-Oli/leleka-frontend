@@ -3,9 +3,9 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useState } from "react";
 import Image from "next/image";
-import { useRouter } from "next/navigation"; // якщо App Router
+import { useRouter } from "next/navigation"; 
 import css from "./OnboardingForm.module.css";
-import toast from "react-hot-toast"; // якщо ти юзаєш iziToast можна підмінити
+import toast from "react-hot-toast"; 
 import { ChildSex } from "@/types/types";
 import * as Yup from "yup";
 import { submitOnboarding } from "@/lib/api/clientApi";
@@ -74,7 +74,6 @@ console.log(a);
               Давайте познайомимось ближче
             </h1>
 
-            {/* Фото */}
             <div className={css.photo_file_wrapper}>
               <div>
                 <label htmlFor="fileInput" className={css.avatarLabel}>
@@ -113,7 +112,6 @@ console.log(a);
               </button>
             </div>
 
-            {/* Стать */}
             <label htmlFor="sex" className={css.label_cont}>
               <span className={`${css.label} text-primary`}>Стать дитини</span>
             <Select
@@ -126,7 +124,6 @@ console.log(a);
               <ErrorMessage name="gender" component="div" className={css.error} />
             </label>
 
-            {/* Дата */}
             <label htmlFor="dueDate" className={css.label_cont}>
               <span className={`${css.label} text-primary`}>
                 Планова дата пологів
@@ -140,7 +137,6 @@ console.log(a);
               <ErrorMessage name="dueDate" component="div" className={css.error} />
             </label>
 
-            {/* Сабміт */}
             <button
               type="submit"
               disabled={isSubmitting}
