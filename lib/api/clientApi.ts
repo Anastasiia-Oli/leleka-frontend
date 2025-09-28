@@ -114,15 +114,12 @@ export async function submitOnboarding(payload: OnboardingPayload) {
     const fd = new FormData();
     fd.append("photo", photo);
 
-    await nextServer.patch("/users/avatar", fd, {
-      headers: { "Content-Type": "multipart/form-data" },
-    });
+    await nextServer.patch("/users/avatar", fd);
   }
 
   const { data } = await nextServer.patch(
     "/users",
-    { childSex, dueDate },
-    { headers: { "Content-Type": "application/json" } }
+    { childSex, dueDate }
   );
 
   return data;
