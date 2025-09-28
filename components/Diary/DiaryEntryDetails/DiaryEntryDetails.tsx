@@ -1,7 +1,7 @@
 import React from "react";
 // import { Edit, X } from "lucide-react";
 import { DiaryEntry } from "@/types/dairy";
-import { EMOTIONS } from "../../../types/dairy";
+// import { EMOTIONS } from "../../../types/dairy";
 import css from "./DiaryEntryDetails.module.css";
 
 interface DiaryEntryDetailsProps {
@@ -17,11 +17,6 @@ const DiaryEntryDetails: React.FC<DiaryEntryDetailsProps> = ({
   onDelete,
   onBack
 }) => {
-  // const getEmotionStyle = (emotionName: string) => {
-  //   const emotion = EMOTIONS.find(e => e.name === emotionName);
-  //   return emotion ? { bgColor: emotion.bgColor, textColor: emotion.textColor } : 
-  //          { bgColor: "var(--gray-lightest)", textColor: "var(--gray-dark)" };
-  // };
 
   if (!entry) {
     return (
