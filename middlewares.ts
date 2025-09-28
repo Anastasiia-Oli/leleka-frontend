@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { checkServerSession } from "./lib/api/serverApi";
 
 const privateRoutes = ["/diary", "/journey", "/profile"];
-const publicRoutes = ["/sign-in", "/sign-up"];
+const publicRoutes = ["/auth/login", "/auth/register"];
 
 export async function middleware(request: NextRequest) {
   const cookieStore = await cookies();
@@ -61,7 +61,7 @@ export async function middleware(request: NextRequest) {
     }
 
     if (isPrivateRoute) {
-      return NextResponse.redirect(new URL("/sign-in", request.url));
+      return NextResponse.redirect(new URL("/auth/login", request.url));
     }
   }
 
@@ -78,7 +78,7 @@ export const config = {
     "/profile/:path*",
     "/diary/:path*",
     "/journey/:path*",
-    "/sign-in",
-    "/sign-up",
+    "/auth/login",
+    "/auth/register",
   ],
 };

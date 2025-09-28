@@ -39,11 +39,11 @@ export async function POST(request: NextRequest) {
         });
       }
     }
-    return NextResponse.redirect(new URL("/sign-in", request.url));
+    return NextResponse.redirect(new URL("/auth/login", request.url));
   } catch (error) {
     if (isAxiosError(error)) {
       logErrorResponse(error.response?.data);
-      return NextResponse.redirect(new URL("/sign-in", request.url));
+      return NextResponse.redirect(new URL("/auth/login", request.url));
     }
     logErrorResponse({ message: (error as Error).message });
     return NextResponse.json(
