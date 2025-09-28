@@ -3,16 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
+    "dev": "next dev --turbopack",
+    "build": "next build --turbopack",
     "start": "next start",
     "lint": "eslint"
   },
   "dependencies": {
-    "@hapi/boom": "^10.0.1",
-    "@hapi/hawk": "^8.0.0",
-    "@hapi/hoek": "^11.0.7",
-    "@tanstack/react-query": "^5.90.2",
+    "@tanstack/react-query": "^5.89.0",
     "@tanstack/react-query-devtools": "^5.89.0",
     "axios": "^1.12.2",
     "cookie": "^1.0.2",
