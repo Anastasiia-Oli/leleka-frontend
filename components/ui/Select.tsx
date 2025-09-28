@@ -1,25 +1,37 @@
 "use client";
-import Select from "react-select";
+import Select, { SingleValue } from "react-select";
 
-type SelectProps = {
+type Option = { value: string; label: string };
+
+type CustomSelectProps = {
   options: string[];
+  value?: string;
+  onChange?: (value: string) => void;
   placeholder?: string;
   name?: string;
   id?: string;
   height?: number | string;
+  instanceId?: string;
 };
 
 export default function CustomSelect({
   options,
+  value,
+  onChange,
   placeholder = "Select one...",
   name,
   id,
   height = 40,
-}: SelectProps) {
+  instanceId,
+}: CustomSelectProps) {
   const formattedOptions = options.map((opt) => ({
     value: opt,
     label: opt,
   }));
+
+const selected =
+  formattedOptions.find((o) => o.value === value) ??
+  (value ? { value, label: value } : null);
 
   return (
     <>
@@ -28,12 +40,13 @@ export default function CustomSelect({
         placeholder={placeholder}
         classNamePrefix="custom-select"
         name={name}
-        id={id}
+        inputId={id}
+        instanceId={instanceId}
         styles={{
           container: (base) => ({
-              ...base,
-              width: "100%", // ← контейнер займає всю ширину батьківського
-            }),
+            ...base,
+            width: "100%", // ← контейнер займає всю ширину батьківського
+          }),
           control: (base, state) => ({
             ...base,
             backgroundColor: "#f2f2f2",
@@ -44,7 +57,7 @@ export default function CustomSelect({
             cursor: "pointer",
             height: height,
             width: "100%",
-            "&:hover" : { border: "1px solid rgba(0,0,0,0.15)" },
+            "&:hover": { border: "1px solid rgba(0,0,0,0.15)" },
           }),
           placeholder: (base) => ({
             ...base,
@@ -78,8 +91,8 @@ export default function CustomSelect({
             backgroundColor: state.isSelected
               ? "#e6e6e6"
               : state.isFocused
-              ? "rgba(0,0,0,0.05)"
-              : "transparent",
+                ? "rgba(0,0,0,0.05)"
+                : "transparent",
             color: "#000",
             "&:active": {
               backgroundColor: "rgba(0,0,0,0.1)",
