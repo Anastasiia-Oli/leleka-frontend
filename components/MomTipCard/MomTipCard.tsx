@@ -1,29 +1,55 @@
 "use client";
-import { useQuery } from "@tanstack/react-query";
-import css from "./MomTipCard.module.css";
-import { getMomDailyTips } from "@/lib/api/clientApi";
 
-export default function MomTipCard({ weekNumber }: { weekNumber: number }) {
-  const { data, isLoading, error } = useQuery({
-    queryKey: ["momTip", weekNumber],
-    queryFn: () => getMomDailyTips(weekNumber),
-  });
+import { useEffect, useState } from "react";
+import styles from "./MomTipCard.module.css";
+import { useGetCurrentWeek } from "@/lib/store/getCurrentWeekStore";
 
-  if (isLoading) return <p>Завантаження...</p>;
-  if (error) return <p>Помилка при завантаженні поради</p>;
+const MomTipCard = () => {
+  const { initialWeek: weekNumber } = useGetCurrentWeek();
+  const [tip, setTip] = useState<string>("Завантаження поради...");
 
-  const todayIndex = new Date().getDay() === 0 ? 6 : new Date().getDay() - 1;
-  const tip = data?.momDailyTips?.[todayIndex] ?? "Немає поради на сьогодні";
+  useEffect(() => {
+    const fetchTip = async () => {
+      try {
+        if (!weekNumber) {
+          setTip("Тиждень не визначено");
+          return;
+        }
+
+        const res = await fetch(`/api/weeks/${weekNumber}`);
+        const data = await res.json();
+
+        const tips: string[] = data?.data?.baby?.momDailyTips || [];
+
+        if (tips.length === 0) {
+          setTip("Порада відсутня");
+          return;
+        }
+
+        // ---- тут рахуємо день (міняється раз на 24 години) ----
+        const today = new Date();
+        const daysSinceEpoch = Math.floor(today.getTime() / (24 * 60 * 60 * 1000));
+
+        // Беремо по черзі поради з масиву
+        const tipIndex = daysSinceEpoch % tips.length;
+
+        setTip(tips[tipIndex] || "Порада відсутня");
+      } catch (err) {
+        console.error(err);
+        setTip("Помилка при завантаженні поради");
+      }
+    };
+
+    fetchTip();
+  }, [weekNumber]);
 
   return (
-    <section className={css.tipSection}>
-      <div className={css.tipHeader}>
-        <svg width={24} height={24} className={css.icon}>
-          <use href="/leleka-sprite.svg#icon-heart"></use>
-        </svg>
-        <h3 className={css.tipTitle}>Порада для мами</h3>
-      </div>
-      <p className={css.tipText}>{tip}</p>
-    </section>
-  );
-}
+  <div className={styles.card}>
+    <div className={styles.title}>Порада для мами</div>
+    <div className={styles.tipBlock}>{tip}</div>
+  </div>
+);
+
+};
+
+export default MomTipCard;

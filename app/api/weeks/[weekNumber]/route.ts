@@ -1,18 +1,30 @@
-import nextServer from "@/lib/api/api";
 import { NextRequest, NextResponse } from "next/server";
+import { api, ApiError } from "../../api";
+import { cookies } from "next/headers";
 
-export async function GET(
-  req: NextRequest,
-  { params }: { params: { weekNumber: string } }
-) {
+type Props = { params: Promise<{ weekNumber: string }> };
+
+export async function GET(request: NextRequest, { params }: Props) {
+  const { weekNumber } = await params;
   try {
-    const { weekNumber } = params;
+    const cookieStore = await cookies();
+    const { data } = await api(`/api/weeks/${weekNumber}`, {
+      headers: { Cookie: cookieStore.toString() },
+    });
 
-    const { data } = await nextServer.get(`/weeks/${weekNumber}`);
 
-    return NextResponse.json({ momDailyTips: data.momDailyTips });
-  } catch (err) {
-    console.error(err);
-    return NextResponse.json({ error: "Помилка сервера" }, { status: 500 });
+    console.log("API response for week", weekNumber, data);
+    return NextResponse.json(data);
+  } catch (error) {
+    return NextResponse.json(
+      {
+        error:
+          (error as ApiError).response?.data?.error ??
+          (error as ApiError).message,
+      },
+      {
+        status: (error as ApiError).status,
+      }
+    );
   }
 }
