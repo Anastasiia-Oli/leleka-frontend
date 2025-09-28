@@ -8,11 +8,11 @@ type Props = {
   params: Promise<{ week: number }>;
 };
 
-export async function GET({ params }: Props, request: Request) {
+export async function GET({ params }: Props) {
   try {
     const cookie = await cookies();
     const { week } = await params;
-    const res = await api(`/weeks/${week}`, {
+    const res = await api(`api/weeks/${week}`, {
       headers: { Cookie: cookie.toString() },
     });
     return NextResponse.json(res.data, { status: res.status });
