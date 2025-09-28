@@ -1,3 +1,5 @@
+// картка щоденика
+
 'use client';
 
 import React from "react";
@@ -11,7 +13,7 @@ interface DiaryEntryCardProps {
 }
 
 const DiaryEntryCard: React.FC<DiaryEntryCardProps> = ({ entry, onClick, isSelected }) => {
-  
+
   // Показуємо максимум 3 емоції, решту ховаємо під "+N"
   const visibleEmotions = entry.emotions?.slice(0, 3) || [];
   const hiddenEmotionsCount = Math.max((entry.emotions?.length ?? 0) - 3, 0);

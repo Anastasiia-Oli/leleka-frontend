@@ -1,3 +1,5 @@
+// Деталі картки щоденика, права сторона
+
 import React, { useState } from "react";
 import { DiaryEntry } from "@/types/dairy";
 import css from "./DiaryEntryDetails.module.css";

@@ -52,6 +52,7 @@
     display: flex;
     align-items: center;
     justify-content: right;
+    fill: var(--black);
 }
 
 .editIcon {

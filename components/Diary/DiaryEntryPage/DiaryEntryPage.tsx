@@ -17,7 +17,7 @@ const DiaryEntryPage = ({ params }: PageProps) => {
   const router = useRouter();
 
   // Отримуємо всі записи щоденника
-  const { data: diaryEntries, isLoading } = useQuery<DiaryEntry[]>({
+  const { data: diaryEntries, isLoading, refetch } = useQuery<DiaryEntry[]>({
     queryKey: ['diary'],
     queryFn: fetchDiary,
   });
@@ -36,24 +36,18 @@ const DiaryEntryPage = ({ params }: PageProps) => {
     }
   };
 
-  const handleDelete = async () => {
-    if (entry && window.confirm('Ви впевнені, що хочете видалити цей запис?')) {
-      try {
-        // Тут буде API виклик для видалення
-        console.log('Видалення запису:', entry._id);
-        // Після успішного видалення повертаємось до списку
-        router.push('/diary');
-      } catch (error) {
-        console.error('Error deleting entry:', error);
-        alert('Помилка при видаленні запису');
-      }
-    }
+  // Обробник видалення запису - викликається з DiaryEntryDetails
+  const handleEntryDelete = (deletedEntryId: string) => {
+    // Після успішного видалення повертаємось до списку
+    router.push('/diary');
+    // Оновлюємо дані в cache
+    refetch();
   };
 
   if (isLoading) {
     return <div>Завантаження...</div>;
   }
-  
+
   // Якщо запис не знайдено
   if (!entry) {
     return (
@@ -67,7 +61,7 @@ const DiaryEntryPage = ({ params }: PageProps) => {
         justifyContent: "center"
       }}>
         <h2>Запис не знайдено</h2>
-        <button 
+        <button
           onClick={handleBack}
           style={{
             marginTop: "16px",
@@ -94,7 +88,6 @@ const DiaryEntryPage = ({ params }: PageProps) => {
         padding: "16px",
         paddingBottom: "0"
       }}>
-        {/* Тут можна додати хлібні крихти або додаткову навігацію */}
       </div>
 
       <div style={{
@@ -104,7 +97,7 @@ const DiaryEntryPage = ({ params }: PageProps) => {
         <DiaryEntryDetails
           entry={entry}
           onEdit={handleEdit}
-          onDelete={handleDelete}
+          onDelete={handleEntryDelete}
           onBack={handleBack}
         />
       </div>
