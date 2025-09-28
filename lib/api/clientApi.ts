@@ -114,7 +114,43 @@ export async function CreateNote(
 }
 //поміняти на post<CreateDiaryEntryData>
 
-export async function DeleteNote(id: string): Promise<{ message: string }> {
+// Отримати конкретний запис щоденника за ID
+export async function getDiaryEntry(id: string): Promise<DiaryEntry> {
+  const res = await nextServer.get<DiaryEntry>(`/diaries/${id}`);
+  return res.data;
+}
+
+// Видалити запис щоденника
+export async function deleteDiaryEntry(id: string): Promise<{ message: string }> {
   const res = await nextServer.delete<{ message: string }>(`/diaries/${id}`);
+  return res.data;
+}
+
+// Оновити запис щоденника
+export async function updateDiaryEntry(
+  id: string,
+  data: Partial<CreateDiaryEntryData>
+): Promise<DiaryEntry> {
+  const res = await nextServer.put<DiaryEntry>(`/diaries/${id}`, data);
+  return res.data;
+}
+
+// Додати емоцію до запису
+export async function addEmotionToEntry(
+  entryId: string,
+  emotionId: string
+): Promise<DiaryEntry> {
+  const res = await nextServer.patch<DiaryEntry>(`/diaries/${entryId}/emotions`, {
+    emotionId: emotionId
+  });
+  return res.data;
+}
+
+// Видалити емоцію з запису
+export async function removeEmotionFromEntry(
+  entryId: string,
+  emotionId: string
+): Promise<DiaryEntry> {
+  const res = await nextServer.delete<DiaryEntry>(`/diaries/${entryId}/emotions/${emotionId}`);
   return res.data;
 }

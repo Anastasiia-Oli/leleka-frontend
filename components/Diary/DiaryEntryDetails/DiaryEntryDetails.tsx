@@ -7,13 +7,15 @@ interface DiaryEntryDetailsProps {
   onEdit?: () => void;
   onDelete?: () => void;
   onBack?: () => void;
+  isDeleting?: boolean;
 }
 
 const DiaryEntryDetails: React.FC<DiaryEntryDetailsProps> = ({
   entry,
   onEdit,
   onDelete,
-  onBack
+  onBack,
+  isDeleting = false
 }) => {
 
   if (!entry) {
@@ -50,10 +52,20 @@ const DiaryEntryDetails: React.FC<DiaryEntryDetailsProps> = ({
 
   return (
     <div className={css.diaryContainer}>
+
+      {isDeleting && (
+        <div className={css.loadingOverlay}>
+          <div className={css.loadingSpinner}>
+            <p>Видалення запису...</p>
+          </div>
+        </div>
+      )}
+
       {onBack && (
         <button
           className={css.backButton}
           onClick={onBack}
+          disabled={isDeleting}
         >
           ← Назад до списку
         </button>

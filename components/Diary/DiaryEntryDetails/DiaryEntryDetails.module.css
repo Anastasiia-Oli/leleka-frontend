@@ -202,3 +202,74 @@
         height: 18px;
     }
 }
+
+.loadingOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    border-radius: 16px;
+}
+
+.loadingSpinner {
+    text-align: center;
+    padding: 20px;
+    color: var(--gray-dark);
+}
+
+.loadingSpinner p {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* Анімація для кнопок у стані disabled */
+.actionButton:disabled,
+.closeButton:disabled,
+.backButton:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.actionButton:disabled:hover,
+.closeButton:disabled:hover {
+    background: none;
+}
+
+.actionButton:disabled .editIcon,
+.closeButton:disabled .deleteIcon {
+    fill: var(--gray-light);
+}
+
+/* Додаткова анімація завантаження */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.loadingOverlay {
+    animation: fadeIn 0.2s ease-in-out;
+}
+
+/* Стилі для mobile */
+@media (max-width: 767px) {
+    .loadingSpinner {
+        padding: 15px;
+    }
+
+    .loadingSpinner p {
+        font-size: 13px;
+    }
+}
