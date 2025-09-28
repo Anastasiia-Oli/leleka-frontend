@@ -23,7 +23,7 @@ export const getMeServer = async () => {
 };
 
 export async function getTasksServer(): Promise<Task[]> {
-  const cookieStore = await cookies;
+  const cookieStore = await cookies();
   const { data } = await nextServer.get<Task[]>("/tasks", {
     headers: { Cookie: cookieStore.toString() },
   });

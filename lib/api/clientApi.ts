@@ -104,8 +104,11 @@ export async function changeStateTask(
   task: Task,
   { isDone }: Task
 ): Promise<SetTaskState> {
-  const { data } = await nextServer.patch<SetTaskState>(`/tasks/${task._id}`, {
-    isDone,
-  });
+  const { data } = await nextServer.patch<SetTaskState>(
+    `/tasks/${task._id}/status`,
+    {
+      isDone,
+    }
+  );
   return data;
 }
