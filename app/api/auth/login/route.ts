@@ -2,12 +2,11 @@ import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { parse } from "cookie";
 import { isAxiosError } from "axios";
-import { api } from "../../api"; 
-import { logErrorResponse } from "../../_utils/utils"; 
+import { api } from "../../api";
+import { logErrorResponse } from "../../_utils/utils";
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-
     const apiRes = await api.post("api/auth/login", body, {
       headers: { Cookie: request.headers.get("cookie") ?? "" },
     });
@@ -28,7 +27,8 @@ export async function POST(request: NextRequest) {
           httpOnly: Object.prototype.hasOwnProperty.call(parsed, "HttpOnly"),
           secure: Object.prototype.hasOwnProperty.call(parsed, "Secure"),
           sameSite:
-            (parsed.SameSite as "lax" | "strict" | "none" | undefined) ?? undefined,
+            (parsed.SameSite as "lax" | "strict" | "none" | undefined) ??
+            undefined,
         } as const;
 
         if (parsed.accessToken) {

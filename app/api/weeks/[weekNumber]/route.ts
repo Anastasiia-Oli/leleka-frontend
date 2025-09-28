@@ -12,8 +12,6 @@ export async function GET(request: NextRequest, { params }: Props) {
       headers: { Cookie: cookieStore.toString() },
     });
 
-
-    console.log("API response for week", weekNumber, data);
     return NextResponse.json(data);
   } catch (error) {
     return NextResponse.json(
@@ -27,4 +25,6 @@ export async function GET(request: NextRequest, { params }: Props) {
       }
     );
   }
+
 }
+

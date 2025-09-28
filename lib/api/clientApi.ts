@@ -1,11 +1,21 @@
 import { User } from "@/types/user";
+import { JourneyDetails } from "@/types/journeyType";
 import nextServer from "./api";
+import type { ChildSex } from "../../types/user";
+
 
 export interface RegisterRequest {
   name: string;
   email: string;
   password: string;
 }
+
+type JourneyDetailResponce = {
+  message: string;
+  status: number;
+  weekNumber: number;
+  data: JourneyDetails;
+};
 
 export interface RegisterUserResponse {
   status: number;
@@ -27,10 +37,39 @@ export interface LoginRequest {
 export interface LoginUserResponse {
   status: number;
   message: string;
-  data: User; 
+  data: User;
 }
 
+export type ApiResponse<T> = {
+    status: number;
+    message: string;
+    data: T;
+};
+
+type OnboardingPayload = {
+  childSex: ChildSex;
+  dueDate: string;
+  photo?: File;
+}; 
+
 export type LogoutResponse = { message?: string };
+
+export const getJourneyDetailsByWeek = async (
+  weekNumber: number
+): Promise<JourneyDetails> => {
+  try {
+    const response = await nextServer<JourneyDetailResponce>(
+      `/weeks/${weekNumber}`
+    );
+    if (!response?.data?.data) {
+      throw new Error("No journey data returned from API");
+    }
+    return response.data.data;
+  } catch (error) {
+    console.error("Failed to fetch journey details:", error);
+    throw error;
+  }
+};
 
 export async function registerUser(
   params: RegisterRequest
@@ -42,9 +81,7 @@ export async function registerUser(
   return data;
 }
 
-export async function login(
-  params: LoginRequest
-): Promise<LoginUserResponse> {
+export async function login(params: LoginRequest): Promise<LoginUserResponse> {
   const { data } = await nextServer.post<LoginUserResponse>(
     "/auth/login",
     params
@@ -60,15 +97,37 @@ export async function logout(): Promise<LogoutResponse> {
 type CheckSessionResponse = { success: boolean };
 
 export const checkSession = async () => {
-  const { data } = await nextServer.get<CheckSessionResponse>("/auth/session");
+  const { data } = await nextServer.post<CheckSessionResponse>("/auth/session");
+  
   return data.success;
 };
 
 export const getMe = async () => {
-  const { data } = await nextServer.get<User>("/auth/session");
+  const { data } = await nextServer.get<User>("/users/current");
   return data;
 };
+
 export async function getMomDailyTips(weekNumber: number): Promise<{ momDailyTips: string[] }> {
   const { data } = await nextServer.get(`/weeks/${weekNumber}`);
   return data;
 }
+
+
+export async function submitOnboarding(payload: OnboardingPayload) {
+  const { childSex, dueDate, photo } = payload;
+
+  if (photo) {
+    const fd = new FormData();
+    fd.append("photo", photo);
+
+    await nextServer.patch("/users/avatar", fd);
+  }
+
+  const { data } = await nextServer.patch(
+    "/users",
+    { childSex, dueDate }
+  );
+
+  return data;
+}
+
