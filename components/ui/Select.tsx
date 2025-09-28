@@ -23,7 +23,7 @@ export default function CustomSelect({
   id,
   height = 40,
   instanceId,
-}: SelectProps) {
+}: CustomSelectProps) {
   const formattedOptions = options.map((opt) => ({
     value: opt,
     label: opt,

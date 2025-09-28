@@ -2,7 +2,6 @@ import { User } from "@/types/user";
 import { JourneyDetails } from "@/types/journeyType";
 import nextServer from "./api";
 import type { ChildSex } from "../../types/types";
-import axios, { AxiosError } from "axios";
 
 
 export interface RegisterRequest {
