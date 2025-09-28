@@ -36,16 +36,6 @@
   font-family: "Lato", sans-serif;
 }
 
-@media screen and (min-width: 1440px) {
-  .weekText {
-    font-size: 16px;
-  }
-
-  .weekNumbers {
-    font-size: 32px;
-  }
-}
-
 .weeksList {
   list-style: none;
   display: flex;
@@ -111,4 +101,18 @@
   disabled: true;
   background: #f2f2f2;
   opacity: 0.6;
+}
+
+@media screen and (min-width: 1440px) {
+  .weekText {
+    font-size: 16px;
+  }
+
+  .weekNumbers {
+    font-size: 32px;
+  }
+
+  .weekSelectorContainer {
+    width: calc(100% - 313px);
+  }
 }
