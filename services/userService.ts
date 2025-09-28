@@ -1,6 +1,7 @@
 import { User } from "../types/user";
 
-const API_URL = "http://localhost:3000"; // бекенд
+// const API_URL = "http://localhost:3000"; // бекенд
+const API_URL = "https://leleka-backend-1.onrender.com";
 
 // отримати поточного юзера
 export async function getCurrentUser(token: string): Promise<User> {

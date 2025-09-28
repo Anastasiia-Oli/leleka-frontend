@@ -1,0 +1,14 @@
+// .vscode/launch.json (У папці вашого ФРОНТЕНДУ)
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Launch Next.js in Chrome",
+      "type": "chrome",
+      "request": "launch",
+      "url": "http://localhost:3000", // Ваш порт
+      "webRoot": "${workspaceFolder}",
+      "runtimeArgs": ["--remote-debugging-port=9222"]
+    }
+  ]
+}

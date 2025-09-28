@@ -11,6 +11,16 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  async rewrites() {
+    return [
+      {
+        source: "/api/:path*",
+        destination: "https://leleka-backend-1.onrender.com/api/:path*",
+        //  destination: "https://leleka-backendmy.onrender.com/api/:path*",
+        // destination: "http://localhost:3000/api/:path*",
+      },
+    ];
+  }
 };
 
 export default nextConfig;
