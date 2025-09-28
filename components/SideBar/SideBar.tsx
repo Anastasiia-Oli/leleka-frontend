@@ -1,7 +1,6 @@
 "use client";
 import Link from "next/link";
 import css from "./SideBar.module.css";
-import AuthNavigation from "../AuthNavigation/AuthNavigation";
 import { useGetCurrentWeek } from "@/lib/store/getCurrentWeekStore";
 
 const SideBar = () => {
@@ -66,7 +65,7 @@ const SideBar = () => {
               <Link href={"/profile"}>Профіль</Link>
             </li>
           </ul>
-          <AuthNavigation />
+          {/* <AuthNavigation /> */}
         </aside>
       </section>
     </>
