@@ -7,7 +7,7 @@
     padding: 24px;
     gap: 8px;
     box-sizing: border-box;
-    
+
 }
 
 .backButton {
@@ -85,6 +85,7 @@
 .editIcon {
     margin-right: 8px;
 }
+
 .actionButton:hover .editIcon,
 .closeButton:hover .deleteIcon {
     fill: var(--gray-dark);
@@ -152,9 +153,10 @@
 /* Desktop fixed height with scroll */
 @media (min-width: 1024px) {
     /* .diarycontainer { */
-        /* height: 450px; */
-        /* Fixed height for desktop */
-    }
+    /* height: 450px; */
+    /* Fixed height for desktop */
+}
+
 /* } */
 
 /* Mobile/Tablet styles */
@@ -271,5 +273,198 @@
 
     .loadingSpinner p {
         font-size: 13px;
+    }
+}
+
+/* Модальне вікно підтвердження */
+.confirmModal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    animation: fadeIn 0.2s ease-in-out;
+}
+
+.confirmContent {
+    background: var(--card, white);
+    padding: 24px;
+    border-radius: 16px;
+    max-width: 420px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px) scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.confirmContent h3 {
+    margin: 0 0 16px 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text, #1a1a1a);
+    line-height: 1.3;
+}
+
+.confirmContent p {
+    margin: 0 0 8px 0;
+    color: var(--text, #1a1a1a);
+    line-height: 1.5;
+    font-size: 14px;
+}
+
+.warningText {
+    color: var(--color-red, #dc2626) !important;
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 24px !important;
+    padding: 8px 12px;
+    background: rgba(220, 38, 38, 0.1);
+    border-radius: 8px;
+    border-left: 3px solid var(--color-red, #dc2626);
+}
+
+.confirmButtons {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+.cancelButton {
+    padding: 10px 20px;
+    border: 1px solid var(--border, #e2e8f0);
+    background: var(--card, white);
+    color: var(--text, #1a1a1a);
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    min-width: 80px;
+}
+
+.cancelButton:hover:not(:disabled) {
+    background: var(--hover, #f1f5f9);
+    border-color: var(--border-hover, #cbd5e1);
+    transform: translateY(-1px);
+}
+
+.confirmDeleteButton {
+    padding: 10px 20px;
+    border: none;
+    background: var(--color-red, #dc2626);
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    min-width: 80px;
+    position: relative;
+}
+
+.confirmDeleteButton:hover:not(:disabled) {
+    background: var(--color-red-hover, #b91c1c);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+}
+
+.confirmDeleteButton:active:not(:disabled) {
+    transform: translateY(0);
+    box-shadow: 0 2px 6px rgba(220, 38, 38, 0.3);
+}
+
+.confirmDeleteButton:disabled,
+.cancelButton:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+/* Loading overlay */
+.loadingOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    border-radius: 16px;
+    backdrop-filter: blur(2px);
+}
+
+.loadingSpinner {
+    text-align: center;
+    padding: 20px;
+    color: var(--text, #1a1a1a);
+}
+
+.loadingSpinner p {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* Mobile адаптація */
+@media (max-width: 768px) {
+    .confirmContent {
+        padding: 20px;
+        margin: 16px;
+        max-width: none;
+        width: calc(100% - 32px);
+    }
+
+    .confirmContent h3 {
+        font-size: 16px;
+    }
+
+    .confirmButtons {
+        flex-direction: column-reverse;
+        gap: 8px;
+    }
+
+    .cancelButton,
+    .confirmDeleteButton {
+        width: 100%;
+        padding: 12px;
+        font-size: 16px;
+    }
+
+    .warningText {
+        font-size: 12px;
+        padding: 6px 10px;
     }
 }

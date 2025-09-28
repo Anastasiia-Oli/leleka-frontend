@@ -1,5 +1,3 @@
-// Деталі картки щоденика, права сторона
-
 import React, { useState } from "react";
 import { DiaryEntry } from "@/types/dairy";
 import css from "./DiaryEntryDetails.module.css";
@@ -8,7 +6,7 @@ import { toast } from "react-hot-toast";
 interface DiaryEntryDetailsProps {
   entry: DiaryEntry | null;
   onEdit?: () => void;
-  onDelete?: (entryId: string) => void; // Змінили тип для передачі ID
+  onDelete?: (entryId: string) => void;
   onBack?: () => void;
   isDeleting?: boolean;
 }
@@ -72,21 +70,22 @@ const DiaryEntryDetails: React.FC<DiaryEntryDetailsProps> = ({
         },
       });
 
-      const result = await response.json();
-
       if (!response.ok) {
-        throw new Error(result.error || 'Помилка видалення запису');
+        const errorData = await response.json();
+        throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
       }
 
+      const result = await response.json();
+
       toast.success("Запис успішно видалено");
+
+      // Закриваємо модальне вікно підтвердження спочатку
+      setIsConfirmingDelete(false);
 
       // Викликаємо callback для оновлення списку на батьківському компоненті
       if (onDelete) {
         onDelete(entry._id);
       }
-
-      // Закриваємо модальне вікно підтвердження
-      setIsConfirmingDelete(false);
 
     } catch (error) {
       console.error("Error deleting diary entry:", error);
@@ -128,7 +127,7 @@ const DiaryEntryDetails: React.FC<DiaryEntryDetailsProps> = ({
         <div className={css.confirmModal}>
           <div className={css.confirmContent}>
             <h3>Підтвердження видалення</h3>
-            <p>Ви впевнені, що хочете видалити запис?</p>
+            <p>Ви впевнені, що хочете видалити запис <strong>&quot;{entry.title}&quot;</strong>?</p>
             <p className={css.warningText}>Цю дію неможливо скасувати.</p>
             <div className={css.confirmButtons}>
               <button

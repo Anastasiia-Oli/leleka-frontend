@@ -32,23 +32,30 @@ const DiaryEntryPage = ({ params }: PageProps) => {
   const handleEdit = () => {
     if (entry) {
       console.log('Open AddDiaryEntryModal for editing', entry);
-      // Тут буде логіка відкриття модального вікна для редагування
     }
   };
 
-  // Обробник видалення запису - викликається з DiaryEntryDetails
+  // Обробник видалення запису
   const handleEntryDelete = (deletedEntryId: string) => {
-    // Після успішного видалення повертаємось до списку
     router.push('/diary');
-    // Оновлюємо дані в cache
     refetch();
   };
 
   if (isLoading) {
-    return <div>Завантаження...</div>;
+    return (
+      <div style={{
+        minHeight: "100vh",
+        background: "var(--pastel-pink-lighter)",
+        padding: "16px",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center"
+      }}>
+        <p>Завантаження...</p>
+      </div>
+    );
   }
 
-  // Якщо запис не знайдено
   if (!entry) {
     return (
       <div style={{
@@ -82,18 +89,9 @@ const DiaryEntryPage = ({ params }: PageProps) => {
     <div style={{
       minHeight: "100vh",
       background: "var(--pastel-pink-lighter)",
-      padding: "0"
+      padding: "16px"
     }}>
-      <div style={{
-        padding: "16px",
-        paddingBottom: "0"
-      }}>
-      </div>
-
-      <div style={{
-        padding: "0 16px 16px 16px",
-        height: "calc(100vh - 120px)"
-      }}>
+      <div style={{ maxWidth: "100%", margin: "0 auto" }}>
         <DiaryEntryDetails
           entry={entry}
           onEdit={handleEdit}
