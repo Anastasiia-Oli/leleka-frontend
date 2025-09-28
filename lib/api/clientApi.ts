@@ -82,7 +82,6 @@ export async function registerUser(
 }
 
 export async function login(params: LoginRequest): Promise<LoginUserResponse> {
-  console.log(12);
   const { data } = await nextServer.post<LoginUserResponse>(
     "/auth/login",
     params
@@ -99,7 +98,6 @@ type CheckSessionResponse = { success: boolean };
 
 export const checkSession = async () => {
   const { data } = await nextServer.post<CheckSessionResponse>("/auth/session");
-  console.log(15, data);
   
   return data.success;
 };
@@ -112,19 +110,17 @@ export const getMe = async () => {
 export async function submitOnboarding(payload: OnboardingPayload) {
   const { childSex, dueDate, photo } = payload;
 
-  // 1. Фото
   if (photo) {
     const fd = new FormData();
     fd.append("photo", photo);
 
-    await nextServer.patch("/api/users/avatar", fd, {
+    await nextServer.patch("/users/avatar", fd, {
       headers: { "Content-Type": "multipart/form-data" },
     });
   }
 
-  // 2. Інші дані
   const { data } = await nextServer.patch(
-    "/api/users",
+    "/users",
     { childSex, dueDate },
     { headers: { "Content-Type": "application/json" } }
   );
