@@ -12,19 +12,21 @@ const StatusBlock = () => {
   const dueDateM = new Date(user.dueDate ? user.dueDate + "T00:00:00" : "");
   const isValidDate = dueDateM instanceof Date && !isNaN(dueDateM.getTime());
 
-  let week = null;
-  let daysLeft = null;
+  let week = 0;
+  let daysLeft;
 
-  const today = new Date();
-  const pregancyStart = new Date(
-    dueDateM.getTime() - 280 * 24 * 60 * 60 * 1000
-  );
-  week = Math.floor(
-    (today.getTime() - pregancyStart.getTime()) / (7 * 24 * 60 * 60 * 1000)
-  );
-  daysLeft = Math.ceil(
-    (dueDateM.getTime() - today.getTime()) / (24 * 60 * 60 * 1000)
-  );
+  if (isValidDate) {
+    const today = new Date();
+    const pregancyStart = new Date(
+      dueDateM.getTime() - 280 * 24 * 60 * 60 * 1000
+    );
+    week = Math.floor(
+      (today.getTime() - pregancyStart.getTime()) / (7 * 24 * 60 * 60 * 1000)
+    );
+    daysLeft = Math.ceil(
+      (dueDateM.getTime() - today.getTime()) / (24 * 60 * 60 * 1000)
+    );
+  }
 
   useEffect(() => {
     if (Number.isFinite(week) && week > 0) {
