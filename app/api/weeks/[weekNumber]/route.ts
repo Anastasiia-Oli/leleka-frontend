@@ -1,33 +1,27 @@
+import { NextRequest, NextResponse } from "next/server";
+import { api, ApiError } from "../../api";
 import { cookies } from "next/headers";
-import { NextResponse } from "next/server";
-import { api } from "../../api";
-import { isAxiosError } from "axios";
-import { logErrorResponse } from "../../_utils/utils";
 
-type Props = {
-  params: Promise<{ week: number }>;
-};
+type Props = { params: Promise<{ weekNumber: string }> };
 
-export async function GET({ params }: Props) {
+export async function GET(request: NextRequest, { params }: Props) {
+  const { weekNumber } = await params;
   try {
-    const cookie = await cookies();
-    const { week } = await params;
-    const res = await api(`api/weeks/${week}`, {
-      headers: { Cookie: cookie.toString() },
+    const cookieStore = await cookies();
+    const { data } = await api(`/api/weeks/${weekNumber}`, {
+      headers: { Cookie: cookieStore.toString() },
     });
-    return NextResponse.json(res.data, { status: res.status });
+    return NextResponse.json(data);
   } catch (error) {
-    if (isAxiosError(error)) {
-      logErrorResponse(error.response?.data);
-      return NextResponse.json(
-        { error: error.message, response: error.response?.data },
-        { status: error.status }
-      );
-    }
-    logErrorResponse({ message: (error as Error).message });
     return NextResponse.json(
-      { error: "Internal Server Error" },
-      { status: 500 }
+      {
+        error:
+          (error as ApiError).response?.data?.error ??
+          (error as ApiError).message,
+      },
+      {
+        status: (error as ApiError).status,
+      }
     );
   }
 }

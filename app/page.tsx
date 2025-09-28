@@ -3,7 +3,6 @@ import StatusBlock from "@/components/StatusBlock/StatusBlock";
 import MomTipCard from "@/components/MomTipCard/MomTipCard";
 import TasksReminderCard from "@/components/TasksReminderCard/TasksReminderCard";
 import FeelingCheckCard from "@/components/FeelingCheckCard/FeelingCheckCard";
-
 export default function Home() {
   return (
     <section>
