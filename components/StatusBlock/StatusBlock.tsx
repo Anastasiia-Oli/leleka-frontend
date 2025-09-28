@@ -2,11 +2,11 @@
 
 import css from "./StatusBlock.module.css";
 import { useAuthUserStore } from "@/lib/store/authStore";
-import { useGetCurrentWeek } from "@/lib/store/getCurrentWeekStore";
+// import { useGetCurrentWeek } from "@/lib/store/getCurrentWeekStore";
 
 const StatusBlock = () => {
   const user = useAuthUserStore((state) => state.user);
-  const { getCurrWeek } = useGetCurrentWeek();
+  // const { getCurrWeek } = useGetCurrentWeek();
 
   const dueDateM = new Date(user.dueDate ? user.dueDate + "T00:00:00" : "");
   const isValidDate = dueDateM instanceof Date && !isNaN(dueDateM.getTime());
@@ -28,7 +28,7 @@ const StatusBlock = () => {
   const week = Math.floor(
     (today.getTime() - pregancyStart.getTime()) / (7 * 24 * 60 * 60 * 1000)
   );
-  getCurrWeek(week);
+  // getCurrWeek(week);
   const daysLeft = Math.ceil(
     (dueDateM.getTime() - today.getTime()) / (24 * 60 * 60 * 1000)
   );
