@@ -39,9 +39,11 @@
   resize: vertical;
 }
 
+.input:hover,
 .input:focus,
+.textarea:hover,
 .textarea:focus,
-.select:focus {
+.select:hover .select:focus {
   outline: none;
   border: 2px solid #ffcbd3;
 }
@@ -65,13 +67,12 @@
   cursor: pointer;
   transition: border 0.2s ease-in-out;
 
-  /* ✨ головне для горизонтального скролу */
+  /* головне для горизонтального скролу */
   overflow-x: auto;
   white-space: nowrap;
-  scrollbar-width: thin; /* для Firefox */
+  scrollbar-width: thin;
 }
 
-/* 👇 Стиль скролбару для Chrome/Edge */
 .selectedEmotions::-webkit-scrollbar {
   height: 6px;
 }
@@ -122,104 +123,40 @@
   top: calc(100% + 4px);
   left: 0;
   width: 100%;
-  background-color: #f2f2f2; /* 👈 фон такий самий як в optionsList */
-  border: 1px solid rgba(0, 0, 0, 0.15);
+  background-color: #f2f2f2;
+  border-left: 1px solid rgba(0, 0, 0, 0.15);
+  border-right: 1px solid rgba(0, 0, 0, 0.15);
+  border-top: 1px solid rgba(0, 0, 0, 0.15);
   border-radius: 12px;
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
   z-index: 10;
-  overflow: visible; /* 👈 дозволяє скролу не обрізатися */
 }
 
 .dropdownHeader {
   position: relative;
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  border-bottom: none;
-  border-radius: 12px 12px 0 0;
-  padding: 8px 12px;
-  font-family: "Lato", sans-serif;
-  font-size: 14px;
-  background-color: rgba(0, 0, 0, 0.05);
-}
-
-/* 📜 Контейнер для опцій */
-.optionsList {
-  max-height: 220px;
-  overflow-y: auto;
-  padding: 8px 0;
-  background-color: #f5f5f5;
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  border-radius: 0 0 12px 12px;
-
-  /* Firefox */
-
-  scrollbar-color: #ffcbd3 rgba(0, 0, 0, 0.2);
-}
-
-div[class*="optionsList"]::-webkit-scrollbar {
-  width: 14px;
-}
-
-div[class*="optionsList"]::-webkit-scrollbar-thumb {
-  background: #ffcbd3;
-  border-radius: 12px;
-}
-
-div[class*="optionsList"]::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.2);
-  border-radius: 12px;
-}
-
-.optionsList::-webkit-scrollbar-thumb:hover {
-  background-color: #f8aebb;
-}
-
-/* 🗂️ Окремі опції */
-.option {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 10px 16px;
+  justify-content: space-between;
+
+  min-height: 48px;
+  padding: 8px 40px 8px 12px;
+  border-radius: 12px;
+  background: #f5f5f5;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: border 0.2s ease-in-out;
+
   font-family: "Lato", sans-serif;
   font-weight: 400;
   font-size: 14px;
   line-height: 1.5;
   color: #000;
-  cursor: pointer;
-  transition: background-color 0.2s ease-in-out;
+  box-shadow: none;
 }
 
-.option:hover {
-  background: rgba(0, 0, 0, 0.05);
-}
-
-.option input[type="checkbox"] {
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-
-  width: 18px;
-  height: 18px;
-  border-radius: 4px;
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  background-color: rgba(0, 0, 0, 0.05);
-  cursor: pointer;
-  position: relative;
-}
-
-/* ✅ Стиль коли чекбокс вибраний */
-.option input[type="checkbox"]:checked {
-  background-color: #000;
-  border-color: #000;
-}
-
-.option input[type="checkbox"]:checked::after {
-  content: "✔";
-  color: #fff;
-  font-size: 14px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+.dropdownHeader:hover,
+.dropdownHeader:focus {
+  border: 2px solid #ffcbd3;
 }
 
 .error {

@@ -6,6 +6,7 @@ import { useDiaryForm } from "@/hooks/useDiaryForm";
 import css from "./AddDiaryEntryForm.module.css";
 import { createDiaryEntry, updateDiaryEntry } from "@/lib/api/clientApi";
 import { createDiaryEntrySchema } from "@/lib/validation/diaryValidation";
+import EmotionSelect from "@/components/Diary/EmotionSelect/EmotionSelect";
 import { ObjectSchema } from "yup";
 import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
@@ -159,26 +160,11 @@ export default function AddDiaryEntryForm({
                     </svg>
                   </div>
 
-                  <div className={css.optionsList}>
-                    {emotions.map((emotion) => (
-                      <label key={emotion._id} className={css.option}>
-                        <input
-                          type="checkbox"
-                          value={emotion._id}
-                          checked={values.emotions.includes(emotion._id)}
-                          onChange={(e) => {
-                            const updated = e.target.checked
-                              ? [...values.emotions, emotion._id]
-                              : values.emotions.filter(
-                                  (id) => id !== emotion._id
-                                );
-                            setFieldValue("emotions", updated);
-                          }}
-                        />
-                        {emotion.title}
-                      </label>
-                    ))}
-                  </div>
+                  <EmotionSelect
+                    emotions={emotions}
+                    values={values}
+                    setFieldValue={setFieldValue}
+                  />
                 </div>
               )}
             </div>
