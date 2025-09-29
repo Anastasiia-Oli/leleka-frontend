@@ -1,3 +1,4 @@
+
 import { NextResponse } from "next/server";
 import { api } from "../../api"; // той, що дивиться на onrender
 import { cookies } from "next/headers";
@@ -29,3 +30,4 @@ export async function PATCH(req: Request) {
     return NextResponse.json({ error: "Upload failed" }, { status: 500 });
   }
 }
+
