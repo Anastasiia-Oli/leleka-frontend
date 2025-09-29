@@ -19,5 +19,5 @@ export const getMeServer = async () => {
       Cookie: cookieStore.toString(),
     },
   });
-  return response.data;
+  return response;
 };
