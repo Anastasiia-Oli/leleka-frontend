@@ -41,7 +41,7 @@ const TasksReminderCard = () => {
     <div className={css.card}>
       <div className={css.listHeader}>
         <h2 className={css.title}>Важливі завдання</h2>
-        <Link href={`/tasks`} className={css.newTask}>
+        <Link href={`/tasks`} className={css.newTask} id="openTaskModal">
           +
         </Link>
       </div>
@@ -52,7 +52,7 @@ const TasksReminderCard = () => {
             <h3 className={css.sectionTitle}>Наразі немає жодних завдань</h3>
             <p className={css.empty}>Створіть мершій нове завдання!</p>
           </div>
-          <Link href={`/tasks`} className={css.btn}>
+          <Link href={`/tasks`} className={css.btn} id="openTaskModal">
             Створити завдання
           </Link>
         </>
