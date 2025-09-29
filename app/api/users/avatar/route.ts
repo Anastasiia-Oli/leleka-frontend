@@ -10,9 +10,13 @@ export async function PATCH(req: Request) {
     const file = formData.get("avatar") as File;
 
     const backendFormData = new FormData();
-    backendFormData.append("avatar", Buffer.from(await file.arrayBuffer()), file.name);
+    backendFormData.append(
+      "avatar",
+      Buffer.from(await file.arrayBuffer()),
+      file.name
+    );
 
-    const { data } = await api.patch("api/users/avatar", backendFormData, {
+    const { data } = await api.patch("/api/users/avatar", backendFormData, {
       headers: {
         ...backendFormData.getHeaders(),
         Cookie: cookieStore.toString(),

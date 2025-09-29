@@ -3,7 +3,6 @@ import { JourneyDetails } from "@/types/journeyType";
 import nextServer from "./api";
 import type { ChildSex } from "../../types/user";
 
-
 export interface RegisterRequest {
   name: string;
   email: string;
@@ -41,16 +40,16 @@ export interface LoginUserResponse {
 }
 
 export type ApiResponse<T> = {
-    status: number;
-    message: string;
-    data: T;
+  status: number;
+  message: string;
+  data: T;
 };
 
 type OnboardingPayload = {
   childSex: ChildSex;
   dueDate: string;
   photo?: File;
-}; 
+};
 
 export type LogoutResponse = { message?: string };
 
@@ -98,7 +97,7 @@ type CheckSessionResponse = { success: boolean };
 
 export const checkSession = async () => {
   const { data } = await nextServer.post<CheckSessionResponse>("/auth/session");
-  
+
   return data.success;
 };
 
@@ -107,21 +106,23 @@ export const getMe = async () => {
   return data;
 };
 
+export async function getMomDailyTips(weekNumber: number): Promise<{ momDailyTips: string[] }> {
+  const { data } = await nextServer.get(`/weeks/${weekNumber}`);
+  return data;
+}
+
+
 export async function submitOnboarding(payload: OnboardingPayload) {
   const { childSex, dueDate, photo } = payload;
 
   if (photo) {
     const fd = new FormData();
-    fd.append("photo", photo);
+    fd.append("avatar", photo);
 
     await nextServer.patch("/users/avatar", fd);
   }
 
-  const { data } = await nextServer.patch(
-    "/users",
-    { childSex, dueDate }
-  );
+  const { data } = await nextServer.patch("/users", { childSex, dueDate });
 
   return data;
 }
-
