@@ -9,7 +9,7 @@ export default function Home() {
     <section>
       <GreetingBlock />
       <StatusBlock />
-      <BabyTodayCard />
+      <BabyTodayCard weekNumber={30} />
       <MomTipCard />
       <TasksReminderCard />
       <FeelingCheckCard />

@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
 import nextServer from "./api";
-import { Baby, User } from "@/types/user";
+import { User } from "@/types/user";
 
 export const checkServerSession = async () => {
   const cookieStore = await cookies();
@@ -20,18 +20,4 @@ export const getMeServer = async () => {
     },
   });
   return response.data;
-};
-
-interface BabyResponse {
-  data: {
-    baby: Baby;
-  };
-}
-
-export const getBabyInfo = async (week: number): Promise<Baby> => {
-  const cookie = await cookies();
-  const { data } = await nextServer.get<BabyResponse>(`/weeks/${week}`, {
-    headers: { Cookie: cookie.toString() },
-  });
-  return data.data.baby;
 };
