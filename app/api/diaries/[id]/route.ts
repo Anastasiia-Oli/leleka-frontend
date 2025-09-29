@@ -50,7 +50,6 @@ export async function DELETE(request: NextRequest, { params }: Props) {
       { status: 500 }
     );
   }
-
 }
 
 type Params = { params: Promise<{ id: string }> };
@@ -79,3 +78,4 @@ export async function PATCH(request: NextRequest, { params }: Params) {
     { error: `Failed to update diary ${id}` },
     { status: 500 }
   );
+}
