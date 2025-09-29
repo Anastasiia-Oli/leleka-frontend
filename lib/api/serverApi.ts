@@ -4,7 +4,7 @@ import { User } from "@/types/user";
 
 export const checkServerSession = async () => {
   const cookieStore = await cookies();
-  const res = await nextServer.post("/auth/session", {
+  const res = await nextServer.get("/auth/session", {
     headers: {
       Cookie: cookieStore.toString(),
     },

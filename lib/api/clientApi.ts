@@ -100,9 +100,14 @@ export async function logout(): Promise<LogoutResponse> {
 type CheckSessionResponse = { success: boolean };
 
 export const checkSession = async () => {
-  const { data } = await nextServer.post<CheckSessionResponse>("/auth/session");
+  try {
+    const { data } =
+      await nextServer.get<CheckSessionResponse>("/auth/session");
 
-  return data.success;
+    return data.success;
+  } catch {
+    return false;
+  }
 };
 
 export const getMe = async () => {
