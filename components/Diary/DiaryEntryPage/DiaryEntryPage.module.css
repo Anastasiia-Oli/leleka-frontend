@@ -1,0 +1,134 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 24px 16px;
+    background: var(--pastel-pink-lighter);
+    border-radius: 16px;
+    box-sizing: border-box;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+    margin-bottom: 16px;
+}
+
+.title {
+    margin: 0;
+    color: var(--black);
+}
+
+.addButton {
+    display: flex;
+    border: none;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+    background: var(--pastel-pink-lighter);
+    flex-direction: row;
+    padding: 8px 16px;
+    border-radius: 8px;
+}
+
+.addButton:hover {
+    background: var(--pastel-pink-lightest);
+}
+
+.addText {
+    font-family: var(--font-family);
+    font-weight: var(--medium);
+    font-size: 16px;
+    line-height: 160%;
+    color: var(--black);
+}
+
+.addIcon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.editIcon {
+    fill: var(--black);
+    transition: fill 0.2s ease;
+    width: 24px;
+    height: 24px;
+}
+
+.entriesList {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--gray-lighter) transparent;
+}
+
+.entriesList::-webkit-scrollbar {
+    width: 6px;
+}
+
+.entriesList::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.entriesList::-webkit-scrollbar-thumb {
+    background: var(--gray-lighter);
+    border-radius: 3px;
+}
+
+.entriesList::-webkit-scrollbar-thumb:hover {
+    background: var(--gray-light);
+}
+
+.placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 200px;
+    color: var(--gray);
+    text-align: center;
+}
+
+/* Стилі для всіх розмірів - динамічна висота */
+.container {
+    height: auto;
+    min-height: 300px;
+}
+
+.entriesList {
+    overflow-y: visible;
+    max-height: none;
+}
+
+@media (max-width: 1023px) {
+    .header {
+        gap: 16px;
+        align-items: flex-start;
+    }
+
+    .addButton {
+        justify-content: center;
+    }
+}
+
+
+@media screen and (max-width: 767px) {
+    .container {
+        padding: 16px;
+    }
+
+    .addText {
+        font-size: 14px;
+    }
+
+    .addIcon svg {
+        width: 20px;
+        height: 20px;
+    }
+}

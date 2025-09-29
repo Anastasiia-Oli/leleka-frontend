@@ -8,6 +8,7 @@ export default function Home() {
     <section>
       <GreetingBlock />
       <StatusBlock />
+      <BabyTodayCard />
       <MomTipCard />
       <TasksReminderCard />
       <FeelingCheckCard />
