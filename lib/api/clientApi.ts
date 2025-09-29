@@ -155,5 +155,5 @@ export async function submitOnboarding(payload: OnboardingPayload) {
 
   const { data } = await nextServer.patch("/users", { childSex, dueDate });
 
-  return data;
+  return data.user;
 }
