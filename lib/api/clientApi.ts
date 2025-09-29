@@ -105,3 +105,25 @@ export const getMe = async () => {
   const { data } = await nextServer.get<User>("/users/current");
   return data;
 };
+
+export async function getMomDailyTips(weekNumber: number): Promise<{ momDailyTips: string[] }> {
+  const { data } = await nextServer.get(`/weeks/${weekNumber}`);
+  return data;
+}
+
+
+export async function submitOnboarding(payload: OnboardingPayload) {
+  const { childSex, dueDate, photo } = payload;
+
+  if (photo) {
+    const fd = new FormData();
+    fd.append("avatar", photo);
+
+    await nextServer.patch("/users/avatar", fd);
+  }
+
+  const { data } = await nextServer.patch("/users", { childSex, dueDate });
+
+  return data;
+}
+

@@ -11,6 +11,7 @@ export async function GET(request: NextRequest, { params }: Props) {
     const { data } = await api(`/api/weeks/${weekNumber}`, {
       headers: { Cookie: cookieStore.toString() },
     });
+
     return NextResponse.json(data);
   } catch (error) {
     return NextResponse.json(
@@ -24,4 +25,6 @@ export async function GET(request: NextRequest, { params }: Props) {
       }
     );
   }
+
 }
+

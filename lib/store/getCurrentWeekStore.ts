@@ -8,4 +8,6 @@ type useGetCurrentWeekType = {
 export const useGetCurrentWeek = create<useGetCurrentWeekType>()((set) => ({
   initialWeek: 1,
   getCurrWeek: (week) => set(() => ({ initialWeek: week })),
+
 }));
+
