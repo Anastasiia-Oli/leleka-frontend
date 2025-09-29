@@ -10,7 +10,6 @@ import Cookies from 'js-cookie';
 // const API_URL = "https://leleka-backend-1.onrender.com/api";
 const API_URL = `/api`;
 
-// Створюємо інтерфейс для даних, які оновлюються
 interface UpdatedProfileData {
   name?: string;
   email?: string;
@@ -65,9 +64,9 @@ export default function UserProfilePage() {
         if (!response.ok) {
           throw new Error("Не вдалося завантажити дані профілю");
         }
-
+// const userData = await response.json();
         const userDataWrapper = await response.json();
-        const userData = userDataWrapper.data;
+        const userData = userDataWrapper.user;
         console.log("Дані користувача отримано:", userData);
 
         setInitialName(userData.name || "");
@@ -111,7 +110,6 @@ export default function UserProfilePage() {
     setLoading(true);
     
 
-    // Використовуємо наш новий тип для updatedFields
     const updatedFields: UpdatedProfileData = {};
     let isAvatarChanged = false;
 
