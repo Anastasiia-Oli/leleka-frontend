@@ -46,9 +46,15 @@ const TasksReminderCard = () => {
     <div className={css.card}>
       <div className={css.listHeader}>
         <h2 className={css.title}>Важливі завдання</h2>
-        <Link href={`/tasks`} className={css.newTask} id="openTaskModal">
-          +
-        </Link>
+        <button className={css.newTask}>
+          <svg viewBox="0 0 32 32" width="20" height="20">
+            <path
+              d="M16 03v26M03 16h26"
+              stroke="currentColor"
+              strokeWidth="3"
+            />
+          </svg>
+        </button>
       </div>
 
       {isSuccess && tasks.length === 0 && (
@@ -57,7 +63,11 @@ const TasksReminderCard = () => {
             <h3 className={css.sectionTitle}>Наразі немає жодних завдань</h3>
             <p className={css.empty}>Створіть мершій нове завдання!</p>
           </div>
-          <Link href={`/tasks`} className={css.btn} id="openTaskModal">
+          <Link
+            href={"/*AddTaskModal*/"}
+            className={css.btn}
+            id="openTaskModal"
+          >
             Створити завдання
           </Link>
         </>
