@@ -122,17 +122,4 @@ export async function deleteDiaryEntry(id: string): Promise<{ message: string }>
   return res.data;
 }
 
-// Отримати обрану нотатку
-const getSelectedNote = async (id: string) => {
-  const response = await fetch(`/api/diaries/${id}`);
-  return response.json();
-};
-
-// Видалити обрану нотатку
-const deleteSelectedNote = async (id: string) => {
-  const response = await fetch(`/api/diaries/${id}`, {
-    method: 'DELETE'
-  });
-  return response.json();
-};
 

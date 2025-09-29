@@ -4,50 +4,6 @@ import { cookies } from 'next/headers';
 import { isAxiosError } from 'axios';
 import { logErrorResponse } from '../../_utils/utils';
 
-// GET - отримати конкретний запис за ID
-export async function GET(
-    request: NextRequest,
-    { params }: { params: { id: string } }
-) {
-    try {
-        const cookieStore = await cookies();
-        const { id } = params;
-
-        if (!id) {
-            return NextResponse.json(
-                { error: 'ID запису обов\'язковий' },
-                { status: 400 }
-            );
-        }
-
-        const res = await api.get(`api/diaries/${id}`, {
-            headers: {
-                Cookie: cookieStore.toString(),
-            },
-        });
-
-        return NextResponse.json(res.data, { status: res.status });
-    } catch (error) {
-        if (isAxiosError(error)) {
-            logErrorResponse(error.response?.data);
-            const status = error.response?.status ?? 500;
-            const message = error.response?.status === 404
-                ? 'Запис не знайдено'
-                : 'Помилка отримання запису';
-
-            return NextResponse.json(
-                { error: message, response: error.response?.data },
-                { status }
-            );
-        }
-        logErrorResponse({ message: (error as Error).message });
-        return NextResponse.json(
-            { error: 'Внутрішня помилка сервера' },
-            { status: 500 }
-        );
-    }
-}
-
 // DELETE - видалити запис за ID
 export async function DELETE(
     request: NextRequest,
@@ -73,6 +29,7 @@ export async function DELETE(
 
         return NextResponse.json(
             {
+                res,
                 message: 'Запис успішно видалено',
                 deletedId: id
             },
