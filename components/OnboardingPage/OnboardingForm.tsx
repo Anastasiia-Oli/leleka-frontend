@@ -3,16 +3,15 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useState } from "react";
 import Image from "next/image";
-import { useRouter } from "next/navigation"; 
+import { useRouter } from "next/navigation";
 import css from "./OnboardingForm.module.css";
-import toast from "react-hot-toast"; 
-import { ChildSex } from "@/types/types";
+import toast from "react-hot-toast";
+import { ChildSex } from "@/types/user";
 import * as Yup from "yup";
 import { submitOnboarding } from "@/lib/api/clientApi";
 import dynamic from "next/dynamic";
 import { useAuthUserStore } from "@/lib/store/authStore";
 const Select = dynamic(() => import("../ui/Select"), { ssr: false });
-
 
 const OPTIONS: ChildSex[] = ["Хлопчик", "Дівчинка", "Ще не знаю"];
 
@@ -22,12 +21,11 @@ type FormValues = {
   dueDate: string;
 };
 
-
 export const OnboardingSchema = Yup.object({
   gender: Yup.string().required("Оберіть стать дитини"),
   dueDate: Yup.string().required("Оберіть дату пологів"),
   photo: Yup.mixed<File>().nullable(),
-}); 
+});
 
 const OnboardingForm = () => {
   const router = useRouter();
@@ -40,7 +38,7 @@ const OnboardingForm = () => {
   };
 
   const a = useAuthUserStore.getState();
-console.log(a);
+  console.log(a);
 
   return (
     <Formik<FormValues>
@@ -67,7 +65,7 @@ console.log(a);
     >
       {({ isSubmitting, setFieldValue, values }) => {
         console.log(values);
-        
+
         return (
           <Form className={css.edit_form}>
             <h1 className={`header-first ${css.header}`}>
@@ -105,7 +103,9 @@ console.log(a);
                 type="button"
                 className={`${css.load_photo_btn} btn-secondary`}
                 onClick={() =>
-                  (document.getElementById("fileInput") as HTMLInputElement)?.click()
+                  (
+                    document.getElementById("fileInput") as HTMLInputElement
+                  )?.click()
                 }
               >
                 Завантажити фото
@@ -114,14 +114,18 @@ console.log(a);
 
             <label htmlFor="sex" className={css.label_cont}>
               <span className={`${css.label} text-primary`}>Стать дитини</span>
-            <Select
+              <Select
                 id="sex"
                 options={OPTIONS}
                 value={values.gender}
                 onChange={(val: string) => setFieldValue("gender", val)}
                 placeholder="Оберіть стать"
               />
-              <ErrorMessage name="gender" component="div" className={css.error} />
+              <ErrorMessage
+                name="gender"
+                component="div"
+                className={css.error}
+              />
             </label>
 
             <label htmlFor="dueDate" className={css.label_cont}>
@@ -134,7 +138,11 @@ console.log(a);
                 name="dueDate"
                 className={css.dateSelect}
               />
-              <ErrorMessage name="dueDate" component="div" className={css.error} />
+              <ErrorMessage
+                name="dueDate"
+                component="div"
+                className={css.error}
+              />
             </label>
 
             <button
@@ -145,10 +153,10 @@ console.log(a);
               {isSubmitting ? "Збереження..." : "Зберегти"}
             </button>
           </Form>
-        )
+        );
       }}
     </Formik>
   );
-}
+};
 
 export default OnboardingForm;

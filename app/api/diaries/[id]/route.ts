@@ -1,27 +1,59 @@
 import { NextRequest, NextResponse } from "next/server";
-import { cookies } from "next/headers";
+
 import { api } from "../../api";
+import { cookies } from "next/headers";
+import { isAxiosError } from "axios";
+import { logErrorResponse } from "../../_utils/utils";
 
-type Params = { params: Promise<{ id: string }> };
+type Props = {
+  params: Promise<{ id: string }>;
+};
 
-export async function GET(request: NextRequest, { params }: Params) {
-  const { id } = await params;
+// DELETE - видалити запис за ID
+export async function DELETE(request: NextRequest, { params }: Props) {
   try {
     const cookieStore = await cookies();
-    const { data } = await api.get(`/api/diaries/${id}`, {
-      headers: { Cookie: cookieStore.toString() },
-    });
-    if (data) {
-      return NextResponse.json(data);
+    const { id } = await params;
+
+    if (!id) {
+      return NextResponse.json(
+        { error: "ID запису обов'язковий" },
+        { status: 400 }
+      );
     }
+
+    // Розкоментуйте цей блок для реального видалення
+    await api.delete(`api/diaries/${id}`, {
+      headers: {
+        Cookie: cookieStore.toString(),
+      },
+    });
+
+    return NextResponse.json(
+      {
+        message: "Запис успішно видалено",
+        deletedId: id,
+      },
+      { status: 200 }
+    );
   } catch (error) {
-    console.error(`Failed to fetch diary ${id}:`, error);
+    if (isAxiosError(error)) {
+      logErrorResponse(error.response?.data);
+      return NextResponse.json(
+        { error: error.message, response: error.response?.data },
+        { status: error.status }
+      );
+    }
+    logErrorResponse({ message: (error as Error).message });
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 }
+    );
   }
-  return NextResponse.json(
-    { error: `Failed to fetch diary ${id}` },
-    { status: 500 }
-  );
+
 }
+
+type Params = { params: Promise<{ id: string }> };
 
 export async function PATCH(request: NextRequest, { params }: Params) {
   const { id } = await params;
@@ -47,4 +79,3 @@ export async function PATCH(request: NextRequest, { params }: Params) {
     { error: `Failed to update diary ${id}` },
     { status: 500 }
   );
-}
