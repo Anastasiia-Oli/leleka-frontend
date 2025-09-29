@@ -18,6 +18,7 @@ function formateDate(date?: string) {
 
 const TasksReminderCard = () => {
   const queryClient = useQueryClient();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const {
     data: tasks = [],
@@ -41,6 +42,14 @@ const TasksReminderCard = () => {
     (t) => t.date && t.date > today && t.isDone !== true
   );
   const execTasks = tasks.filter((t) => t.isDone === true);
+
+  const handleOpenModal = () => setIsModalOpen(true);
+  const handleCloseModal = () => setIsModalOpen(false);
+
+  const handleTaskSaved = () => {
+    queryClient.invalidateQueries({ queryKey: ["tasks"] });
+    handleCloseModal();
+  };
 
   return (
     <div className={css.card}>
@@ -67,6 +76,7 @@ const TasksReminderCard = () => {
             href={"/*AddTaskModal*/"}
             className={css.btn}
             id="openTaskModal"
+            onClick={handleOpenModal}
           >
             Створити завдання
           </Link>
@@ -151,6 +161,11 @@ const TasksReminderCard = () => {
           </ul>
         </>
       )}
+       <AddTaskModal
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        onTaskSaved={handleTaskSaved}
+      />
     </div>
   );
 };
