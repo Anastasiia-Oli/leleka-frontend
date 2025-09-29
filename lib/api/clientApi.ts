@@ -110,32 +110,6 @@ export const getMe = async () => {
   return data;
 };
 
-export async function fetchDiary(): Promise<DiaryEntry[]> {
-  const res = await nextServer.get<DiaryEntry[]>("/diaries");
-  return res.data;
-}
-
-export async function fetchEmotions(): Promise<Emotion[]> {
-  const res = await nextServer.get<Emotion[]>("/emotions");
-  return res.data;
-}
-
-export async function CreateNote(
-  params: CreateDiaryEntryData
-): Promise<DiaryEntry> {
-  const res = await nextServer.post<DiaryEntry>("/diaries", params);
-  return res.data;
-}
-//поміняти на post<CreateDiaryEntryData>
-
-// Видалити запис щоденника
-export async function deleteDiaryEntry(
-  id: string
-): Promise<{ message: string }> {
-  const res = await nextServer.delete(`/diaries/${id}`);
-  return res.data;
-}
-
 export async function getMomDailyTips(
   weekNumber: number
 ): Promise<{ momDailyTips: string[] }> {
