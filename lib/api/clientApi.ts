@@ -1,11 +1,10 @@
 import { User } from "@/types/user";
 import { JourneyDetails } from "@/types/journeyType";
 import nextServer from "./api";
-import type { DiaryEntryData } from "@/types/diaryModal";
-import { DiaryEntry } from "@/types/dairy";
-import { Emotion } from "@/types/dairy";
-import { CreateDiaryEntryData } from "@/types/dairy";
 import type { ChildSex } from "../../types/user";
+import type { DiaryEntryData, Emotion } from "@/types/diaryModal";
+import { DiaryEntry } from "@/types/dairy";
+import { CreateDiaryEntryData } from "@/types/dairy";
 
 export interface RegisterRequest {
   name: string;
