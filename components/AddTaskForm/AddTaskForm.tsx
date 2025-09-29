@@ -3,12 +3,7 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import css from "./AddTaskForm.module.css";
-
-interface TaskFormValues {
-  _id?: string;
-  title: string;
-  date: string;
-}
+import { TaskFormValues } from "@/lib/api/clientApi";
 
 interface AddTaskFormProps {
   initialData?: TaskFormValues;
@@ -16,7 +11,7 @@ interface AddTaskFormProps {
 }
 
 const TaskSchema = Yup.object().shape({
-  title: Yup.string().required("Обов'язкове поле"),
+  text: Yup.string().required("Обов'язкове поле"),
   date: Yup.date().required("Обов'язкове поле"),
 });
 
@@ -28,7 +23,7 @@ export default function AddTaskForm({
     <Formik
       initialValues={{
         _id: initialData?._id,
-        title: initialData?.title || "",
+        text: initialData?.text || "",
         date: initialData?.date || new Date().toISOString().slice(0, 10),
       }}
       validationSchema={TaskSchema}
@@ -39,12 +34,12 @@ export default function AddTaskForm({
           <div className={css.fieldWrapper}>
             <label className={css.label}>Назва завдання</label>
             <Field
-              className={`${css.field} ${errors.title && touched.title ? css.errorField : ""}`}
-              name="title"
+              className={`${css.field} ${errors.text && touched.text ? css.errorField : ""}`}
+              name="text"
               placeholder="Прийняти вітаміни"
             />
             <ErrorMessage
-              name="title"
+              name="text"
               component="div"
               className={css.errorMessage}
             />

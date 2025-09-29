@@ -1,28 +1,28 @@
 import { NextResponse } from "next/server";
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
+import { cookies } from "next/headers";
+import type { AxiosError } from "axios";
+import { api } from "@/app/api/api";
 
 export async function PATCH(
   req: Request,
   { params }: { params: { id: string } }
 ) {
-  const body = await req.json();
+  try {
+    const body = await req.json();
+    const cookieStore = await cookies();
 
-  const res = await fetch(`${API_URL}/tasks/${params.id}`, {
-    method: "PATCH",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(body),
-  });
+    const { data, status } = await api.patch(
+      `/api/tasks/${params.id}/status`,
+      body,
+      { headers: { Cookie: cookieStore.toString() } }
+    );
 
-  const data = await res.json();
-  return NextResponse.json(data, { status: res.status });
-}
-
-export async function GET(
-  req: Request,
-  { params }: { params: { id: string } }
-) {
-  const res = await fetch(`${API_URL}/tasks/${params.id}`);
-  const data = await res.json();
-  return NextResponse.json(data, { status: res.status });
+    return NextResponse.json(data, { status });
+  } catch (err) {
+    const error = err as AxiosError;
+    return NextResponse.json(
+      { error: error.response?.data || "Something went wrong" },
+      { status: error.response?.status || 500 }
+    );
+  }
 }

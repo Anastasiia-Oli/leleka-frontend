@@ -4,12 +4,13 @@ import { useEffect } from "react";
 import css from "./AddTaskModal.module.css";
 import AddTaskForm from "../AddTaskForm/AddTaskForm";
 import { toast } from "react-toastify";
-
-export interface Task {
-  _id?: string;
-  title: string;
-  date: string;
-}
+import {
+  CreateTaskDto,
+  Task,
+  TaskFormValues,
+  tasksApi,
+  UpdateTaskDto,
+} from "@/lib/api/clientApi";
 
 interface AddTaskModalProps {
   isOpen: boolean;
@@ -25,37 +26,35 @@ export default function AddTaskModal({
   onTaskSaved,
 }: AddTaskModalProps) {
   useEffect(() => {
+    if (!isOpen) return;
     const handleEsc = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
     };
     document.addEventListener("keydown", handleEsc);
     return () => document.removeEventListener("keydown", handleEsc);
-  }, [onClose]);
+  }, [isOpen, onClose]);
 
   if (!isOpen) return null;
 
-  const handleSubmit = async (values: Task) => {
+  const handleSubmit = async (values: TaskFormValues) => {
     try {
-      const url = initialData ? `/api/tasks/${initialData._id}` : `/api/tasks`;
+      const response = initialData
+        ? await tasksApi.updateTask(initialData._id!, {
+            text: values.text,
+            date: values.date,
+          })
+        : await tasksApi.createTask({
+            text: values.text,
+            date: values.date,
+            isDone: false,
+          });
 
-      const response = await fetch(url, {
-        method: initialData ? "PATCH" : "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(values),
-      });
-
-      if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.message || "Помилка сервера");
-      }
-
-      const savedTask: Task = await response.json();
-      onTaskSaved(savedTask);
-      toast.success(initialData ? "Завдання оновлено!" : "Завдання створено!");
-      onClose();
+      onTaskSaved(response.data);
     } catch (error: unknown) {
       if (error instanceof Error) toast.error(error.message);
       else toast.error("Сталася невідома помилка");
+    } finally {
+      onClose();
     }
   };
 

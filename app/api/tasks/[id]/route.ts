@@ -1,16 +1,18 @@
 import { NextResponse } from "next/server";
-
 import type { AxiosError } from "axios";
-import { cookies } from "next/headers";
-import { api } from "../api";
 
-export async function POST(req: Request) {
+import { cookies } from "next/headers";
+import { api } from "../../api";
+
+export async function PATCH(
+  req: Request,
+  { params }: { params: { id: string } }
+) {
   try {
     const body = await req.json();
-
     const cookieStore = await cookies();
 
-    const { data, status } = await api.post("/api/tasks", body, {
+    const { data, status } = await api.patch(`/api/tasks/${params.id}`, body, {
       headers: { Cookie: cookieStore.toString() },
     });
 
@@ -24,11 +26,14 @@ export async function POST(req: Request) {
   }
 }
 
-export async function GET() {
+export async function GET(
+  req: Request,
+  { params }: { params: { id: string } }
+) {
   try {
     const cookieStore = await cookies();
 
-    const { data, status } = await api.get("/api/tasks", {
+    const { data, status } = await api.get(`/api/tasks/${params.id}`, {
       headers: { Cookie: cookieStore.toString() },
     });
 
