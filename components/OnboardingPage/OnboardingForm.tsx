@@ -30,6 +30,7 @@ export const OnboardingSchema = Yup.object({
 const OnboardingForm = () => {
   const router = useRouter();
   const [preview, setPreview] = useState<string | null>(null);
+  const setUser = useAuthUserStore((state) => state.setUser);
 
   const initialValues: FormValues = {
     photo: null,
@@ -46,11 +47,15 @@ const OnboardingForm = () => {
       validationSchema={OnboardingSchema}
       onSubmit={async (values, { setSubmitting }) => {
         try {
-          await submitOnboarding({
+          const res = await submitOnboarding({
             childSex: values.gender, // звузимо під час сабміту
             dueDate: values.dueDate,
             photo: values.photo ?? undefined,
           });
+
+          if (res) {
+            setUser(res);
+          }
 
           toast.success("Дані збережено!");
           router.push("/");
