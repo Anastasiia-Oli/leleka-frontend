@@ -62,15 +62,17 @@ export default function EmotionSelect({
       <div className={css.scrollContainer} ref={scrollRef}>
         <div className={css.optionsList}>
           {emotions.map((emotion) => (
-            <label key={emotion._id} className={css.option}>
+            <label key={emotion.title} className={css.option}>
               <input
                 type="checkbox"
-                value={emotion._id}
-                checked={values.emotions.includes(emotion._id)}
+                value={emotion.title}
+                checked={values.emotions.includes(emotion.title)}
                 onChange={(e) => {
                   const updated = e.target.checked
-                    ? [...values.emotions, emotion._id]
-                    : values.emotions.filter((id) => id !== emotion._id);
+                    ? [...values.emotions, emotion.title]
+                    : values.emotions.filter(
+                        (title) => title !== emotion.title
+                      );
                   setFieldValue("emotions", updated);
                 }}
               />
