@@ -1,0 +1,58 @@
+.diaryContainer {
+    /* min-height: 100vh; */
+    padding: 24px 16px;
+    box-sizing: border-box;
+    height: 100%;
+}
+
+/* Мобільна версія за замовчуванням */
+.mobileLayout {
+    display: block;
+}
+
+.desktopLayout {
+    display: none;
+}
+
+.mobileGrid {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* Десктопна версія */
+@media (min-width: 1024px) {
+    .diaryContainer {
+        padding: 24px;
+    }
+
+    .mobileLayout {
+        display: none;
+    }
+
+    .desktopLayout {
+        display: block;
+    }
+
+    .desktopGrid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+        /* height: 500px; */
+        max-width: 100%;
+    }
+}
+
+/* Планшети */
+@media (min-width: 768px) and (max-width: 1023px) {
+    .diaryContainer {
+        padding: 24px 20px;
+    }
+}
+
+/* Мобільні пристрої */
+@media (max-width: 767px) {
+    .diaryContainer {
+        padding: 16px;
+    }
+}

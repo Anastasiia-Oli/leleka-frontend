@@ -1,74 +1,161 @@
 "use client";
-import React, { useState } from "react";
-import Image from "next/image";
-import Select from "../ui/Select";
-import css from "./OnboardingForm.module.css";
 
-const OPTIONS = ["Хлопчик", "Дівчинка", "Ще не знаю"];
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import { useState } from "react";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import css from "./OnboardingForm.module.css";
+import toast from "react-hot-toast";
+import { ChildSex } from "@/types/user";
+import * as Yup from "yup";
+import { submitOnboarding } from "@/lib/api/clientApi";
+import dynamic from "next/dynamic";
+import { useAuthUserStore } from "@/lib/store/authStore";
+const Select = dynamic(() => import("../ui/Select"), { ssr: false });
+
+const OPTIONS: ChildSex[] = ["Хлопчик", "Дівчинка", "Ще не знаю"];
+
+type FormValues = {
+  photo: File | null;
+  gender: ChildSex | "Ще не знаю";
+  dueDate: string;
+};
+
+export const OnboardingSchema = Yup.object({
+  gender: Yup.string().required("Оберіть стать дитини"),
+  dueDate: Yup.string().required("Оберіть дату пологів"),
+  photo: Yup.mixed<File>().nullable(),
+});
 
 const OnboardingForm = () => {
-    const [preview, setPreview] = useState<string>("");
+  const router = useRouter();
+  const [preview, setPreview] = useState<string | null>(null);
 
-    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0];
-                if (file) {
-        setPreview(URL.createObjectURL(file));
-        }
-    };
+  const initialValues: FormValues = {
+    photo: null,
+    gender: "Ще не знаю",
+    dueDate: "",
+  };
+
+  const a = useAuthUserStore.getState();
+  console.log(a);
 
   return (
-    <div className={css.onboard_container}>
-      <h1 className={`header-first ${css.header}`}>
-        Давайте познайомимось ближче
-      </h1>
+    <Formik<FormValues>
+      initialValues={initialValues}
+      validationSchema={OnboardingSchema}
+      onSubmit={async (values, { setSubmitting }) => {
+        try {
+          await submitOnboarding({
+            childSex: values.gender, // звузимо під час сабміту
+            dueDate: values.dueDate,
+            photo: values.photo ?? undefined,
+          });
 
-      <div className={css.photo_file_wrapper}>
-        <div>
-            <input
-                type="file"
-                id="fileInput"
-                accept="image/*"
-                onChange={handleFileChange}
-                hidden
-            />
+          toast.success("Дані збережено!");
+          router.push("/");
+        } catch (err: unknown) {
+          if (err instanceof Error) {
+            toast.error(err?.message || "Сталася помилка");
+          }
+        } finally {
+          setSubmitting(false);
+        }
+      }}
+    >
+      {({ isSubmitting, setFieldValue, values }) => {
+        console.log(values);
 
-            <label htmlFor="fileInput" className={css.avatarLabel}>
-                <Image
-                    src={preview || "/images/placeholder.png"} // картинка-заглушка
+        return (
+          <Form className={css.edit_form}>
+            <h1 className={`header-first ${css.header}`}>
+              Давайте познайомимось ближче
+            </h1>
+
+            <div className={css.photo_file_wrapper}>
+              <div>
+                <label htmlFor="fileInput" className={css.avatarLabel}>
+                  <Image
+                    src={preview || "/images/placeholder.png"}
                     alt="avatar"
                     className={css.avatar}
                     width={164}
                     height={164}
+                  />
+                </label>
+                <input
+                  id="fileInput"
+                  type="file"
+                  accept="image/*"
+                  hidden
+                  onChange={(e) => {
+                    const file = e.currentTarget.files?.[0] || null;
+                    setFieldValue("photo", file);
+                    if (file) {
+                      setPreview(URL.createObjectURL(file));
+                    } else {
+                      setPreview(null);
+                    }
+                  }}
                 />
+              </div>
+              <button
+                type="button"
+                className={`${css.load_photo_btn} btn-secondary`}
+                onClick={() =>
+                  (
+                    document.getElementById("fileInput") as HTMLInputElement
+                  )?.click()
+                }
+              >
+                Завантажити фото
+              </button>
+            </div>
+
+            <label htmlFor="sex" className={css.label_cont}>
+              <span className={`${css.label} text-primary`}>Стать дитини</span>
+              <Select
+                id="sex"
+                options={OPTIONS}
+                value={values.gender}
+                onChange={(val: string) => setFieldValue("gender", val)}
+                placeholder="Оберіть стать"
+              />
+              <ErrorMessage
+                name="gender"
+                component="div"
+                className={css.error}
+              />
             </label>
-        </div>
-            <button className={`${css.load_photo_btn} btn-secondary`} onClick={() => (document.getElementById("fileInput") as HTMLInputElement | null)?.click()}>
-             Завантажити фото
+
+            <label htmlFor="dueDate" className={css.label_cont}>
+              <span className={`${css.label} text-primary`}>
+                Планова дата пологів
+              </span>
+              <Field
+                id="dueDate"
+                type="date"
+                name="dueDate"
+                className={css.dateSelect}
+              />
+              <ErrorMessage
+                name="dueDate"
+                component="div"
+                className={css.error}
+              />
+            </label>
+
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className={`btn-primary ${css.submit_btn}`}
+            >
+              {isSubmitting ? "Збереження..." : "Зберегти"}
             </button>
-      </div>
-
-      <form action="" className={css.edit_form}>
-        <div className={css.inputs}>
-          <label htmlFor="sex" className={css.label_cont}>
-            <span className={`${css.label} text-primary`}>Стать дитини</span>
-                      <Select options={OPTIONS} id="sex" />
-          </label>
-
-          <label htmlFor="dateOfBirth" className={css.label_cont}>
-            <span className={`${css.label} text-primary`}>
-              Планова дата пологів
-            </span>
-            <input
-              type="date"
-              className={css.dateSelect}
-              id="dateOfBirth"
-            />
-          </label>
-        </div>
-
-        <button className={`btn-primary ${css.submit_btn}`}>Зберегти</button>
-      </form>
-    </div>
+          </Form>
+        );
+      }}
+    </Formik>
   );
 };
 

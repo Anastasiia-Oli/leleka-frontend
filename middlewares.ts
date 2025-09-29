@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { checkServerSession } from "./lib/api/serverApi";
 
 const privateRoutes = ["/diary", "/journey", "/profile"];
-const publicRoutes = ["/sign-in", "/sign-up"];
+const publicRoutes = ["/auth/login", "/auth/register"];
 
 export async function middleware(request: NextRequest) {
   const cookieStore = await cookies();
