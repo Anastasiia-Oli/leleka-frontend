@@ -54,9 +54,9 @@ const DiaryPage: React.FC = () => {
     setIsModalOpen(true);
   };
 
-  const handleAddNote = () => {
-    console.log("Open AddNoteModal");
-  };
+  // const handleAddNote = () => {
+  //   console.log("Open AddNoteModal");
+  // };
 
   const handleEditEntry = () => {
     if (selectedEntry) {
@@ -65,10 +65,10 @@ const DiaryPage: React.FC = () => {
     }
   };
 
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-    setEditingEntry(null);
-  };
+  // const handleCloseModal = () => {
+  //   setIsModalOpen(false);
+  //   setEditingEntry(null);
+  // };
 
   return (
     <div className={css.diaryContainer}>
