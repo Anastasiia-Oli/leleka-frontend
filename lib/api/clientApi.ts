@@ -1,8 +1,11 @@
 import { User } from "@/types/user";
 import { JourneyDetails } from "@/types/journeyType";
 import nextServer from "./api";
+import type { DiaryEntryData } from "@/types/diaryModal";
+import { DiaryEntry } from "@/types/dairy";
+import { Emotion } from "@/types/dairy";
+import { CreateDiaryEntryData } from "@/types/dairy";
 import type { ChildSex } from "../../types/user";
-import type { DiaryEntryData, Emotion } from "@/types/diaryModal";
 
 export interface RegisterRequest {
   name: string;
@@ -125,12 +128,45 @@ export const getEmotions = async (): Promise<Emotion[]> => {
   return data;
 };
 
+export async function fetchDiary(): Promise<DiaryEntry[]> {
+  const res = await nextServer.get<DiaryEntry[]>("/diaries");
+  return res.data;
+}
+
+export async function fetchEmotions(): Promise<Emotion[]> {
+  const res = await nextServer.get<Emotion[]>("/emotions");
+  return res.data;
+}
+
+export async function CreateNote(
+  params: CreateDiaryEntryData
+): Promise<DiaryEntry> {
+  const res = await nextServer.post<DiaryEntry>("/diaries", params);
+  return res.data;
+}
+//поміняти на post<CreateDiaryEntryData>
+
+// Видалити запис щоденника
+export async function deleteDiaryEntry(
+  id: string
+): Promise<{ message: string }> {
+  const res = await nextServer.delete(`/diaries/${id}`);
+  return res.data;
+}
+
+export async function getMomDailyTips(
+  weekNumber: number
+): Promise<{ momDailyTips: string[] }> {
+  const { data } = await nextServer.get(`/weeks/${weekNumber}`);
+  return data;
+}
+
 export async function submitOnboarding(payload: OnboardingPayload) {
   const { childSex, dueDate, photo } = payload;
 
   if (photo) {
     const fd = new FormData();
-    fd.append("photo", photo);
+    fd.append("avatar", photo);
 
     await nextServer.patch("/users/avatar", fd);
   }
