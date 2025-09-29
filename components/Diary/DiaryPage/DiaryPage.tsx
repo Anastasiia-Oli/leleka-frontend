@@ -33,7 +33,18 @@ const DiaryPage: React.FC = () => {
   }, []);
 
   React.useEffect(() => {
-    if (data && data.length > 0 && !selectedEntry && !isMobile) {
+    if (!data || isMobile) return;
+
+    if (data.length === 0) {
+      setSelectedEntry(null);
+      return;
+    }
+
+    // Якщо вибраний запис видалено, обираємо перший доступний
+    const isSelectedDeleted = selectedEntry &&
+      !data.find(entry => entry._id === selectedEntry._id);
+
+    if (!selectedEntry || isSelectedDeleted) {
       setSelectedEntry(data[0]);
     }
   }, [data, selectedEntry, isMobile]);

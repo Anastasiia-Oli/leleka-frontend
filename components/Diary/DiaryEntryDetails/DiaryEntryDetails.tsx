@@ -26,14 +26,25 @@ const DiaryEntryDetails: React.FC<DiaryEntryDetailsProps> = ({
 
   const { mutate, isPending } = useMutation({
     mutationFn: deleteDiaryEntry,
-    onSuccess: () => {
-      toast.success("Note deleted successfully");
-      setIsConfirmingDelete(false); // close modal
+    onSuccess: (_, deletedId) => {
+      toast.success("Запис успішно видалено");
+      setIsConfirmingDelete(false);
+
+      // Оптимістичне оновлення кешу
+      queryClient.setQueryData<DiaryEntry[]>(["diary"], (oldData) =>
+        oldData?.filter((entry) => entry._id !== deletedId) ?? []
+      );
+
+      // Потім інвалідуємо для гарантії синхронізації
       queryClient.invalidateQueries({ queryKey: ["diary"] });
-      router.push("/diary");
+
+      // Для мобільного повертаємось назад
+      if (onBack) {
+        onBack();
+      }
     },
     onError: () => {
-      toast.error("Failed to delete note");
+      toast.error("Не вдалося видалити запис");
     },
   });
   //  ----- deleter end
