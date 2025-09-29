@@ -1,31 +1,33 @@
-// app/api/users/avatar/route.ts - remove form-data import conflict
+
 import { NextResponse } from "next/server";
-import { api } from "../../api";
+import { api } from "../../api"; // той, що дивиться на onrender
 import { cookies } from "next/headers";
+import FormData from "form-data";
 
 export async function PATCH(req: Request) {
-    try {
-        const cookieStore = await cookies();
-        const formData = await req.formData();
-        const file = formData.get("avatar") as File;
+  try {
+    const cookieStore = await cookies();
+    const formData = await req.formData();
+    const file = formData.get("avatar") as File;
 
-        if (!file) {
-            return NextResponse.json({ error: "No file provided" }, { status: 400 });
-        }
+    const backendFormData = new FormData();
+    backendFormData.append(
+      "avatar",
+      Buffer.from(await file.arrayBuffer()),
+      file.name
+    );
 
-        // Create FormData for backend
-        const backendFormData = new FormData();
-        backendFormData.append("avatar", file);
+    const { data } = await api.patch("/api/users/avatar", backendFormData, {
+      headers: {
+        ...backendFormData.getHeaders(),
+        Cookie: cookieStore.toString(),
+      },
+    });
 
-        const { data } = await api.patch("api/users/avatar", backendFormData, {
-            headers: {
-                Cookie: cookieStore.toString(),
-            },
-        });
-
-        return NextResponse.json(data);
-    } catch (err) {
-        console.error("Avatar upload error:", err);
-        return NextResponse.json({ error: "Upload failed" }, { status: 500 });
-    }
+    return NextResponse.json(data);
+  } catch (err) {
+    console.error(err);
+    return NextResponse.json({ error: "Upload failed" }, { status: 500 });
+  }
 }
+
