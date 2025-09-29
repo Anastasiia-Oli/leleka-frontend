@@ -7,6 +7,8 @@ import { toast } from "react-hot-toast";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteDiaryEntry } from "@/lib/api/clientApi";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
+
 
 interface DiaryEntryDetailsProps {
   entry: DiaryEntry | null;
@@ -157,11 +159,12 @@ const DiaryEntryDetails: React.FC<DiaryEntryDetailsProps> = ({
                 {entry.title}
               </h2>
               {onEdit && (
-                <button
+                <Link
+                  href={`/diary/action/edit/${entry._id}`}
                   className={css.actionButton}
-                  onClick={onEdit}
                   title="Редагувати"
-                  disabled={isPending}
+                  aria-disabled={isPending}
+                  style={{ pointerEvents: isPending ? 'none' : 'auto' }}
                 >
                   <svg
                     className={css.editIcon}
@@ -171,7 +174,7 @@ const DiaryEntryDetails: React.FC<DiaryEntryDetailsProps> = ({
                   >
                     <use href="/leleka-sprite.svg#icon-edit_square" />
                   </svg>
-                </button>
+                </Link>
               )}
             </div>
 

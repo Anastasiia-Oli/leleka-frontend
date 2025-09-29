@@ -3,6 +3,7 @@ import DiaryEntryCard from "../DiaryEntryCard/DiaryEntryCard";
 import css from "./DiaryList.module.css";
 import { useQuery } from "@tanstack/react-query";
 import { DiaryEntry } from "@/types/dairy";
+import Link from "next/link";
 
 interface DiaryListProps {
   data: DiaryEntry[];
@@ -25,7 +26,8 @@ const DiaryList: React.FC<DiaryListProps> = ({
     <div className={css.diaryContainer}>
       <div className={css.diaryHeader}>
         <h2 className={`${css.diaryTitle} header-third`}>Ваші записи</h2>
-        <button
+        <Link
+          href="/diary/action/create"
           className={css.addButton}
           onClick={onAddEntry}
         >
@@ -35,7 +37,7 @@ const DiaryList: React.FC<DiaryListProps> = ({
               <use href="/leleka-sprite.svg#icon-add-circle" />
             </svg>
           </div>
-        </button>
+        </Link>
       </div>
 
       <div className={css.entriesList}>
