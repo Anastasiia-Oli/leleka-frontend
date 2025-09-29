@@ -1,106 +1,52 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { api } from '../../api';
-import { cookies } from 'next/headers';
-import { isAxiosError } from 'axios';
-import { logErrorResponse } from '../../_utils/utils';
+import { NextRequest, NextResponse } from "next/server";
+import { api } from "../../api";
+import { cookies } from "next/headers";
+import { isAxiosError } from "axios";
+import { logErrorResponse } from "../../_utils/utils";
 
-// GET - отримати конкретний запис за ID
-export async function GET(
-    request: NextRequest,
-    { params }: { params: { id: string } }
-) {
-    try {
-        const cookieStore = await cookies();
-        const { id } = params;
-
-        if (!id) {
-            return NextResponse.json(
-                { error: 'ID запису обов\'язковий' },
-                { status: 400 }
-            );
-        }
-
-        const res = await api.get(`api/diaries/${id}`, {
-            headers: {
-                Cookie: cookieStore.toString(),
-            },
-        });
-
-        return NextResponse.json(res.data, { status: res.status });
-    } catch (error) {
-        if (isAxiosError(error)) {
-            logErrorResponse(error.response?.data);
-            const status = error.response?.status ?? 500;
-            const message = error.response?.status === 404
-                ? 'Запис не знайдено'
-                : 'Помилка отримання запису';
-
-            return NextResponse.json(
-                { error: message, response: error.response?.data },
-                { status }
-            );
-        }
-        logErrorResponse({ message: (error as Error).message });
-        return NextResponse.json(
-            { error: 'Внутрішня помилка сервера' },
-            { status: 500 }
-        );
-    }
-}
+type Props = {
+  params: Promise<{ id: string }>;
+};
 
 // DELETE - видалити запис за ID
-export async function DELETE(
-    request: NextRequest,
-    { params }: { params: { id: string } }
-) {
-    try {
-        const cookieStore = await cookies();
-        const { id } = params;
+export async function DELETE(request: NextRequest, { params }: Props) {
+  try {
+    const cookieStore = await cookies();
+    const { id } = await params;
 
-        if (!id) {
-            return NextResponse.json(
-                { error: 'ID запису обов\'язковий' },
-                { status: 400 }
-            );
-        }
-
-        // Розкоментуйте цей блок для реального видалення
-        const res = await api.delete(`api/diaries/${id}`, {
-            headers: {
-                Cookie: cookieStore.toString(),
-            },
-        });
-
-        return NextResponse.json(
-            {
-                message: 'Запис успішно видалено',
-                deletedId: id
-            },
-            { status: 200 }
-        );
-    } catch (error) {
-        if (isAxiosError(error)) {
-            logErrorResponse(error.response?.data);
-            const status = error.response?.status ?? 500;
-            let message = 'Помилка видалення запису';
-
-            if (error.response?.status === 404) {
-                message = 'Запис не знайдено';
-            } else if (error.response?.status === 403) {
-                message = 'Немає прав для видалення цього запису';
-            } else if (error.response?.status === 401) {
-                message = 'Необхідна авторизація для видалення запису';
-            }
-
-            return NextResponse.json(
-                { error: message, response: error.response?.data },
-                { status }
-            );
-        }
-        logErrorResponse({ message: (error as Error).message });
-        return NextResponse.json(
-            { error: 'Внутрішня помилка сервера' },
-            { status: 500 }
-        );
+    if (!id) {
+      return NextResponse.json(
+        { error: "ID запису обов'язковий" },
+        { status: 400 }
+      );
     }
+
+    // Розкоментуйте цей блок для реального видалення
+    await api.delete(`api/diaries/${id}`, {
+      headers: {
+        Cookie: cookieStore.toString(),
+      },
+    });
+
+    return NextResponse.json(
+      {
+        message: "Запис успішно видалено",
+        deletedId: id,
+      },
+      { status: 200 }
+    );
+  } catch (error) {
+    if (isAxiosError(error)) {
+      logErrorResponse(error.response?.data);
+      return NextResponse.json(
+        { error: error.message, response: error.response?.data },
+        { status: error.status }
+      );
+    }
+    logErrorResponse({ message: (error as Error).message });
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 }
+    );
+  }
 }

@@ -10,8 +10,9 @@ import { useQuery } from "@tanstack/react-query";
 
 const DiaryPage: React.FC = () => {
   const router = useRouter();
-  const { data, refetch } = useQuery<DiaryEntry[]>({
-    queryKey: ['diary'],
+
+  const { data } = useQuery<DiaryEntry[]>({
+    queryKey: ["diary"],
     queryFn: fetchDiary,
   });
 
@@ -27,8 +28,8 @@ const DiaryPage: React.FC = () => {
     };
 
     checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
   React.useEffect(() => {
@@ -54,7 +55,7 @@ const DiaryPage: React.FC = () => {
   };
 
   const handleAddNote = () => {
-    console.log('Open AddNoteModal');
+    console.log("Open AddNoteModal");
   };
 
   const handleEditEntry = () => {
@@ -67,11 +68,6 @@ const DiaryPage: React.FC = () => {
   const handleCloseModal = () => {
     setIsModalOpen(false);
     setEditingEntry(null);
-  };
-
-  const handleEntryDelete = (deletedEntryId: string) => {
-    setSelectedEntry(null);
-    refetch();
   };
 
   return (
@@ -94,11 +90,7 @@ const DiaryPage: React.FC = () => {
             onAddEntry={handleAddEntry}
           />
 
-          <DiaryEntryDetails
-            entry={selectedEntry}
-            onEdit={handleEditEntry}
-            onDelete={handleEntryDelete}
-          />
+          <DiaryEntryDetails entry={selectedEntry} onEdit={handleEditEntry} />
         </div>
       </div>
     </div>

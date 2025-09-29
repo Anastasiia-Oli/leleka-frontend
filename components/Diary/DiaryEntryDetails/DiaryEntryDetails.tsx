@@ -1,25 +1,44 @@
+"use client";
+
 import React, { useState } from "react";
 import { DiaryEntry } from "@/types/dairy";
 import css from "./DiaryEntryDetails.module.css";
 import { toast } from "react-hot-toast";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { deleteDiaryEntry } from "@/lib/api/clientApi";
+import { useRouter } from "next/navigation";
 
 interface DiaryEntryDetailsProps {
   entry: DiaryEntry | null;
   onEdit?: () => void;
-  onDelete?: (entryId: string) => void;
   onBack?: () => void;
-  isDeleting?: boolean;
 }
 
 const DiaryEntryDetails: React.FC<DiaryEntryDetailsProps> = ({
   entry,
   onEdit,
-  onDelete,
   onBack,
-  isDeleting = false
 }) => {
+  const router = useRouter();
+
+  //  ----- deleter
+  const queryClient = useQueryClient();
+
+  const { mutate, isPending } = useMutation({
+    mutationFn: deleteDiaryEntry,
+    onSuccess: () => {
+      toast.success("Note deleted successfully");
+      setIsConfirmingDelete(false); // close modal
+      queryClient.invalidateQueries({ queryKey: ["diary"] });
+      router.push("/diary");
+    },
+    onError: () => {
+      toast.error("Failed to delete note");
+    },
+  });
+  //  ----- deleter end
+
   const [isConfirmingDelete, setIsConfirmingDelete] = useState(false);
-  const [isDeletingEntry, setIsDeletingEntry] = useState(false);
 
   if (!entry) {
     return (
@@ -43,60 +62,19 @@ const DiaryEntryDetails: React.FC<DiaryEntryDetailsProps> = ({
       if (isNaN(date.getTime())) {
         return dateString;
       }
-      return date.toLocaleDateString('uk-UA', {
-        day: 'numeric',
-        month: 'long',
-        year: 'numeric'
+      return date.toLocaleDateString("uk-UA", {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
       });
-    } catch (error) {
+    } catch {
       return dateString;
     }
   };
 
   // Функція видалення нотатки
-  const handleDeleteEntry = async () => {
-    if (!entry?._id) {
-      toast.error("Помилка: ID запису не знайдено");
-      return;
-    }
-
-    setIsDeletingEntry(true);
-
-    try {
-      const response = await fetch(`/api/diaries/${entry._id}`, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
-      }
-
-      const result = await response.json();
-
-      toast.success("Запис успішно видалено");
-
-      // Закриваємо модальне вікно підтвердження спочатку
-      setIsConfirmingDelete(false);
-
-      // Викликаємо callback для оновлення списку на батьківському компоненті
-      if (onDelete) {
-        onDelete(entry._id);
-      }
-
-    } catch (error) {
-      console.error("Error deleting diary entry:", error);
-      toast.error(
-        error instanceof Error
-          ? error.message
-          : "Не вдалося видалити запис"
-      );
-    } finally {
-      setIsDeletingEntry(false);
-    }
+  const handleDeleteEntry = (id: string) => {
+    mutate(id);
   };
 
   // Обробник кліку на кнопку видалення
@@ -109,12 +87,10 @@ const DiaryEntryDetails: React.FC<DiaryEntryDetailsProps> = ({
     setIsConfirmingDelete(false);
   };
 
-  const isProcessing = isDeleting || isDeletingEntry;
-
   return (
     <div className={css.diaryContainer}>
       {/* Overlay для завантаження */}
-      {isProcessing && (
+      {isPending && (
         <div className={css.loadingOverlay}>
           <div className={css.loadingSpinner}>
             <p>Видалення запису...</p>
@@ -127,22 +103,25 @@ const DiaryEntryDetails: React.FC<DiaryEntryDetailsProps> = ({
         <div className={css.confirmModal}>
           <div className={css.confirmContent}>
             <h3>Підтвердження видалення</h3>
-            <p>Ви впевнені, що хочете видалити запис <strong>&quot;{entry.title}&quot;</strong>?</p>
+            <p>
+              Ви впевнені, що хочете видалити запис{" "}
+              <strong>&quot;{entry.title}&quot;</strong>?
+            </p>
             <p className={css.warningText}>Цю дію неможливо скасувати.</p>
             <div className={css.confirmButtons}>
               <button
                 className={css.cancelButton}
                 onClick={handleCancelDelete}
-                disabled={isDeletingEntry}
+                disabled={isPending}
               >
                 Скасувати
               </button>
               <button
                 className={css.confirmDeleteButton}
-                onClick={handleDeleteEntry}
-                disabled={isDeletingEntry}
+                onClick={() => handleDeleteEntry(entry._id)}
+                disabled={isPending}
               >
-                {isDeletingEntry ? "Видаляю..." : "Видалити"}
+                {isPending ? "Видаляю..." : "Видалити"}
               </button>
             </div>
           </div>
@@ -153,7 +132,7 @@ const DiaryEntryDetails: React.FC<DiaryEntryDetailsProps> = ({
         <button
           className={css.backButton}
           onClick={onBack}
-          disabled={isProcessing}
+          disabled={isPending}
         >
           ← Назад до списку
         </button>
@@ -163,15 +142,22 @@ const DiaryEntryDetails: React.FC<DiaryEntryDetailsProps> = ({
         <div className={css.headerTop}>
           <div className={css.headerActions}>
             <div className={css.headerRow}>
-              <h2 className={`${css.diaryTitle} header-third`}>{entry.title}</h2>
+              <h2 className={`${css.diaryTitle} header-third`}>
+                {entry.title}
+              </h2>
               {onEdit && (
                 <button
                   className={css.actionButton}
                   onClick={onEdit}
                   title="Редагувати"
-                  disabled={isProcessing}
+                  disabled={isPending}
                 >
-                  <svg className={css.editIcon} viewBox="0 0 32 32" width="24" height="24">
+                  <svg
+                    className={css.editIcon}
+                    viewBox="0 0 32 32"
+                    width="24"
+                    height="24"
+                  >
                     <use href="/leleka-sprite.svg#icon-edit_square" />
                   </svg>
                 </button>
@@ -179,14 +165,21 @@ const DiaryEntryDetails: React.FC<DiaryEntryDetailsProps> = ({
             </div>
 
             <div className={css.headerInfo}>
-              <div className={`${css.date} text-primary`}>{formatDate(entry.date)}</div>
+              <div className={`${css.date} text-primary`}>
+                {formatDate(entry.date)}
+              </div>
               <button
                 className={css.closeButton}
                 onClick={handleDeleteClick}
                 title="Видалити"
-                disabled={isProcessing}
+                disabled={isPending}
               >
-                <svg className={css.deleteIcon} viewBox="0 0 32 32" width="24" height="24">
+                <svg
+                  className={css.deleteIcon}
+                  viewBox="0 0 32 32"
+                  width="24"
+                  height="24"
+                >
                   <use href="/leleka-sprite.svg#icon-delete_forever" />
                 </svg>
               </button>

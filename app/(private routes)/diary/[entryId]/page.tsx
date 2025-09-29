@@ -8,104 +8,104 @@ import { fetchDiary } from "@/lib/api/clientApi";
 import { DiaryEntry } from "@/types/dairy";
 
 interface PageProps {
-    params: Promise<{
-        entryId: string;
-    }>;
+  params: Promise<{
+    entryId: string;
+  }>;
 }
 
 const DiaryEntryPage = ({ params }: PageProps) => {
-    const router = useRouter();
-    const [entryId, setEntryId] = React.useState<string>("");
+  const router = useRouter();
+  const [entryId, setEntryId] = React.useState<string>("");
 
-    // Розпаковуємо params (оскільки це Promise в Next.js 15+)
-    React.useEffect(() => {
-        params.then((resolvedParams) => {
-            setEntryId(resolvedParams.entryId);
-        });
-    }, [params]);
-
-    const { data: diaryEntries, isLoading, refetch } = useQuery<DiaryEntry[]>({
-        queryKey: ['diary'],
-        queryFn: fetchDiary,
+  // Розпаковуємо params (оскільки це Promise в Next.js 15+)
+  React.useEffect(() => {
+    params.then((resolvedParams) => {
+      setEntryId(resolvedParams.entryId);
     });
+  }, [params]);
 
-    const entry = diaryEntries?.find(e => e._id === entryId) || null;
+  const { data: diaryEntries, isLoading } = useQuery<DiaryEntry[]>({
+    queryKey: ["diary"],
+    queryFn: fetchDiary,
+  });
 
-    const handleBack = () => {
-        router.push('/diary');
-    };
+  const entry = diaryEntries?.find((e) => e._id === entryId) || null;
 
-    const handleEdit = () => {
-        if (entry) {
-            console.log('Open AddDiaryEntryModal for editing', entry);
-        }
-    };
+  const handleBack = () => {
+    router.push("/diary");
+  };
 
-    const handleEntryDelete = (deletedEntryId: string) => {
-        router.push('/diary');
-        refetch();
-    };
-
-    if (isLoading || !entryId) {
-        return (
-            <div style={{
-                minHeight: "100vh",
-                background: "var(--pastel-pink-lighter)",
-                padding: "16px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center"
-            }}>
-                <p>Завантаження...</p>
-            </div>
-        );
+  const handleEdit = () => {
+    if (entry) {
+      console.log("Open AddDiaryEntryModal for editing", entry);
     }
+  };
 
-    if (!entry) {
-        return (
-            <div style={{
-                minHeight: "100vh",
-                background: "var(--pastel-pink-lighter)",
-                padding: "16px",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center"
-            }}>
-                <h2>Запис не знайдено</h2>
-                <button
-                    onClick={handleBack}
-                    style={{
-                        marginTop: "16px",
-                        padding: "10px 20px",
-                        backgroundColor: "var(--pastel-pink)",
-                        border: "none",
-                        borderRadius: "8px",
-                        cursor: "pointer"
-                    }}
-                >
-                    Повернутися до списку
-                </button>
-            </div>
-        );
-    }
-
+  if (isLoading || !entryId) {
     return (
-        <div style={{
-            minHeight: "100vh",
-            background: "var(--pastel-pink-lighter)",
-            padding: "16px"
-        }}>
-            <div style={{ maxWidth: "100%", margin: "0 auto" }}>
-                <DiaryEntryDetails
-                    entry={entry}
-                    onEdit={handleEdit}
-                    onDelete={handleEntryDelete}
-                    onBack={handleBack}
-                />
-            </div>
-        </div>
+      <div
+        style={{
+          minHeight: "100vh",
+          background: "var(--pastel-pink-lighter)",
+          padding: "16px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <p>Завантаження...</p>
+      </div>
     );
+  }
+
+  if (!entry) {
+    return (
+      <div
+        style={{
+          minHeight: "100vh",
+          background: "var(--pastel-pink-lighter)",
+          padding: "16px",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <h2>Запис не знайдено</h2>
+        <button
+          onClick={handleBack}
+          style={{
+            marginTop: "16px",
+            padding: "10px 20px",
+            backgroundColor: "var(--pastel-pink)",
+            border: "none",
+            borderRadius: "8px",
+            cursor: "pointer",
+          }}
+        >
+          Повернутися до списку
+        </button>
+      </div>
+    );
+  }
+
+  return (
+    <div
+      style={{
+        minHeight: "100vh",
+        background: "var(--pastel-pink-lighter)",
+        padding: "16px",
+      }}
+    >
+      <div style={{ maxWidth: "100%", margin: "0 auto" }}>
+        <DiaryEntryDetails
+          entry={entry}
+          onEdit={handleEdit}
+          onBack={handleBack}
+        />
+      </div>
+    </div>
+  );
 };
 
 export default DiaryEntryPage;

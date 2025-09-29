@@ -1,4 +1,3 @@
-
 import { User } from "@/types/user";
 import { JourneyDetails } from "@/types/journeyType";
 import nextServer from "./api";
@@ -7,7 +6,6 @@ import { DiaryEntry } from "@/types/dairy";
 import { Emotion } from "@/types/dairy";
 import { CreateDiaryEntryData } from "@/types/dairy";
 import type { ChildSex } from "../../types/user";
-
 
 export interface RegisterRequest {
   name: string;
@@ -112,7 +110,6 @@ export const getMe = async () => {
   return data;
 };
 
-
 export async function fetchDiary(): Promise<DiaryEntry[]> {
   const res = await nextServer.get<DiaryEntry[]>("/diaries");
   return res.data;
@@ -131,32 +128,20 @@ export async function CreateNote(
 }
 //поміняти на post<CreateDiaryEntryData>
 
-
 // Видалити запис щоденника
-export async function deleteDiaryEntry(id: string): Promise<{ message: string }> {
-  const res = await nextServer.delete<{ message: string }>(`/diaries/${id}`);
+export async function deleteDiaryEntry(
+  id: string
+): Promise<{ message: string }> {
+  const res = await nextServer.delete(`/diaries/${id}`);
   return res.data;
 }
 
-// Отримати обрану нотатку
-const getSelectedNote = async (id: string) => {
-  const response = await fetch(`/api/diaries/${id}`);
-  return response.json();
-};
-
-// Видалити обрану нотатку
-const deleteSelectedNote = async (id: string) => {
-  const response = await fetch(`/api/diaries/${id}`, {
-    method: 'DELETE'
-  });
-  return response.json();
-};
-
-export async function getMomDailyTips(weekNumber: number): Promise<{ momDailyTips: string[] }> {
+export async function getMomDailyTips(
+  weekNumber: number
+): Promise<{ momDailyTips: string[] }> {
   const { data } = await nextServer.get(`/weeks/${weekNumber}`);
   return data;
 }
-
 
 export async function submitOnboarding(payload: OnboardingPayload) {
   const { childSex, dueDate, photo } = payload;
@@ -172,4 +157,3 @@ export async function submitOnboarding(payload: OnboardingPayload) {
 
   return data;
 }
-
