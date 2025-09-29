@@ -10,7 +10,7 @@ export default function Home() {
       <GreetingBlock />
       <StatusBlock />
       <BabyTodayCard />
-      <MomTipCard />
+      <MomTipCard/>
       <TasksReminderCard />
       <FeelingCheckCard />
     </section>

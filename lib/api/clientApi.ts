@@ -3,6 +3,11 @@ import { JourneyDetails } from "@/types/journeyType";
 
 import nextServer from "./api";
 
+import { DiaryEntry } from "@/types/dairy";
+import { Emotion } from "@/types/dairy";
+import { CreateDiaryEntryData } from "@/types/dairy";
+import type { ChildSex } from "../../types/user";
+
 export interface RegisterRequest {
   name: string;
   email: string;
@@ -38,6 +43,18 @@ export interface LoginUserResponse {
   message: string;
   data: User;
 }
+
+export type ApiResponse<T> = {
+  status: number;
+  message: string;
+  data: T;
+};
+
+type OnboardingPayload = {
+  childSex: ChildSex;
+  dueDate: string;
+  photo?: File;
+};
 
 export type LogoutResponse = { message?: string };
 
@@ -84,7 +101,8 @@ export async function logout(): Promise<LogoutResponse> {
 type CheckSessionResponse = { success: boolean };
 
 export const checkSession = async () => {
-  const { data } = await nextServer.post<CheckSessionResponse>("/auth/refresh");
+  const { data } = await nextServer.post<CheckSessionResponse>("/auth/session");
+
   return data.success;
 };
 
@@ -92,6 +110,54 @@ export const getMe = async () => {
   const { data } = await nextServer.get<User>("/users/current");
   return data;
 };
+
+export async function fetchDiary(): Promise<DiaryEntry[]> {
+  const res = await nextServer.get<DiaryEntry[]>("/diaries");
+  return res.data;
+}
+
+export async function fetchEmotions(): Promise<Emotion[]> {
+  const res = await nextServer.get<Emotion[]>("/emotions");
+  return res.data;
+}
+
+export async function CreateNote(
+  params: CreateDiaryEntryData
+): Promise<DiaryEntry> {
+  const res = await nextServer.post<DiaryEntry>("/diaries", params);
+  return res.data;
+}
+//поміняти на post<CreateDiaryEntryData>
+
+// Видалити запис щоденника
+export async function deleteDiaryEntry(
+  id: string
+): Promise<{ message: string }> {
+  const res = await nextServer.delete(`/diaries/${id}`);
+  return res.data;
+}
+
+export async function getMomDailyTips(
+  weekNumber: number
+): Promise<{ momDailyTips: string[] }> {
+  const { data } = await nextServer.get(`/weeks/${weekNumber}`);
+  return data;
+}
+
+export async function submitOnboarding(payload: OnboardingPayload) {
+  const { childSex, dueDate, photo } = payload;
+
+  if (photo) {
+    const fd = new FormData();
+    fd.append("avatar", photo);
+
+    await nextServer.patch("/users/avatar", fd);
+  }
+
+  const { data } = await nextServer.patch("/users", { childSex, dueDate });
+
+  return data;
+}
 
 export type SetTaskState = { id: string; isDone: boolean };
 

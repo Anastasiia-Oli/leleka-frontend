@@ -10,6 +10,7 @@ export interface User {
   createdAt: string;
   updatedAt: string;
 }
+
 export type Task = {
   _id?: string;
   text?: string;
