@@ -178,34 +178,8 @@ export type CreateTaskDto = TaskFormValues & { isDone: boolean };
 export type UpdateTaskDto = Partial<TaskFormValues>;
 
 export const tasksApi = {
-  // GET /tasks
-  getTasks: async (): Promise<AxiosResponse<Task[]>> => {
-    return await nextServer.get<Task[]>("/tasks");
-  },
-
-  // GET /tasks/:id
-  getTask: async (id: string): Promise<AxiosResponse<Task>> => {
-    return await nextServer.get<Task>(`/tasks/${id}`);
-  },
-
   // POST /tasks
   createTask: async (task: CreateTaskDto): Promise<AxiosResponse<Task>> => {
     return await nextServer.post<Task>("/tasks", task);
-  },
-
-  // PATCH /tasks/:id
-  updateTask: async (
-    id: string,
-    updates: UpdateTaskDto
-  ): Promise<AxiosResponse<Task>> => {
-    return await nextServer.patch<Task>(`/tasks/${id}`, updates);
-  },
-
-  // PATCH /tasks/:id/status
-  updateTaskStatus: async (
-    id: string,
-    isDone: boolean
-  ): Promise<AxiosResponse<Task>> => {
-    return await nextServer.patch<Task>(`/tasks/${id}/status`, { isDone });
   },
 };

@@ -23,21 +23,3 @@ export async function POST(req: Request) {
     );
   }
 }
-
-export async function GET() {
-  try {
-    const cookieStore = await cookies();
-
-    const { data, status } = await api.get("/api/tasks", {
-      headers: { Cookie: cookieStore.toString() },
-    });
-
-    return NextResponse.json(data, { status });
-  } catch (err) {
-    const error = err as AxiosError;
-    return NextResponse.json(
-      { error: error.response?.data || "Something went wrong" },
-      { status: error.response?.status || 500 }
-    );
-  }
-}

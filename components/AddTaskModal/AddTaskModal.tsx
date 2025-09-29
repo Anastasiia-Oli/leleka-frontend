@@ -4,32 +4,28 @@ import { useEffect } from "react";
 import css from "./AddTaskModal.module.css";
 import AddTaskForm from "../AddTaskForm/AddTaskForm";
 import { toast } from "react-toastify";
-import {
-  CreateTaskDto,
-  Task,
-  TaskFormValues,
-  tasksApi,
-  UpdateTaskDto,
-} from "@/lib/api/clientApi";
+import { Task, TaskFormValues, tasksApi } from "@/lib/api/clientApi";
 
 interface AddTaskModalProps {
   isOpen: boolean;
-  onClose: () => void;
   initialData?: Task;
   onTaskSaved: (task: Task) => void;
+  onClose: () => void;
 }
 
 export default function AddTaskModal({
   isOpen,
-  onClose,
   initialData,
   onTaskSaved,
+  onClose,
 }: AddTaskModalProps) {
   useEffect(() => {
     if (!isOpen) return;
+
     const handleEsc = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
     };
+
     document.addEventListener("keydown", handleEsc);
     return () => document.removeEventListener("keydown", handleEsc);
   }, [isOpen, onClose]);
@@ -38,16 +34,11 @@ export default function AddTaskModal({
 
   const handleSubmit = async (values: TaskFormValues) => {
     try {
-      const response = initialData
-        ? await tasksApi.updateTask(initialData._id!, {
-            text: values.text,
-            date: values.date,
-          })
-        : await tasksApi.createTask({
-            text: values.text,
-            date: values.date,
-            isDone: false,
-          });
+      const response = await tasksApi.createTask({
+        text: values.text,
+        date: values.date,
+        isDone: false,
+      });
 
       onTaskSaved(response.data);
     } catch (error: unknown) {
@@ -61,9 +52,7 @@ export default function AddTaskModal({
   return (
     <div className={css.backdrop} onClick={onClose}>
       <div className={css.modal} onClick={(e) => e.stopPropagation()}>
-        <h2 className={css.title}>
-          {initialData ? "Редагувати завдання" : "Нове завдання"}
-        </h2>
+        <h2 className={css.title}>Нове завдання</h2>
         <button
           className={css.closeBtn}
           onClick={onClose}
