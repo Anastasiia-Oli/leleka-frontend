@@ -1,10 +1,11 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { getEmotions, Emotion } from "@/lib/api/clientApi";
+import { getEmotions } from "@/lib/api/clientApi";
+import { Emotion } from "@/types/diaryModal";
 
 interface UseDiaryFormReturn {
-  emotions: Emotion[];
+  emotions: Emotion[]; // тут залишаємо масив об’єктів, бо треба мати _id і title для відображення
   loading: boolean;
   error: string | null;
   topCount: number;

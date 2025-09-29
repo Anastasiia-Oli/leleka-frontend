@@ -2,7 +2,7 @@ import { User } from "@/types/user";
 import { JourneyDetails } from "@/types/journeyType";
 import nextServer from "./api";
 import type { ChildSex } from "../../types/user";
-
+import type { DiaryEntryData, Emotion } from "@/types/diaryModal";
 
 export interface RegisterRequest {
   name: string;
@@ -41,31 +41,18 @@ export interface LoginUserResponse {
 }
 
 export type ApiResponse<T> = {
-    status: number;
-    message: string;
-    data: T;
+  status: number;
+  message: string;
+  data: T;
 };
 
 type OnboardingPayload = {
   childSex: ChildSex;
   dueDate: string;
   photo?: File;
-}; 
+};
 
 export type LogoutResponse = { message?: string };
-
-
-export interface DiaryEntryData {
-  title: string;
-  description: string;
-  date?: string;
-  emotions: string[];
-}
-
-export interface Emotion {
-  _id: string;
-  title: string;
-}
 
 export const getJourneyDetailsByWeek = async (
   weekNumber: number
@@ -83,7 +70,6 @@ export const getJourneyDetailsByWeek = async (
     throw error;
   }
 };
-
 
 export async function registerUser(
   params: RegisterRequest
@@ -112,7 +98,7 @@ type CheckSessionResponse = { success: boolean };
 
 export const checkSession = async () => {
   const { data } = await nextServer.post<CheckSessionResponse>("/auth/session");
-  
+
   return data.success;
 };
 
@@ -121,29 +107,21 @@ export const getMe = async () => {
   return data;
 };
 
-
 export async function createDiaryEntry(data: DiaryEntryData) {
-  const { data: res } = await nextServer.post("/diaries", data);
+  const { data: res } = await nextServer.post<DiaryEntryData>("/diaries", data);
   return res;
 }
 
 export async function updateDiaryEntry(id: string, data: DiaryEntryData) {
-  const { data: res } = await nextServer.patch(`/diaries/${id}`, data);
+  const { data: res } = await nextServer.put<DiaryEntryData>(
+    `/diaries/${id}`,
+    data
+  );
   return res;
 }
 
-export async function getDiaryEntries() {
-  const { data } = await nextServer.get("/diaries");
-  return data;
-}
-
-export async function getDiaryEntryById(id: string) {
-  const { data } = await nextServer.get(`/diaries/${id}`);
-  return data;
-}
-
-export const getEmotions = async () => {
-  const { data } = await nextServer.get("/emotions");
+export const getEmotions = async (): Promise<Emotion[]> => {
+  const { data } = await nextServer.get<Emotion[]>("/emotions");
   return data;
 };
 
@@ -157,11 +135,7 @@ export async function submitOnboarding(payload: OnboardingPayload) {
     await nextServer.patch("/users/avatar", fd);
   }
 
-  const { data } = await nextServer.patch(
-    "/users",
-    { childSex, dueDate }
-  );
+  const { data } = await nextServer.patch("/users", { childSex, dueDate });
 
   return data;
 }
-

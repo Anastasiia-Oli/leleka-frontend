@@ -15,7 +15,7 @@ interface DiaryEntryValues {
   title: string;
   description: string;
   date: string;
-  emotions: string[];
+  emotions: string[]; // тут залишаю string[], бо Formik з чекбоксами працює тільки з простими рядками
 }
 
 interface AddDiaryEntryFormProps {
@@ -28,7 +28,7 @@ const initialValues: DiaryEntryValues = {
   title: "",
   description: "",
   date: new Date().toISOString().slice(0, 10),
-  emotions: [],
+  emotions: [], // а тут вже йде масив тайтлів, а не об’єктів
 };
 
 export default function AddDiaryEntryForm({

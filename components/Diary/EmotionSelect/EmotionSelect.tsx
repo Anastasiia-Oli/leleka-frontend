@@ -1,14 +1,10 @@
 import { useRef, useState, useEffect } from "react";
 import css from "./EmotionSelect.module.css";
 import { FormikHelpers } from "formik";
-
-export type Emotion = {
-  _id: string;
-  title: string;
-};
+import type { Emotion } from "@/types/diaryModal";
 
 export type DiaryFormValues = {
-  emotions: string[];
+  emotions: string[]; // зберігаємо _id
 };
 
 type EmotionSelectProps = {
@@ -32,12 +28,12 @@ export default function EmotionSelect({
     const handleScroll = () => {
       const { scrollTop, scrollHeight, clientHeight } = container;
 
-      const trackHeight = 204; // фіксована висота треку
-      const thumbHeight = 56; // висота тумба
+      const trackHeight = 204;
+      const thumbHeight = 56;
       const scrollable = scrollHeight - clientHeight;
 
       if (scrollable <= 0) {
-        setThumbTop(8); // якщо скролу немає — тримаємо тумб зверху
+        setThumbTop(8);
         return;
       }
 
@@ -52,27 +48,21 @@ export default function EmotionSelect({
 
   return (
     <div className={css.scrollWrapper}>
-      {/* Сірий трек */}
       <div className={css.track}></div>
-
-      {/* Рожевий тумб */}
       <div className={css.thumb} style={{ top: `${thumbTop}px` }}></div>
 
-      {/* Скролюваний список */}
       <div className={css.scrollContainer} ref={scrollRef}>
         <div className={css.optionsList}>
           {emotions.map((emotion) => (
-            <label key={emotion.title} className={css.option}>
+            <label key={emotion._id} className={css.option}>
               <input
                 type="checkbox"
-                value={emotion.title}
-                checked={values.emotions.includes(emotion.title)}
+                value={emotion._id}
+                checked={values.emotions.includes(emotion._id)}
                 onChange={(e) => {
                   const updated = e.target.checked
-                    ? [...values.emotions, emotion.title]
-                    : values.emotions.filter(
-                        (title) => title !== emotion.title
-                      );
+                    ? [...values.emotions, emotion._id]
+                    : values.emotions.filter((id) => id !== emotion._id);
                   setFieldValue("emotions", updated);
                 }}
               />
