@@ -111,23 +111,21 @@ export const getMe = async () => {
   return data;
 };
 
-export type SetTaskState = { id: string; isDone: boolean };
-
+export type TaskProp = {
+  status: number;
+  data: Task[];
+};
 export async function getTasks(): Promise<Task[]> {
-  const { data } = await nextServer.get<Task[]>("/tasks");
-  return data;
+  const { data } = await nextServer.get<TaskProp>("/tasks");
+  return data.data;
 }
-
 export async function changeStateTask(
   task: Task,
-  { isDone }: Task
-): Promise<SetTaskState> {
-  const { data } = await nextServer.patch<SetTaskState>(
-    `/tasks/${task._id}/status`,
-    {
-      isDone,
-    }
-  );
+  isDone: boolean
+): Promise<Task> {
+  const { data } = await nextServer.patch<Task>(`/tasks/${task._id}/status`, {
+    isDone,
+  });
   return data;
 }
 

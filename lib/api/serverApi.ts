@@ -1,6 +1,7 @@
 import { cookies } from "next/headers";
 import nextServer from "./api";
 import { User, Task } from "@/types/user";
+import { TaskProp } from "./clientApi";
 
 export const checkServerSession = async () => {
   const cookieStore = await cookies();
@@ -24,8 +25,8 @@ export const getMeServer = async () => {
 
 export async function getTasksServer(): Promise<Task[]> {
   const cookieStore = await cookies();
-  const { data } = await nextServer.get<Task[]>("/tasks", {
+  const { data } = await nextServer.get<TaskProp>("/tasks", {
     headers: { Cookie: cookieStore.toString() },
   });
-  return data;
+  return data.data;
 }

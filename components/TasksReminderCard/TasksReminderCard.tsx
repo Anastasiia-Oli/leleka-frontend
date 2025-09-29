@@ -19,21 +19,26 @@ function formateDate(date?: string) {
 const TasksReminderCard = () => {
   const queryClient = useQueryClient();
 
-  const { data: tasks = [], isSuccess } = useQuery<Task[]>({
+  const {
+    data: tasks = [],
+    isSuccess,
+    isPending,
+  } = useQuery<Task[]>({
     queryKey: ["tasks"],
-    queryFn: (): Promise<Task[]> => getTasks(),
+    queryFn: getTasks,
     refetchOnMount: false,
   });
 
   const { mutate } = useMutation({
-    mutationFn: (task: Task) => changeStateTask(task, { isDone: !task.isDone }),
+    mutationFn: (task: Task) => changeStateTask(task, !task.isDone),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["tasks"] }),
   });
 
   const today = new Date().toISOString().slice(0, 10);
+
   const todayTasks = tasks.filter((t) => t.date === today && t.isDone !== true);
-  const futureTasks = tasks.filter((t) =>
-    t.date ? t.date > today && t.isDone !== true : []
+  const futureTasks = tasks.filter(
+    (t) => t.date && t.date > today && t.isDone !== true
   );
   const execTasks = tasks.filter((t) => t.isDone === true);
 
@@ -74,6 +79,7 @@ const TasksReminderCard = () => {
                     checked={task.isDone}
                     onChange={() => mutate(task)}
                     className={css.checkbox}
+                    disabled={isPending}
                   ></input>
                   <span
                     className={`${css.text} ${task.isDone ? css.done : ""}`}
@@ -98,6 +104,7 @@ const TasksReminderCard = () => {
                     checked={task.isDone}
                     onChange={() => mutate(task)}
                     className={css.checkbox}
+                    disabled={isPending}
                   ></input>
                   <span
                     className={`${css.text} ${task.isDone ? css.done : ""}`}
@@ -122,6 +129,7 @@ const TasksReminderCard = () => {
                     checked={task.isDone}
                     onChange={() => mutate(task)}
                     className={css.checkbox}
+                    disabled={isPending}
                   ></input>
                   <span
                     className={`${css.text} ${task.isDone ? css.done : ""}`}

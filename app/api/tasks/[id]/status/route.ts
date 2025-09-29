@@ -8,7 +8,7 @@ type Props = {
   params: Promise<{ id: string }>;
 };
 
-export async function PATCH({ params }: Props, request: NextRequest) {
+export async function PATCH(request: NextRequest, { params }: Props) {
   try {
     const cookieStore = await cookies();
     const { id } = await params;
