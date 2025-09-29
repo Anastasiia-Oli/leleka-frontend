@@ -1,9 +1,7 @@
 "use client";
 import React, { useState } from "react";
-import {
-  DiaryEntry
-} from "@/types/dairy";
-
+import { DiaryEntry } from "@/types/dairy";
+import { useRouter } from "next/navigation";
 import DiaryList from "../DiaryList/DiaryList";
 import DiaryEntryDetails from "../DiaryEntryDetails/DiaryEntryDetails";
 import css from "./DiaryPage.module.css";
@@ -11,7 +9,7 @@ import { fetchDiary } from "@/lib/api/clientApi";
 import { useQuery } from "@tanstack/react-query";
 
 const DiaryPage: React.FC = () => {
-
+  const router = useRouter();
   const { data, refetch } = useQuery<DiaryEntry[]>({
     queryKey: ['diary'],
     queryFn: fetchDiary,
@@ -23,7 +21,6 @@ const DiaryPage: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingEntry, setEditingEntry] = useState<DiaryEntry | null>(null);
 
-  // Перевіряємо розмір екрану
   React.useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 1024);
@@ -34,7 +31,6 @@ const DiaryPage: React.FC = () => {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  // Автоматично вибираємо перший запис на десктопі
   React.useEffect(() => {
     if (data && data.length > 0 && !selectedEntry && !isMobile) {
       setSelectedEntry(data[0]);
@@ -43,10 +39,9 @@ const DiaryPage: React.FC = () => {
 
   const handleEntryClick = (entry: DiaryEntry) => {
     if (isMobile) {
-      // На мобільних переходимо на окрему сторінку
-      window.location.href = `/diary/${entry._id}`;
+      // Використовуємо Next.js router замість window.location.href
+      router.push(`/diary/${entry._id}`);
     } else {
-      // На десктопі показуємо в правій колонці
       setSelectedEntry(entry);
       setSelectedNote(null);
     }
@@ -74,17 +69,13 @@ const DiaryPage: React.FC = () => {
     setEditingEntry(null);
   };
 
-  // Обробник видалення запису - викликається з DiaryEntryDetails
   const handleEntryDelete = (deletedEntryId: string) => {
-    // Очищаємо обраний запис
     setSelectedEntry(null);
-    // Оновлюємо дані в списку
     refetch();
   };
 
   return (
     <div className={css.diaryContainer}>
-      {/* Mobile Layout */}
       <div className={css.mobileLayout}>
         <DiaryList
           data={data || []}
@@ -94,10 +85,8 @@ const DiaryPage: React.FC = () => {
         />
       </div>
 
-      {/* Desktop Layout */}
       <div className={css.desktopLayout}>
         <div className={css.desktopGrid}>
-          {/* Ліва колонка - список записів */}
           <DiaryList
             data={data || []}
             onEntryClick={handleEntryClick}
@@ -105,7 +94,6 @@ const DiaryPage: React.FC = () => {
             onAddEntry={handleAddEntry}
           />
 
-          {/* Права колонка - деталі запису */}
           <DiaryEntryDetails
             entry={selectedEntry}
             onEdit={handleEditEntry}
@@ -113,13 +101,6 @@ const DiaryPage: React.FC = () => {
           />
         </div>
       </div>
-
-      {/* Модальне вікно для додавання/редагування
-      <AddDiaryEntryModal 
-        isOpen={isModalOpen}
-        onClose={handleCloseModal}
-        editEntry={editingEntry}
-      /> */}
     </div>
   );
 };
