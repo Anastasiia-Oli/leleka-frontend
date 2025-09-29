@@ -47,7 +47,6 @@ export const getJourneyDetailsByWeek = async (
     const response = await nextServer<JourneyDetailResponce>(
       `/weeks/${weekNumber}`
     );
-    console.log(weekNumber);
     if (!response?.data?.data) {
       throw new Error("No journey data returned from API");
     }
