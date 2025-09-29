@@ -113,7 +113,7 @@ export async function createDiaryEntry(data: DiaryEntryData) {
 }
 
 export async function updateDiaryEntry(id: string, data: DiaryEntryData) {
-  const { data: res } = await nextServer.put<DiaryEntryData>(
+  const { data: res } = await nextServer.patch<DiaryEntryData>(
     `/diaries/${id}`,
     data
   );

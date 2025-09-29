@@ -2,24 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { api } from "../api";
 
-export async function GET() {
-  try {
-    const cookieStore = await cookies();
-    const { data } = await api.get("/api/diaries", {
-      headers: { Cookie: cookieStore.toString() },
-    });
-    if (data) {
-      return NextResponse.json(data);
-    }
-  } catch (error) {
-    console.error("Failed to fetch diaries:", error);
-  }
-  return NextResponse.json(
-    { error: "Failed to fetch diaries" },
-    { status: 500 }
-  );
-}
-
 export async function POST(request: NextRequest) {
   const cookieStore = await cookies();
 
