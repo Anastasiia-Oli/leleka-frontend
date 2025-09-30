@@ -1,4 +1,4 @@
-import { User } from "@/types/user";
+import { User, Task } from "@/types/user";
 import { JourneyDetails } from "@/types/journeyType";
 import nextServer from "./api";
 import { AxiosResponse } from "axios";
@@ -149,6 +149,24 @@ export async function getMomDailyTips(
   return data;
 }
 
+export type TaskProp = {
+  status: number;
+  data: Task[];
+};
+export async function getTasks(): Promise<Task[]> {
+  const { data } = await nextServer.get<TaskProp>("/tasks");
+  return data.data;
+}
+export async function changeStateTask(
+  task: Task,
+  isDone: boolean
+): Promise<Task> {
+  const { data } = await nextServer.patch<Task>(`/tasks/${task._id}/status`, {
+    isDone,
+  });
+  return data;
+}
+
 export async function submitOnboarding(payload: OnboardingPayload) {
   const { childSex, dueDate, photo } = payload;
 
@@ -201,3 +219,4 @@ export const getBabyClient = async (weekNumber: number): Promise<Baby> => {
   const { data } = await nextServer.get<BabyResponse>(`/weeks/${weekNumber}`);
   return data.data.baby;
 };
+
