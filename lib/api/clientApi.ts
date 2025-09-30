@@ -6,7 +6,7 @@ import { AxiosResponse } from "axios";
 import { DiaryEntry } from "@/types/dairy";
 import { Emotion } from "@/types/dairy";
 import { CreateDiaryEntryData } from "@/types/dairy";
-import type { ChildSex } from "../../types/user";
+import type { Baby, ChildSex } from "../../types/user";
 
 export interface RegisterRequest {
   name: string;
@@ -187,4 +187,17 @@ export const tasksApi = {
   createTask: async (task: CreateTaskDto): Promise<AxiosResponse<Task>> => {
     return await nextServer.post<Task>("/tasks", task);
   },
+};
+
+export interface BabyResponse {
+  status: number;
+  message: string;
+  weekNumber: number;
+  data: {
+    baby: Baby;
+  };
+}
+export const getBabyClient = async (weekNumber: number): Promise<Baby> => {
+  const { data } = await nextServer.get<BabyResponse>(`/weeks/${weekNumber}`);
+  return data.data.baby;
 };
