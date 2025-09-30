@@ -4,12 +4,17 @@ import { Formik, Form, Field, FormikHelpers } from "formik";
 import { useState, useEffect } from "react";
 import { useDiaryForm } from "@/hooks/useDiaryForm";
 import css from "./AddDiaryEntryForm.module.css";
-import { createDiaryEntry, updateDiaryEntry } from "@/lib/api/clientApi";
+import {
+  createDiaryEntry,
+  updateDiaryEntry,
+  getDiaryById,
+} from "@/lib/api/clientApi";
 import { createDiaryEntrySchema } from "@/lib/validation/diaryValidation";
 import EmotionSelect from "@/components/Diary/EmotionSelect/EmotionSelect";
 import { ObjectSchema } from "yup";
 import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
+import { Emotion } from "@/types/diaryModal";
 
 interface DiaryEntryValues {
   title: string;
@@ -24,13 +29,6 @@ interface AddDiaryEntryFormProps {
   onSuccess: () => void;
 }
 
-const initialValues: DiaryEntryValues = {
-  title: "",
-  description: "",
-  date: new Date().toISOString().slice(0, 10),
-  emotions: [], // а тут вже йде масив тайтлів, а не об’єктів
-};
-
 export default function AddDiaryEntryForm({
   mode,
   entryId,
@@ -42,6 +40,14 @@ export default function AddDiaryEntryForm({
   const [validationSchema, setValidationSchema] =
     useState<ObjectSchema<DiaryEntryValues> | null>(null);
 
+  const [initialValues, setInitialValues] = useState<DiaryEntryValues>({
+    title: "",
+    description: "",
+    date: new Date().toISOString().slice(0, 10),
+    emotions: [], // а тут вже йде масив тайтлів, а не об’єктів
+  });
+
+  const [loadingEntry, setLoadingEntry] = useState(false);
   const topEmotions = emotions.slice(0, topCount);
 
   // ✅ Отримуємо динамічну схему валідації на основі емоцій з бази
@@ -52,6 +58,33 @@ export default function AddDiaryEntryForm({
       );
     }
   }, [emotions]);
+
+  // ✅ якщо режим редагування – підтягуємо існуючий запис
+  useEffect(() => {
+    const fetchEntry = async () => {
+      if (mode === "edit" && entryId) {
+        setLoadingEntry(true);
+        try {
+          const entry = await getDiaryById(entryId);
+
+          setInitialValues({
+            title: entry.title || "",
+            description: entry.description || "",
+            date:
+              entry.date?.slice(0, 10) || new Date().toISOString().slice(0, 10), // ✅ гарантуємо рядок
+            emotions: (entry.emotions as Emotion[])?.map((e) => e._id) || [],
+          });
+        } catch (err) {
+          console.error("Не вдалося завантажити запис:", err);
+          toast.error("Не вдалося завантажити запис");
+        } finally {
+          setLoadingEntry(false);
+        }
+      }
+    };
+
+    fetchEntry();
+  }, [mode, entryId]);
 
   // ✅ Сабміт з пуш-помилкою і оновленням сторінки
   const handleSubmit = async (
@@ -83,9 +116,11 @@ export default function AddDiaryEntryForm({
   };
 
   if (!validationSchema) return <div>Завантаження форми...</div>;
+  if (loadingEntry) return <div>Завантаження запису...</div>;
 
   return (
     <Formik
+      enableReinitialize
       initialValues={initialValues}
       validationSchema={validationSchema}
       onSubmit={handleSubmit}
