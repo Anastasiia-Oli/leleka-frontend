@@ -1,4 +1,3 @@
-// картка щоденика
 
 'use client';
 
@@ -12,37 +11,33 @@ interface DiaryEntryCardProps {
   isSelected?: boolean;
 }
 
-const DiaryEntryCard: React.FC<DiaryEntryCardProps> = ({ entry, onClick, isSelected }) => {
-
+const DiaryEntryCard: React.FC<DiaryEntryCardProps> = ({
+  entry,
+  onClick,
+  isSelected
+}) => {
   // Показуємо максимум 3 емоції, решту ховаємо під "+N"
   const visibleEmotions = entry.emotions?.slice(0, 3) || [];
   const hiddenEmotionsCount = Math.max((entry.emotions?.length ?? 0) - 3, 0);
 
   // Функція форматування дати
   const formatDate = (dateString: string) => {
-    // Якщо дата вже в правильному форматі, повертаємо її
     if (typeof dateString === 'string' && dateString.includes('липня')) {
       return dateString;
     }
 
     try {
-      // Спробуємо створити дату з рядка
       const date = new Date(dateString);
-
-      // Перевіряємо, чи дата валідна
       if (isNaN(date.getTime())) {
-        // Якщо дата невалідна, повертаємо оригінальний рядок
         return dateString;
       }
 
-      // Форматуємо дату в український формат
       return date.toLocaleDateString('uk-UA', {
         day: 'numeric',
         month: 'long',
         year: 'numeric'
       });
     } catch (error) {
-      // У випадку помилки повертаємо оригінальний рядок
       return dateString;
     }
   };

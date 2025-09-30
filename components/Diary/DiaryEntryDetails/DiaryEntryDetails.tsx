@@ -1,3 +1,4 @@
+// components/Diary/DiaryEntryDetails/DiaryEntryDetails.tsx
 "use client";
 
 import React, { useState } from "react";
@@ -6,9 +7,7 @@ import css from "./DiaryEntryDetails.module.css";
 import { toast } from "react-hot-toast";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteDiaryEntry } from "@/lib/api/clientApi";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
-
 
 interface DiaryEntryDetailsProps {
   entry: DiaryEntry | null;
@@ -21,10 +20,8 @@ const DiaryEntryDetails: React.FC<DiaryEntryDetailsProps> = ({
   onEdit,
   onBack,
 }) => {
-  const router = useRouter();
-
-  //  ----- deleter
   const queryClient = useQueryClient();
+  const [isConfirmingDelete, setIsConfirmingDelete] = useState(false);
 
   const { mutate, isPending } = useMutation({
     mutationFn: deleteDiaryEntry,
@@ -37,7 +34,7 @@ const DiaryEntryDetails: React.FC<DiaryEntryDetailsProps> = ({
         oldData?.filter((entry) => entry._id !== deletedId) ?? []
       );
 
-      // Потім інвалідуємо для гарантії синхронізації
+      // Інвалідуємо для гарантії синхронізації
       queryClient.invalidateQueries({ queryKey: ["diary"] });
 
       // Для мобільного повертаємось назад
@@ -49,9 +46,6 @@ const DiaryEntryDetails: React.FC<DiaryEntryDetailsProps> = ({
       toast.error("Не вдалося видалити запис");
     },
   });
-  //  ----- deleter end
-
-  const [isConfirmingDelete, setIsConfirmingDelete] = useState(false);
 
   if (!entry) {
     return (
