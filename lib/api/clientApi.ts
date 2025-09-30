@@ -1,6 +1,7 @@
 import { User, Task } from "@/types/user";
 import { JourneyDetails } from "@/types/journeyType";
 import nextServer from "./api";
+import { AxiosResponse } from "axios";
 
 import { DiaryEntry } from "@/types/dairy";
 import { Emotion } from "@/types/dairy";
@@ -100,9 +101,14 @@ export async function logout(): Promise<LogoutResponse> {
 type CheckSessionResponse = { success: boolean };
 
 export const checkSession = async () => {
-  const { data } = await nextServer.post<CheckSessionResponse>("/auth/session");
+  try {
+    const { data } =
+      await nextServer.get<CheckSessionResponse>("/auth/session");
 
-  return data.success;
+    return data.success;
+  } catch {
+    return false;
+  }
 };
 
 export const getMe = async () => {
@@ -175,3 +181,28 @@ export async function submitOnboarding(payload: OnboardingPayload) {
 
   return data.user;
 }
+export interface Task {
+  _id: string;
+  text: string;
+  date: string;
+  isDone: boolean;
+  userId: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface TaskFormValues {
+  _id?: string;
+  text: string;
+  date: string;
+}
+
+export type CreateTaskDto = TaskFormValues & { isDone: boolean };
+export type UpdateTaskDto = Partial<TaskFormValues>;
+
+export const tasksApi = {
+  // POST /tasks
+  createTask: async (task: CreateTaskDto): Promise<AxiosResponse<Task>> => {
+    return await nextServer.post<Task>("/tasks", task);
+  },
+};

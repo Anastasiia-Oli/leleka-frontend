@@ -40,6 +40,11 @@ const selected =
         placeholder={placeholder}
         classNamePrefix="custom-select"
         name={name}
+        value={selected}
+        onChange={(option: SingleValue<Option>) => {
+          onChange?.(option ? option.value : "");
+        }}
+        isClearable
         inputId={id}
         instanceId={instanceId}
         styles={{

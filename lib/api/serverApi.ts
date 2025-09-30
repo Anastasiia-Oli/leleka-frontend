@@ -5,7 +5,7 @@ import { TaskProp } from "./clientApi";
 
 export const checkServerSession = async () => {
   const cookieStore = await cookies();
-  const res = await nextServer.post("/auth/refresh", {
+  const res = await nextServer.get("/auth/session", {
     headers: {
       Cookie: cookieStore.toString(),
     },
@@ -20,7 +20,7 @@ export const getMeServer = async () => {
       Cookie: cookieStore.toString(),
     },
   });
-  return response.data;
+  return response;
 };
 
 export async function getTasksServer(): Promise<Task[]> {
