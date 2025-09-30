@@ -8,6 +8,12 @@
   z-index: 999;
 }
 
+@media screen and (min-width: 1128px) {
+  .backdrop {
+    display: none;
+  }
+}
+
 .backgroundSideBar {
   width: 300px;
   height: 100vh;
