@@ -3,12 +3,11 @@ import Image from "next/image";
 import css from "./BabyTodayCard.module.css";
 import { useQuery } from "@tanstack/react-query";
 import { getBabyClient } from "@/lib/api/clientApi";
+import { useGetCurrentWeek } from "@/lib/store/getCurrentWeekStore";
 
-interface BabyTodayCardProps {
-  weekNumber: number;
-}
+const BabyTodayCard = () => {
+  const { initialWeek: weekNumber = 1 } = useGetCurrentWeek();
 
-const BabyTodayCard = ({ weekNumber }: BabyTodayCardProps) => {
   const { data: baby, isSuccess } = useQuery({
     queryKey: ["weeks", weekNumber],
     queryFn: () => getBabyClient(Number(weekNumber)),
