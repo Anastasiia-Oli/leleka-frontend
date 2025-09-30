@@ -8,7 +8,7 @@ type Props = {
   children: React.ReactNode;
 };
 
-const REFRESH_INTERVAL = 14 * 60 * 1000; // 14m
+// const REFRESH_INTERVAL = 14 * 60 * 1000; // 14m
 
 const AuthProvider = ({ children }: Props) => {
   const setUser = useAuthUserStore((state) => state.setUser);
@@ -28,12 +28,12 @@ const AuthProvider = ({ children }: Props) => {
     };
     fetchUser();
 
-    //  refreshes token
-    const intervalId = setInterval(async () => {
-      await fetchUser();
-    }, REFRESH_INTERVAL);
+    // //  refreshes token
+    // const intervalId = setInterval(async () => {
+    //   await fetchUser();
+    // }, REFRESH_INTERVAL);
 
-    return () => clearInterval(intervalId);
+    // return () => clearInterval(intervalId);
   }, [setUser, clearIsAuthenticated]);
   return children;
 };
