@@ -1,5 +1,5 @@
 export const ukrainianTranslations: { [key: string]: string } = {
-  home: 'Головна',
+  home: 'Лелека',
   profile: 'Профіль',
  
   // Додайте інші переклади, які вам потрібні

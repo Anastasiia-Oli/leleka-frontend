@@ -12,6 +12,7 @@ type CustomSelectProps = {
   id?: string;
   height?: number | string;
   instanceId?: string;
+  isClearable?: boolean;
 };
 
 export default function CustomSelect({

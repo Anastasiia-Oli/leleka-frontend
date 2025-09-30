@@ -5,8 +5,8 @@
 }
 
 .breadcrumbsList {
-  list-style: none; /* прибрали крапки */
-  display: flex; /* в рядок */
+  list-style: none; 
+  display: flex; 
   flex-wrap: wrap;
   gap: 0.5rem;
   padding: 0;

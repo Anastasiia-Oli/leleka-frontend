@@ -1,0 +1,108 @@
+.scene {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--bg);
+  padding: 16px;
+}
+
+.regRight {
+  display: none;
+}
+
+.logoCont {
+  position: absolute;
+  top: 21px;
+  left: 24px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 105px;
+  height: 45px;
+}
+
+.logoIcon {
+  width: 95px;
+  height: 29px;
+}
+
+.regCard {
+  width: 100%;
+  max-width: 360px;
+  background: var(--card);
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.08);
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+.regLeft {
+  padding: 20px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+@media (min-width: 768px) {
+  .regCard {
+    width: 720px;
+    height: 900px;
+    max-width: none;
+  }
+  .regLeft {
+    padding: 40px 24px;
+    justify-content: center;
+    min-height: auto;
+  }
+  .logoCont {
+    top: 21px;
+    left: 37px;
+  }
+}
+
+@media (min-width: 1128px) {
+.scene {
+  min-height: 100vh;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  background: var(--bg);
+  padding-left: 32px;
+  padding-top: 0; 
+}
+
+  .regCard {
+    width: 1440px;
+    height: 900px;
+    max-width: none;
+    grid-template-columns: 720px 720px;
+  }
+  .regRight {
+    display: block;
+    position: relative;
+    background: #fafaf9;
+  }
+  .regLeft {
+    justify-content: center;
+    min-height: auto;
+    margin: 32px 64px;
+    padding: 56px;
+    display: flex; 
+   flex-direction: column;
+    align-items: stretch;
+  }
+  .logoCont {
+    left: 0;
+  }
+}
