@@ -25,3 +25,16 @@
 .privateRoutesWrapper {
   width: 100%;
 }
+
+.logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 105px;
+  height: 45px;
+}
+
+.logoIcon {
+  width: 95px;
+  height: 29px;
+}

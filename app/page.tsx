@@ -4,15 +4,28 @@ import BabyTodayCard from "@/components/BabyTodayCard/BabyTodayCard";
 import MomTipCard from "@/components/MomTipCard/MomTipCard";
 import TasksReminderCard from "@/components/TasksReminderCard/TasksReminderCard";
 import FeelingCheckCard from "@/components/FeelingCheckCard/FeelingCheckCard";
+import Header from "@/components/Header/Header";
+import SideBar from "@/components/SideBar/SideBar";
+import css from "./Home.module.css";
+
 export default function Home() {
   return (
-    <section>
-      <GreetingBlock />
-      <StatusBlock />
-      <BabyTodayCard />
-      <MomTipCard />
-      <TasksReminderCard />
-      <FeelingCheckCard />
+    <section className={css.homeContainer}>
+      <Header />
+      <div className={css.bodyWrapper}>
+        <div className={css.sideWrapper}>
+          <SideBar />
+        </div>
+
+        <div className={css.contentWrapper}>
+          <GreetingBlock />
+          <StatusBlock />
+          <BabyTodayCard />
+          <MomTipCard />
+          <TasksReminderCard />
+          <FeelingCheckCard />
+        </div>
+      </div>
     </section>
   );
 }

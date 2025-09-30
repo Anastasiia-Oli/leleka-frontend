@@ -1,8 +1,12 @@
 "use client";
-import Select from "react-select";
+import Select, { SingleValue } from "react-select";
 
-type SelectProps = {
+type Option = { value: string; label: string };
+
+type CustomSelectProps = {
   options: string[];
+  value?: string;
+  onChange?: (value: string) => void;
   placeholder?: string;
   name?: string;
   id?: string;
@@ -12,16 +16,22 @@ type SelectProps = {
 
 export default function CustomSelect({
   options,
+  value,
+  onChange,
   placeholder = "Select one...",
   name,
   id,
   height = 40,
   instanceId,
-}: SelectProps) {
+}: CustomSelectProps) {
   const formattedOptions = options.map((opt) => ({
     value: opt,
     label: opt,
   }));
+
+const selected =
+  formattedOptions.find((o) => o.value === value) ??
+  (value ? { value, label: value } : null);
 
   return (
     <>
@@ -30,6 +40,11 @@ export default function CustomSelect({
         placeholder={placeholder}
         classNamePrefix="custom-select"
         name={name}
+        value={selected}
+        onChange={(option: SingleValue<Option>) => {
+          onChange?.(option ? option.value : "");
+        }}
+        isClearable
         inputId={id}
         instanceId={instanceId}
         styles={{

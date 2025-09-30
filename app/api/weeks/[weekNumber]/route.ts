@@ -6,11 +6,13 @@ type Props = { params: Promise<{ weekNumber: string }> };
 
 export async function GET(request: NextRequest, { params }: Props) {
   const { weekNumber } = await params;
+
   try {
     const cookieStore = await cookies();
     const { data } = await api(`/api/weeks/${weekNumber}`, {
       headers: { Cookie: cookieStore.toString() },
     });
+
     return NextResponse.json(data);
   } catch (error) {
     return NextResponse.json(

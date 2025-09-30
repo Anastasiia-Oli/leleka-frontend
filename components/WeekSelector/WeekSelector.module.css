@@ -105,6 +105,44 @@
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
+
+/* .weeksList {
+  list-style: none;
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  width: 100%;
+  min-width: 1453px;
+  padding: 0 16px;
+  box-sizing: border-box;
+}
+
+.weeksList::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  background: transparent;
+}
+
+.weeksList::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.weeksList::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+
+.weeksList li {
+  flex: 0 0 auto;
+  height: 100%;
+}
+
+.weekSelectorContainer {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  margin-top: 24px; */
+
 }
 
 @media screen and (min-width: 1440px) {
@@ -126,9 +164,3 @@
     height: 101px;
   }
 }
-
-/* @media screen and (min-width: 1128px) {
-  .weekSelectorContainer {
-    margin-right: 308px;
-  }
-} */

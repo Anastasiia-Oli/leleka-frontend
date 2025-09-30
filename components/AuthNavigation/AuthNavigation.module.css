@@ -1,8 +1,103 @@
-/* .userPhoto {
+.sideFooterAuth {
+  margin-top: 100%;
+  margin-bottom: 0;
+  padding: 16px;
+  padding-bottom: 24px;
+  border-top: 1px solid var(--color-scheme-border);
+}
+
+@media (min-width: 1440px) {
+  .sideFooterAuth {
+    padding-top: 24px;
+  }
+}
+
+.sideAuth {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navigationLinkAuth {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  align-items: center;
+}
+
+.userPhoto {
   border-radius: 100%;
+}
+
+.sideUser {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  list-style: none;
+}
+
+.sideName {
+  font-family: var(--font-family);
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 160%;
+  color: var(--color-scheme-text);
+  padding: 0px;
+}
+
+.sideEmail {
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 160%;
+  color: var(--color-scheme-text);
+  padding: 0px;
 }
 
 .logoutButton {
   width: 40px;
   height: 40px;
-} */
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logoutIcon {
+  width: 24px;
+  height: 24px;
+  display: flex;
+}
+
+/* ---- */
+
+.sideNotAuth {
+  display: flex;
+  justify-content: space-between;
+}
+
+.navigationLink {
+  font-family: inherit;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #000;
+  text-decoration: none;
+}
+
+.navigationLink:hover,
+.navigationLink:focus {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.navigationLink:active {
+  color: #ffcbd3;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.navigationLink:visited {
+  text-decoration: none;
+}

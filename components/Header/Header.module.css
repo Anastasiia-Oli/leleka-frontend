@@ -42,7 +42,7 @@
   }
 }
 
-@media (min-width: 1440px) {
+@media (min-width: 1128px) {
   .header {
     display: none;
   }
