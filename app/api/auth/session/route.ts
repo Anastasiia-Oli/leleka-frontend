@@ -5,7 +5,7 @@ import { parse } from "cookie";
 import { isAxiosError } from "axios";
 import { logErrorResponse } from "../../_utils/utils";
 
-export async function POST() {
+export async function GET() {
   try {
     const cookieStore = await cookies();
     const accessToken = cookieStore.get("accessToken")?.value;
@@ -28,7 +28,6 @@ export async function POST() {
         const cookieArray = Array.isArray(setCookie) ? setCookie : [setCookie];
         for (const cookieStr of cookieArray) {
           const parsed = parse(cookieStr);
-
 
           const options = {
             expires: parsed.Expires ? new Date(parsed.Expires) : undefined,
