@@ -46,10 +46,10 @@ const TasksReminderCard = () => {
   // const handleOpenModal = () => setIsModalOpen(true);
   // const handleCloseModal = () => setIsModalOpen(false);
 
-  const handleTaskSaved = () => {
-    queryClient.invalidateQueries({ queryKey: ["tasks"] });
-    // handleCloseModal();
-  };
+  // const handleTaskSaved = () => {
+  //   queryClient.invalidateQueries({ queryKey: ["tasks"] });
+  //   // handleCloseModal();
+  // };
 
   return (
     <div className={css.card}>
