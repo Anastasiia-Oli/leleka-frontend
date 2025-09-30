@@ -65,14 +65,39 @@
 }
 
 .logoutIcon {
-  width: 40px;
-  height: 40px;
+  width: 24px;
+  height: 24px;
+  display: flex;
 }
 
 /* ---- */
 
 .sideNotAuth {
+  display: flex;
+  justify-content: space-between;
 }
 
 .navigationLink {
+  font-family: inherit;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #000;
+  text-decoration: none;
+}
+
+.navigationLink:hover,
+.navigationLink:focus {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.navigationLink:active {
+  color: #ffcbd3;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.navigationLink:visited {
+  text-decoration: none;
 }
