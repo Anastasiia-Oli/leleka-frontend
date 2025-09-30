@@ -6,7 +6,7 @@ import { getBabyClient } from "@/lib/api/clientApi";
 import { useGetCurrentWeek } from "@/lib/store/getCurrentWeekStore";
 
 const BabyTodayCard = () => {
-  const { initialWeek: weekNumber = 1 } = useGetCurrentWeek();
+  const { initialWeek: weekNumber = 10 } = useGetCurrentWeek();
 
   const { data: baby, isSuccess } = useQuery({
     queryKey: ["weeks", weekNumber],
@@ -22,8 +22,9 @@ const BabyTodayCard = () => {
             <Image
               src={baby?.image ?? "/placeholder.png"}
               alt="baby"
-              width={257}
-              height={194}
+              width={287}
+              height={217}
+              sizes="(min-width:335px) 287px, (min-width:768px) 257px, 100vw"
               className={css.img}
             />
             <div className={css.babyInfo}>
