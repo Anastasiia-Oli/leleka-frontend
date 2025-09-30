@@ -2,8 +2,12 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useEffect, useRef } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Mousewheel } from "swiper/modules";
+import type { Swiper as SwiperType } from "swiper";
+import "swiper/css";
 import css from "./WeekSelector.module.css";
-import { useGetCurrentWeek } from "@/lib/store/getCurrentWeekStore";
 
 type WeekSelectorProps = {
   weeks: number[];
@@ -12,20 +16,52 @@ type WeekSelectorProps = {
 
 const WeekSelector = ({ weeks, onButtonClick }: WeekSelectorProps) => {
   const pathname = usePathname();
-  const { initialWeek } = useGetCurrentWeek();
+  const swiperRef = useRef<SwiperType | null>(null);
+
+  const currentWeek = Number(pathname?.split("/").filter(Boolean).pop());
+
+  useEffect(() => {
+    if (swiperRef.current && !isNaN(currentWeek)) {
+      const index = weeks.indexOf(currentWeek);
+      if (index !== -1) {
+        swiperRef.current.slideTo(index, 0);
+      }
+    }
+  }, [currentWeek, weeks]);
 
   return (
     <div className={css.weekSelectorContainer}>
-      <ul className={css.weeksList}>
+      <Swiper
+        modules={[Mousewheel]}
+        slidesPerView="auto"
+        spaceBetween={16}
+        freeMode={true}
+        mousewheel={{
+          forceToAxis: true,
+          releaseOnEdges: true,
+          sensitivity: 3,
+        }}
+        onSwiper={(swiper) => {
+          swiperRef.current?.slideTo(0, 600);
+          swiperRef.current = swiper;
+        }}
+      >
         {weeks.map((week) => {
           const isActive = pathname === `/journey/${week}`;
-          const isDisabled = week > initialWeek;
+          const isDisabled =
+            typeof currentWeek === "number" && week > currentWeek;
 
           return (
-            <li className={css.weekItem} key={week}>
+            <SwiperSlide
+              key={week}
+              className={css.weekSlide}
+              style={{ flexShrink: 0 }}
+            >
               <Link
                 href={isDisabled ? "#" : `/journey/${week}`}
-                className={`${isActive ? css.activatedButton : ""} ${isDisabled ? css.disabledBtn : css.weekButton}`}
+                className={`${isActive ? css.activatedButton : ""} ${
+                  isDisabled ? css.disabledBtn : css.weekButton
+                }`}
                 onClick={(e) => {
                   if (isDisabled) {
                     e.preventDefault();
@@ -37,10 +73,10 @@ const WeekSelector = ({ weeks, onButtonClick }: WeekSelectorProps) => {
                 <p className={css.weekNumbers}>{week}</p>
                 <p className={css.weekText}>Тиждень</p>
               </Link>
-            </li>
+            </SwiperSlide>
           );
         })}
-      </ul>
+      </Swiper>
     </div>
   );
 };
