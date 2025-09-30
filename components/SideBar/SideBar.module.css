@@ -19,7 +19,7 @@
   z-index: 1111;
 }
 
-.sidebar li {
+.sidebar .li {
   display: flex;
   align-items: center;
   flex-direction: row;
@@ -33,7 +33,7 @@
   transition: transform;
 }
 
-.sidebar li:hover {
+.sidebar .li:hover {
   background-color: #fff4f6;
 }
 
@@ -42,7 +42,7 @@
     display: flex;
   }
 
-  .sidebar li {
+  .sidebar .li {
     font-size: 16px;
   }
 }
