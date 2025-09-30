@@ -79,20 +79,7 @@
 /* #endregion */
 
 /* #region For Moms */
-.journeyDetails {
-}
-/* Mobile
-font-weight: 700;
-font-size: 18px;
-line-height: 1.4;
-letter-spacing: 0.01em;
-color: #000;
- Tablet
- width: 656px;
-height: 379px;
-  Desktop
-  width: 461px;
-height: 379px; */
+
 .journeyDetails {
   display: grid;
   grid-template-columns: 2fr;
@@ -220,7 +207,7 @@ height: 379px; */
 }
 
 /* Desktop Styles */
-@media screen and (min-width: 1440px) {
+@media screen and (min-width: 1128px) {
   .imgAnalogContainer {
     max-width: 461px;
   }
@@ -259,7 +246,7 @@ height: 379px; */
   }
 
   .descriptionContainer {
-    min-height: 280px;
+    height: 280px;
     overflow-y: scroll;
     scrollbar-width: none;
   }
@@ -277,5 +264,9 @@ height: 379px; */
   .iconTitleAdvice h5 {
     font-size: 16px;
     font-weight: 600;
+  }
+
+  .journeyTextInfo {
+    height: 400px;
   }
 }
