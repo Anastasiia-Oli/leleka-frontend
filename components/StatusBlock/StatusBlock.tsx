@@ -77,6 +77,3 @@ const StatusBlock = () => {
 
 export default StatusBlock;
 
-{
-  /* <BabyTodayCardServer week={1} />; */
-}
