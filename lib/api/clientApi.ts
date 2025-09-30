@@ -188,3 +188,16 @@ export const tasksApi = {
     return await nextServer.post<Task>("/tasks", task);
   },
 };
+
+export interface BabyResponse {
+  status: number;
+  message: string;
+  weekNumber: number;
+  data: {
+    baby: Baby;
+  };
+}
+export const getBabyClient = async (weekNumber: number): Promise<Baby> => {
+  const { data } = await nextServer.get<BabyResponse>(`/weeks/${weekNumber}`);
+  return data.data.baby;
+};
