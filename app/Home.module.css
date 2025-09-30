@@ -1,0 +1,21 @@
+.homeContainer {
+}
+
+.bodyWrapper {
+  display: flex;
+}
+
+.sideWrapper {
+  display: none;
+}
+
+@media (min-width: 1128px) {
+  .sideWrapper {
+    display: flex;
+  }
+}
+
+.contentWrapper {
+  padding: 32px;
+  padding-top: 24px;
+}
