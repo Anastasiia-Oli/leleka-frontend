@@ -1,0 +1,90 @@
+.diaryContainer {
+    min-width: 375px;
+    box-sizing: border-box;
+    padding: 24px 16px;
+    background: var(--pastel-pink-lighter);
+    border-radius: 32px;
+}
+.card {
+    background: var(--pastel-pink);
+    border-radius: 16px;
+    padding: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.card:hover {
+    background: var(--pastel-pink-lightest);
+    border-color: var(--pastel-pink);
+}
+
+.cardHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    gap: 16px;
+}
+
+.cardTitle {
+    margin: 0;
+    color: var(--black);
+    flex: 1;
+    line-height: 1.4;
+}
+
+.cardDate {
+    color: var(--gray);
+    flex-shrink: 0;
+    font-size: 14px;
+}
+
+.emotions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.emotionTag {
+    background: var(--pastel-pink-lightest);
+    color: var(--black);
+    padding: 2px 12px;
+    border-radius: 16px;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 1.2;
+    text-align: center;
+}
+
+.moreEmotions {
+    background: var(--gray-lightest);
+    color: var(--black);
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+/* Mobile styles */
+@media (max-width: 767px) {
+    .card {
+        padding: 16px;
+    }
+
+    .cardHeader {
+        /* flex-direction: column; */
+        gap: 8px;
+        align-items: flex-start;
+    }
+
+    .cardDate {
+        font-size: 12px;
+    }
+
+    .emotionTag {
+        font-size: 11px;
+        padding: 3px 10px;
+    }
+}

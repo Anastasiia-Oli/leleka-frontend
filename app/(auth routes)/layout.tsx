@@ -2,6 +2,9 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import ToasterProvider from "@/components/ToasterProvider/ToasterProvider";
+// import { ClipLoader } from "react-spinners";
+import Loading from "../loading";
 
 type Props = {
   children: React.ReactNode;
@@ -17,5 +20,10 @@ export default function PublicLayout({ children }: Props) {
     setLoading(false);
   }, [router]);
 
-  return <>{loading ? <div>Loading...</div> : children}</>;
+  return (
+    <>
+      <ToasterProvider />
+      {loading ? <Loading /> : children}
+    </>
+  );
 }

@@ -5,7 +5,7 @@ import { parse } from "cookie";
 import { isAxiosError } from "axios";
 import { logErrorResponse } from "../../_utils/utils";
 
-export async function POST(request: NextRequest) {
+export async function GET(request: NextRequest) {
   try {
     const cookieStore = await cookies();
     const refreshToken = cookieStore.get("refreshToken")?.value;
@@ -39,11 +39,11 @@ export async function POST(request: NextRequest) {
         });
       }
     }
-    return NextResponse.redirect(new URL("/sign-in", request.url));
+    return NextResponse.redirect(new URL("/auth/login", request.url));
   } catch (error) {
     if (isAxiosError(error)) {
       logErrorResponse(error.response?.data);
-      return NextResponse.redirect(new URL("/sign-in", request.url));
+      return NextResponse.redirect(new URL("/auth/login", request.url));
     }
     logErrorResponse({ message: (error as Error).message });
     return NextResponse.json(
