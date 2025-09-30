@@ -14,19 +14,6 @@
   display: flex;
 }
 
-.weekButton,
-.activatedButton,
-.disabledBtn {
-  flex: 0 0 auto;
-  width: 97px;
-  height: 87px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  border-radius: 32px;
-  box-sizing: border-box;
-}
 .weekButton {
   display: flex;
   flex-direction: column;
@@ -36,6 +23,7 @@
   background-color: #fff4f6;
   width: max-content;
   height: max-content;
+  margin-right: 16px;
   width: 97px;
 }
 
@@ -55,7 +43,22 @@
   cursor: not-allowed;
 }
 
+.weekButton,
+.activatedButton,
+.disabledBtn {
+  flex: 0 0 auto;
+  width: 97px;
+  height: 87px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 32px;
+  box-sizing: border-box;
+}
+
 .weekSlide {
+  gap: 16px;
   width: 97px;
   flex-shrink: 0;
 }
