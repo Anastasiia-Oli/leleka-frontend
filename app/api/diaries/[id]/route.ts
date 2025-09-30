@@ -79,24 +79,3 @@ export async function PATCH(request: NextRequest, { params }: Params) {
     { status: 500 }
   );
 }
-
-export async function GET(_request: NextRequest, { params }: Props) {
-  const { id } = await params;
-  const cookieStore = await cookies();
-
-  try {
-    const { data } = await api.get(`/api/diaries/${id}`, {
-      headers: {
-        Cookie: cookieStore.toString(),
-      },
-    });
-
-    return NextResponse.json(data);
-  } catch (error) {
-    console.error(`Failed to fetch diary ${id}:`, error);
-    return NextResponse.json(
-      { error: `Failed to fetch diary ${id}` },
-      { status: 500 }
-    );
-  }
-}

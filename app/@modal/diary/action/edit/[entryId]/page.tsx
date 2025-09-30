@@ -1,11 +1,12 @@
+"use client";
+
+import { useDiaryStore } from "@/lib/store/useDiaryStore";
 import AddDiaryEntryModal from "../../../../../../components/Diary/AddDiaryEntryModal/AddDiaryEntryModal";
 
-interface EditDiaryEntryModalPageProps {
-  params: { entryId: string };
-}
+export default function EditDiaryEntryModalPage() {
+  const { currentEntry } = useDiaryStore();
 
-export default function EditDiaryEntryModalPage({
-  params,
-}: EditDiaryEntryModalPageProps) {
-  return <AddDiaryEntryModal mode="edit" entryId={params.entryId} />;
+  if (!currentEntry) return <div>Запис не знайдено</div>;
+
+  return <AddDiaryEntryModal mode="edit" entry={currentEntry} />;
 }

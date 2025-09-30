@@ -179,8 +179,3 @@ export async function submitOnboarding(payload: OnboardingPayload) {
 
   return data.user;
 }
-
-export const getDiaryById = async (id: string) => {
-  const { data } = await nextServer.get(`/diaries/${id}`);
-  return data;
-};

@@ -4,17 +4,13 @@ import { Formik, Form, Field, FormikHelpers } from "formik";
 import { useState, useEffect } from "react";
 import { useDiaryForm } from "@/hooks/useDiaryForm";
 import css from "./AddDiaryEntryForm.module.css";
-import {
-  createDiaryEntry,
-  updateDiaryEntry,
-  getDiaryById,
-} from "@/lib/api/clientApi";
+import { createDiaryEntry, updateDiaryEntry } from "@/lib/api/clientApi";
 import { createDiaryEntrySchema } from "@/lib/validation/diaryValidation";
 import EmotionSelect from "@/components/Diary/EmotionSelect/EmotionSelect";
 import { ObjectSchema } from "yup";
 import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
-import { Emotion } from "@/types/diaryModal";
+import { DiaryEntry } from "@/types/diaryModal";
 
 interface DiaryEntryValues {
   title: string;
@@ -25,13 +21,13 @@ interface DiaryEntryValues {
 
 interface AddDiaryEntryFormProps {
   mode: "create" | "edit";
-  entryId?: string;
+  entry?: DiaryEntry;
   onSuccess: () => void;
 }
 
 export default function AddDiaryEntryForm({
   mode,
-  entryId,
+  entry,
   onSuccess,
 }: AddDiaryEntryFormProps) {
   const router = useRouter();
@@ -47,7 +43,6 @@ export default function AddDiaryEntryForm({
     emotions: [], // а тут вже йде масив тайтлів, а не об’єктів
   });
 
-  const [loadingEntry, setLoadingEntry] = useState(false);
   const topEmotions = emotions.slice(0, topCount);
 
   // ✅ Отримуємо динамічну схему валідації на основі емоцій з бази
@@ -61,30 +56,15 @@ export default function AddDiaryEntryForm({
 
   // ✅ якщо режим редагування – підтягуємо існуючий запис
   useEffect(() => {
-    const fetchEntry = async () => {
-      if (mode === "edit" && entryId) {
-        setLoadingEntry(true);
-        try {
-          const entry = await getDiaryById(entryId);
-
-          setInitialValues({
-            title: entry.title || "",
-            description: entry.description || "",
-            date:
-              entry.date?.slice(0, 10) || new Date().toISOString().slice(0, 10), // ✅ гарантуємо рядок
-            emotions: (entry.emotions as Emotion[])?.map((e) => e._id) || [],
-          });
-        } catch (err) {
-          console.error("Не вдалося завантажити запис:", err);
-          toast.error("Не вдалося завантажити запис");
-        } finally {
-          setLoadingEntry(false);
-        }
-      }
-    };
-
-    fetchEntry();
-  }, [mode, entryId]);
+    if (mode === "edit" && entry) {
+      setInitialValues({
+        title: entry.title || "",
+        description: entry.description || "",
+        date: entry.date?.slice(0, 10) || new Date().toISOString().slice(0, 10),
+        emotions: entry.emotions?.map((e) => e._id) || [],
+      });
+    }
+  }, [mode, entry]);
 
   // ✅ Сабміт з пуш-помилкою і оновленням сторінки
   const handleSubmit = async (
@@ -95,8 +75,8 @@ export default function AddDiaryEntryForm({
       if (mode === "create") {
         await createDiaryEntry(values);
         toast.success("Запис успішно створено!");
-      } else if (mode === "edit" && entryId) {
-        await updateDiaryEntry(entryId, values);
+      } else if (mode === "edit" && entry?._id) {
+        await updateDiaryEntry(entry?._id, values);
         toast.success("Запис оновлено!");
       }
       helpers.resetForm();
@@ -116,7 +96,6 @@ export default function AddDiaryEntryForm({
   };
 
   if (!validationSchema) return <div>Завантаження форми...</div>;
-  if (loadingEntry) return <div>Завантаження запису...</div>;
 
   return (
     <Formik

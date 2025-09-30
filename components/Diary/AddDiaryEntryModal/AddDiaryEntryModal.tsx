@@ -3,15 +3,16 @@
 import AddDiaryEntryForm from "../AddDiaryEntryForm/AddDiaryEntryForm";
 import css from "./AddDiaryEntryModal.module.css";
 import { useDiaryModal } from "@/hooks/useDiaryModal";
+import { DiaryEntry } from "@/types/diaryModal";
 
 interface AddDiaryEntryModalProps {
   mode: "create" | "edit";
-  entryId?: string;
+  entry?: DiaryEntry;
 }
 
 export default function AddDiaryEntryModal({
   mode,
-  entryId,
+  entry,
 }: AddDiaryEntryModalProps) {
   const { closeModal } = useDiaryModal();
 
@@ -26,11 +27,7 @@ export default function AddDiaryEntryModal({
         <h2 className={css.title}>
           {mode === "create" ? "Новий запис" : "Редагувати запис"}
         </h2>
-        <AddDiaryEntryForm
-          mode={mode}
-          entryId={entryId}
-          onSuccess={closeModal}
-        />
+        <AddDiaryEntryForm mode={mode} entry={entry} onSuccess={closeModal} />
       </div>
     </div>
   );
