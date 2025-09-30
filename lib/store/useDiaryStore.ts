@@ -1,7 +1,7 @@
 "use client";
 
 import { create } from "zustand";
-import { DiaryEntry } from "@/types/diaryModal";
+import { DiaryEntry } from "@/types/dairy";
 
 type DiaryStoreType = {
   currentEntry: DiaryEntry | null;

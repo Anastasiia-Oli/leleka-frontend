@@ -8,15 +8,14 @@ import { createDiaryEntry, updateDiaryEntry } from "@/lib/api/clientApi";
 import { createDiaryEntrySchema } from "@/lib/validation/diaryValidation";
 import EmotionSelect from "@/components/Diary/EmotionSelect/EmotionSelect";
 import { ObjectSchema } from "yup";
-import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
-import { DiaryEntry } from "@/types/diaryModal";
+import { DiaryEntry } from "@/types/dairy";
 
 interface DiaryEntryValues {
   title: string;
   description: string;
   date: string;
-  emotions: string[]; // тут залишаю string[], бо Formik з чекбоксами працює тільки з простими рядками
+  emotions: string[];
 }
 
 interface AddDiaryEntryFormProps {
@@ -30,7 +29,6 @@ export default function AddDiaryEntryForm({
   entry,
   onSuccess,
 }: AddDiaryEntryFormProps) {
-  const router = useRouter();
   const { emotions, loading, error, topCount } = useDiaryForm();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [validationSchema, setValidationSchema] =
@@ -40,12 +38,12 @@ export default function AddDiaryEntryForm({
     title: "",
     description: "",
     date: new Date().toISOString().slice(0, 10),
-    emotions: [], // а тут вже йде масив тайтлів, а не об’єктів
+    emotions: [],
   });
 
   const topEmotions = emotions.slice(0, topCount);
 
-  // ✅ Отримуємо динамічну схему валідації на основі емоцій з бази
+  // ✅ Створюємо схему валідації після завантаження емоцій
   useEffect(() => {
     if (emotions.length > 0) {
       createDiaryEntrySchema().then((schema) =>
@@ -54,7 +52,7 @@ export default function AddDiaryEntryForm({
     }
   }, [emotions]);
 
-  // ✅ якщо режим редагування – підтягуємо існуючий запис
+  // ✅ Заповнюємо форму даними при редагуванні
   useEffect(() => {
     if (mode === "edit" && entry) {
       setInitialValues({
@@ -63,25 +61,33 @@ export default function AddDiaryEntryForm({
         date: entry.date?.slice(0, 10) || new Date().toISOString().slice(0, 10),
         emotions: entry.emotions?.map((e) => e._id) || [],
       });
+    } else if (mode === "create") {
+      setInitialValues({
+        title: "",
+        description: "",
+        date: new Date().toISOString().slice(0, 10),
+        emotions: [],
+      });
     }
   }, [mode, entry]);
 
-  // ✅ Сабміт з пуш-помилкою і оновленням сторінки
+  // ✅ Сабміт форми
   const handleSubmit = async (
     values: DiaryEntryValues,
     helpers: FormikHelpers<DiaryEntryValues>
   ) => {
     try {
       if (mode === "create") {
+        console.log("📤 Дані, які відправляємо:", values);
         await createDiaryEntry(values);
         toast.success("Запис успішно створено!");
       } else if (mode === "edit" && entry?._id) {
-        await updateDiaryEntry(entry?._id, values);
-        toast.success("Запис оновлено!");
+        await updateDiaryEntry(entry._id, values);
+        toast.success("Запис успішно оновлено!");
       }
+
       helpers.resetForm();
-      onSuccess();
-      router.refresh(); // ✅ оновлює список записів
+      onSuccess(); // ✅ закриває модалку
     } catch (err: unknown) {
       console.error("Помилка при збереженні запису:", err);
 
@@ -188,7 +194,7 @@ export default function AddDiaryEntryForm({
             )}
           </div>
 
-          {/* ✏️ Запис */}
+          {/* ✏️ Опис */}
           <div className={css.fieldWrapper}>
             <label className={css.label}>Запис</label>
             <Field
@@ -207,7 +213,7 @@ export default function AddDiaryEntryForm({
           </div>
 
           <button type="submit" className={css.submitBtn}>
-            {mode === "create" ? "Зберегти" : "Оновити"}
+            {mode === "create" ? "Створити запис" : "Оновити запис"}
           </button>
         </Form>
       )}

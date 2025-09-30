@@ -12,10 +12,10 @@ export interface Emotion {
   title: string;
 }
 
-export interface DiaryEntry {
-  _id: string;
-  title: string;
-  description: string;
-  date: string;
-  emotions: Emotion[];
-}
+// export interface DiaryEntry {
+//   _id: string;
+//   title: string;
+//   description: string;
+//   date: string;
+//   emotions: Emotion[];
+// }
