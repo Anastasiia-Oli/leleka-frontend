@@ -44,7 +44,7 @@
   overflow-y: hidden;
   width: 100%;
   min-width: 1453px;
-  scrollbar-width: none;
+  /* scrollbar-width: none; */
   padding: 0 16px;
   box-sizing: border-box;
 }
@@ -73,7 +73,7 @@
   overflow-x: auto;
   overflow-y: hidden;
   margin-top: 24px;
-  scrollbar-width: none;
+  /* scrollbar-width: none; */
 }
 
 .weekSelectorContainer::-webkit-scrollbar {
