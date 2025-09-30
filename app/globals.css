@@ -1,6 +1,6 @@
 @import "modern-normalize";
 
- :root {
+:root {
   --font-family: "Lato", sans-serif;
   --second-family: "Comfortaa", sans-serif;
 
@@ -128,7 +128,6 @@ body {
 
 * {
   padding: 0;
-  margin: 0;
   box-sizing: border-box;
 }
 

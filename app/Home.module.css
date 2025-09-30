@@ -12,10 +12,27 @@
 @media (min-width: 1128px) {
   .sideWrapper {
     display: flex;
+    flex-direction: column;
   }
 }
 
 .contentWrapper {
   padding: 32px;
   padding-top: 24px;
+}
+
+.logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 105px;
+  height: 45px;
+  padding-top: 24px;
+  padding-bottom: 16px;
+  padding-left: 24px;
+}
+
+.logoIcon {
+  width: 95px;
+  height: 29px;
 }
