@@ -9,11 +9,10 @@ export async function GET(request: NextRequest) {
   try {
     const cookieStore = await cookies();
     const refreshToken = cookieStore.get("refreshToken")?.value;
-    const sessionId = cookieStore.get("sessionId")?.value;
     const next = request.nextUrl.searchParams.get("next") || "/";
 
-    if (refreshToken && sessionId) {
-      const apiRes = await api.post("/api/auth/refresh", {
+    if (refreshToken) {
+      const apiRes = await api.get("api/auth/refresh", {
         headers: {
           Cookie: cookieStore.toString(),
         },
@@ -33,13 +32,11 @@ export async function GET(request: NextRequest) {
         if (accessToken) cookieStore.set("accessToken", accessToken);
         if (refreshToken) cookieStore.set("refreshToken", refreshToken);
 
-        return NextResponse.json(
-          {accessToken: accessToken},
-         {status:200,
+        return NextResponse.redirect(new URL(next, request.url), {
           headers: {
-            "set-cookie": cookieStore.toString()},
-          }
-        );
+            "set-cookie": cookieStore.toString(),
+          },
+        });
       }
     }
     return NextResponse.redirect(new URL("/auth/login", request.url));
