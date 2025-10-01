@@ -1,4 +1,4 @@
-import { User } from "@/types/user";
+import { User, Task } from "@/types/user";
 import { JourneyDetails } from "@/types/journeyType";
 import nextServer from "./api";
 import type { DiaryEntryData, Emotion } from "@/types/diaryModal";
@@ -217,7 +217,12 @@ export async function saveProfile(payload: ProfilePayload) {
     await nextServer.patch("/users/avatar", fd);
   }
 
-  const { data } = await nextServer.patch("/users", { name, email, childSex, dueDate });
+  const { data } = await nextServer.patch("/users", {
+    name,
+    email,
+    childSex,
+    dueDate,
+  });
 
   return data.user;
 }
