@@ -1,0 +1,77 @@
+.backdrop {
+  background-color: rgba(0, 0, 0, 0.25);
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.modal {
+  background-color: #fff;
+  position: relative;
+  z-index: 10001;
+  border-radius: 40px;
+  padding: 64px 20px;
+}
+
+@media (max-width: 1440px) {
+  .modal {
+    padding: 64px 32px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .modal {
+    padding: 64px;
+  }
+}
+
+.title {
+  margin: 0;
+  font-family: "Comfortaa", sans-serif;
+  font-weight: 700;
+  font-size: 36px;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+  text-align: center;
+  color: #000;
+  margin-bottom: 48px;
+}
+
+@media (min-width: 1440px) {
+  .title {
+    font-size: 48px;
+  }
+}
+
+.closeBtn {
+  all: unset;
+  cursor: pointer;
+  position: absolute;
+  color: #000;
+  top: 24px;
+  right: 24px;
+  border: none;
+  padding: 0;
+  z-index: 10;
+}
+
+.closeBtn svg {
+  stroke: #000;
+}
+
+@media (min-width: 768px) {
+  .closeBtn {
+    top: 26.5px;
+    right: 36px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .closeBtn {
+    top: 29px;
+  }
+}

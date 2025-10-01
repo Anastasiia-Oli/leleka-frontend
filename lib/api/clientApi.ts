@@ -1,11 +1,12 @@
-import { User } from "@/types/user";
+import { User, Task } from "@/types/user";
 import { JourneyDetails } from "@/types/journeyType";
 import nextServer from "./api";
-
-import { DiaryEntry } from "@/types/dairy";
-import { Emotion } from "@/types/dairy";
-import { CreateDiaryEntryData } from "@/types/dairy";
 import type { ChildSex } from "../../types/user";
+import type { DiaryEntryData, Emotion } from "@/types/diaryModal";
+import { AxiosResponse } from "axios";
+import { DiaryEntry } from "@/types/dairy";
+import { CreateDiaryEntryData } from "@/types/dairy";
+import type { Baby, ChildSex } from "../../types/user";
 
 export interface RegisterRequest {
   name: string;
@@ -123,6 +124,24 @@ export const getMe = async () => {
   return data;
 };
 
+export async function createDiaryEntry(data: DiaryEntryData) {
+  const { data: res } = await nextServer.post<DiaryEntryData>("/diaries", data);
+  return res;
+}
+
+export async function updateDiaryEntry(id: string, data: DiaryEntryData) {
+  const { data: res } = await nextServer.patch<DiaryEntryData>(
+    `/diaries/${id}`,
+    data
+  );
+  return res;
+}
+
+export const getEmotions = async (): Promise<Emotion[]> => {
+  const { data } = await nextServer.get<Emotion[]>("/emotions");
+  return data;
+};
+
 export async function fetchDiary(): Promise<DiaryEntry[]> {
   const res = await nextServer.get<DiaryEntry[]>("/diaries");
   return res.data;
@@ -156,6 +175,24 @@ export async function getMomDailyTips(
   return data;
 }
 
+export type TaskProp = {
+  status: number;
+  data: Task[];
+};
+export async function getTasks(): Promise<Task[]> {
+  const { data } = await nextServer.get<TaskProp>("/tasks");
+  return data.data;
+}
+export async function changeStateTask(
+  task: Task,
+  isDone: boolean
+): Promise<Task> {
+  const { data } = await nextServer.patch<Task>(`/tasks/${task._id}/status`, {
+    isDone,
+  });
+  return data;
+}
+
 export async function submitOnboarding(payload: OnboardingPayload) {
   const { childSex, dueDate, photo } = payload;
 
@@ -185,3 +222,42 @@ export async function saveProfile(payload: ProfilePayload) {
 
   return data.user;
 }
+export interface Task {
+  _id: string;
+  text: string;
+  date: string;
+  isDone: boolean;
+  userId: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface TaskFormValues {
+  _id?: string;
+  text: string;
+  date: string;
+}
+
+export type CreateTaskDto = TaskFormValues & { isDone: boolean };
+export type UpdateTaskDto = Partial<TaskFormValues>;
+
+export const tasksApi = {
+  // POST /tasks
+  createTask: async (task: CreateTaskDto): Promise<AxiosResponse<Task>> => {
+    return await nextServer.post<Task>("/tasks", task);
+  },
+};
+
+export interface BabyResponse {
+  status: number;
+  message: string;
+  weekNumber: number;
+  data: {
+    baby: Baby;
+  };
+}
+export const getBabyClient = async (weekNumber: number): Promise<Baby> => {
+  const { data } = await nextServer.get<BabyResponse>(`/weeks/${weekNumber}`);
+  return data.data.baby;
+};
+

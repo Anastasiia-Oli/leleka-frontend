@@ -108,7 +108,7 @@ export default function JourneyDetailsComponent({
                     </svg>
                     <h5>{data?.mom.comfortTips[2].category}</h5>
                   </div>
-                  <p>{data?.mom.comfortTips[0].tip}</p>
+                  <p>{data?.mom.comfortTips[2].tip}</p>
                 </li>
               </ul>
             </div>

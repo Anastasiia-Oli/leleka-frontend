@@ -4,6 +4,7 @@ import { DiaryEntry } from "@/types/dairy";
 import { useRouter } from "next/navigation";
 import DiaryList from "../DiaryList/DiaryList";
 import DiaryEntryDetails from "../DiaryEntryDetails/DiaryEntryDetails";
+import AddDiaryEntryModal from "../AddDiaryEntryModal/AddDiaryEntryModal";
 import css from "./DiaryPage.module.css";
 import { fetchDiary } from "@/lib/api/clientApi";
 import { useQuery } from "@tanstack/react-query";
@@ -20,6 +21,7 @@ const DiaryPage: React.FC = () => {
   const [selectedNote, setSelectedNote] = useState<DiaryEntry | null>(null);
   const [isMobile, setIsMobile] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalMode, setModalMode] = useState<"create" | "edit">("create");
   const [editingEntry, setEditingEntry] = useState<DiaryEntry | null>(null);
 
   React.useEffect(() => {
@@ -50,6 +52,7 @@ const DiaryPage: React.FC = () => {
   };
 
   const handleAddEntry = () => {
+    setModalMode("create");
     setEditingEntry(null);
     setIsModalOpen(true);
   };
@@ -60,15 +63,16 @@ const DiaryPage: React.FC = () => {
 
   const handleEditEntry = () => {
     if (selectedEntry) {
+      setModalMode("edit");
       setEditingEntry(selectedEntry);
       setIsModalOpen(true);
     }
   };
 
-  // const handleCloseModal = () => {
-  //   setIsModalOpen(false);
-  //   setEditingEntry(null);
-  // };
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setEditingEntry(null);
+  };
 
   return (
     <div className={css.diaryContainer}>
@@ -93,6 +97,12 @@ const DiaryPage: React.FC = () => {
           <DiaryEntryDetails entry={selectedEntry} onEdit={handleEditEntry} />
         </div>
       </div>
+      <AddDiaryEntryModal
+        isOpen={isModalOpen}
+        mode={modalMode}
+        entry={editingEntry}
+        onClose={handleCloseModal}
+      />
     </div>
   );
 };
