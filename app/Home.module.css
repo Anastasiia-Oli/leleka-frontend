@@ -6,6 +6,9 @@
 }
 
 .sideWrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
   padding-top: 8px;
   display: none;
   border-right: 1px solid var(--color-scheme-border);
@@ -15,6 +18,10 @@
   .sideWrapper {
     display: flex;
     flex-direction: column;
+  }
+
+  .contentWrapper {
+    margin-left: 312px;
   }
 }
 
@@ -37,4 +44,19 @@
 .logoIcon {
   width: 95px;
   height: 29px;
+}
+
+.title {
+  font-size: 36px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 60px;
+  text-align: center;
+}
+
+.description {
+  font-size: 18px;
+  color: #444444;
+  line-height: 28px;
+  margin-bottom: 16px;
 }
