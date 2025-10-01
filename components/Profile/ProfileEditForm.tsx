@@ -38,7 +38,6 @@ const ProfileForm = () => {
   const [preview, setPreview] = useState<string | null>(null);
   const user = useAuthUserStore((state) => state.user);
   const setUser = useAuthUserStore((state) => state.setUser);
-  // const { user, setUser } = useAuthUserStore(state => ({ user: state.user, setUser: state.setUser }));
 
   const initialValues: FormValues = {
     name: user.name || "",
@@ -120,12 +119,10 @@ const ProfileForm = () => {
 
               <div className={css.info_fields_stack}>
                 <div className={css.info_item}>
-                  {/* <span className={css.label}>Ім&apos;я:</span> */}
                   <span className={css.value_name}>{user.name || "Ганна"}</span>
                 </div>
 
                 <div className={css.info_item}>
-                  {/* <span className={css.label}>Email:</span> */}
                   <span className={css.value_email}>
                     {user.email || "hanna@gmail.com"}
                   </span>

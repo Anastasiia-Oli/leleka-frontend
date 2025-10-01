@@ -57,7 +57,6 @@
   display: flex;
   flex-direction: column;
   gap: 32px;
-  /* align-items: center; */
   align-items: stretch;
   width: 43%;
 }
@@ -147,9 +146,7 @@
 .value_email{
   font-family: var(--font-family);
   font-size: 16px;
-  /* font-weight: 700; */
   line-height: 150%;
-  /* letter-spacing: 0.01em; */
   color: var(--color-scheme-text);
 }
 
