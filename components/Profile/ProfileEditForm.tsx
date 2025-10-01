@@ -66,7 +66,6 @@ const ProfileForm = () => {
           }
 
           toast.success("Дані збережено!");
-          router.push("/");
         } catch (err: unknown) {
           if (err instanceof Error) {
             toast.error(err?.message || "Сталася помилка");
