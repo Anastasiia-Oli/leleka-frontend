@@ -16,9 +16,9 @@ const FeelingCheckCard = () => {
           <p className="text-primary"> Занотуйте незвичні відчуття у тілі.</p>
         </div>
       </div>
-    <button
+        <button
         type="button"
-        className={css.btn}
+        className={`${css.btn} text-medium`}
         onClick={() => setIsModalOpen(true)}
       >
         Зробити запис у щоденник
