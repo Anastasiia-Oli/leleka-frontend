@@ -47,9 +47,6 @@ const ProfileForm = () => {
     dueDate: user.dueDate || "",
   };
 
-  const a = useAuthUserStore.getState();
-  console.log(a);
-
   return (
     <Formik<FormValues>
       initialValues={initialValues}
