@@ -77,7 +77,6 @@ const ProfileForm = () => {
       enableReinitialize={true}
     >
       {({ isSubmitting, setFieldValue, values, resetForm }) => {
-        console.log(values);
 
         return (
           
