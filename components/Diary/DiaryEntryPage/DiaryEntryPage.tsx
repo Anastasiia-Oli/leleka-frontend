@@ -103,7 +103,6 @@ const DiaryEntryPage = ({ params }: PageProps) => {
       <div
         style={{
           minHeight: "100vh",
-          background: "var(--pastel-pink-lighter)",
           padding: "16px",
         }}
       >

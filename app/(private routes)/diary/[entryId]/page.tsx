@@ -72,7 +72,6 @@ const DiaryEntryPage = ({ params }: PageProps) => {
       <div
         style={{
           minHeight: "100vh",
-          background: "var(--pastel-pink-lighter)",
           padding: "16px",
           display: "flex",
           alignItems: "center",
@@ -89,7 +88,6 @@ const DiaryEntryPage = ({ params }: PageProps) => {
       <div
         style={{
           minHeight: "100vh",
-          background: "var(--pastel-pink-lighter)",
           padding: "16px",
           display: "flex",
           flexDirection: "column",
@@ -120,7 +118,6 @@ const DiaryEntryPage = ({ params }: PageProps) => {
       <div
         style={{
           minHeight: "100vh",
-          background: "var(--pastel-pink-lighter)",
           padding: "16px",
         }}
       >

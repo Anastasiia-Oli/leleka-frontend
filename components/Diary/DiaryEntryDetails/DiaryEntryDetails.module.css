@@ -61,10 +61,9 @@
 }
 
 .headerActions {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    flex-direction: row;
     gap: 6px;
-    align-items: flex-start;
     width: 100%;
     justify-content: space-between;
 
@@ -105,7 +104,7 @@
     display: flex;
     align-items: center;
     gap: 8px;
-    
+    justify-content: flex-end;
 
 }
 
@@ -169,7 +168,9 @@
     }
 
     .headerActions {
-        flex-direction: row;
+        display: flex;
+        grid-template-columns: 1fr 1fr;
+        /* flex-direction: row; */
         align-items: flex-start;
         gap: 8px;
         width: auto;
@@ -206,7 +207,8 @@
 
     .headerTop {
         flex-direction: row;
-        flex-wrap: wrap;
+        display: flex;
+        justify-content: space-between;
         gap: 16px;
     }
 }
