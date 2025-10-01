@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import css from "./PRLayout.module.css";
 import SideBar from "@/components/SideBar/SideBar";
 import Header from "@/components/Header/Header";
@@ -24,7 +23,7 @@ const PrivateRoutesLayout = ({ children }: Props) => {
       <section className={css.container}>
         {!shouldHide && (
           <aside className={css.sidebar}>
-            <LogoComponent/>
+            <LogoComponent />
             <SideBar />
           </aside>
         )}

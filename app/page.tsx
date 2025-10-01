@@ -15,7 +15,7 @@ export default function Home() {
       <Header />
       <div className={css.bodyWrapper}>
         <div className={css.sideWrapper}>
-          <LogoComponent/>
+          <LogoComponent />
           <SideBar />
         </div>
 
