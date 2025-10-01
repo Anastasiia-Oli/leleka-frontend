@@ -1,7 +1,12 @@
-import Link from "next/link";
+"use client";
+
+import { useState } from "react";
+import AddDiaryEntryModal from "../Diary/AddDiaryEntryModal/AddDiaryEntryModal";
 import css from "./FeelingCheckCard.module.css";
 
 const FeelingCheckCard = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
     <div className={css.card}>
       <div className={css.textBlock}>
@@ -11,9 +16,19 @@ const FeelingCheckCard = () => {
           <p className="text-primary"> Занотуйте незвичні відчуття у тілі.</p>
         </div>
       </div>
-      <Link href={"/diary"} className={`${css.btn} text-medium`}>
+    <button
+        type="button"
+        className={css.btn}
+        onClick={() => setIsModalOpen(true)}
+      >
         Зробити запис у щоденник
-      </Link>
+      </button>
+
+      <AddDiaryEntryModal
+        isOpen={isModalOpen}
+        mode="create"
+        onClose={() => setIsModalOpen(false)}
+      />
     </div>
   );
 };
