@@ -2,8 +2,9 @@
 import { changeStateTask, getTasks } from "@/lib/api/clientApi";
 import { Task } from "@/types/user";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import Link from "next/link";
+import { useEffect, useState } from "react";
 import css from "./TasksReminderCard.module.css";
+import AddTaskModal from "../AddTaskModal/AddTaskModal";
 
 function formateDate(date?: string) {
   if (date) {
@@ -18,7 +19,22 @@ function formateDate(date?: string) {
 
 const TasksReminderCard = () => {
   const queryClient = useQueryClient();
-  // const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  useEffect(() => {
+    if (isModalOpen) {
+      document.body.style.overflow = "hidden";
+      document.documentElement.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
+    }
+
+    return () => {
+      document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
+    };
+  }, [isModalOpen]);
 
   const {
     data: tasks = [],
@@ -43,13 +59,13 @@ const TasksReminderCard = () => {
   );
   const execTasks = tasks.filter((t) => t.isDone === true);
 
-  // const handleOpenModal = () => setIsModalOpen(true);
-  // const handleCloseModal = () => setIsModalOpen(false);
+  const handleOpenModal = () => setIsModalOpen(true);
+  const handleCloseModal = () => setIsModalOpen(false);
 
-  // const handleTaskSaved = () => {
-  //   queryClient.invalidateQueries({ queryKey: ["tasks"] });
-  //   // handleCloseModal();
-  // };
+  const handleTaskSaved = () => {
+    queryClient.invalidateQueries({ queryKey: ["tasks"] });
+    handleCloseModal();
+  };
 
   return (
     <div className={css.card}>
@@ -72,14 +88,14 @@ const TasksReminderCard = () => {
             <p className="text-bold">Наразі немає жодних завдань</p>
             <p className="text-primary">Створіть мершій нове завдання!</p>
           </div>
-          <Link
-            href={"/*AddTaskModal*/"}
+          <button
+            type="button"
             className={`${css.btn} text-medium`}
             id="openTaskModal"
-            // onClick={handleOpenModal}
+            onClick={handleOpenModal}
           >
             Створити завдання
-          </Link>
+          </button>
         </>
       )}
 
@@ -161,11 +177,11 @@ const TasksReminderCard = () => {
           </ul>
         </>
       )}
-      {/* <AddTaskModal
+      <AddTaskModal
         isOpen={isModalOpen}
         onClose={handleCloseModal}
         onTaskSaved={handleTaskSaved}
-      /> */}
+      />
     </div>
   );
 };

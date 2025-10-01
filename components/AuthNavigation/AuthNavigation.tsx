@@ -6,13 +6,31 @@ import { useAuthUserStore } from "@/lib/store/authStore";
 import { useRouter } from "next/navigation";
 import { logout } from "@/lib/api/clientApi";
 import Image from "next/image";
+import { useEffect, useState } from "react";
+import ConfirmationModal from "../ConfirmationModal/ConfirmationModal";
 
 export default function AuthNavigation() {
   const router = useRouter();
   const { user, isAuthenticated } = useAuthUserStore();
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const clearIsAuthenticated = useAuthUserStore(
     (state) => state.clearIsAuthenticated
   );
+
+  useEffect(() => {
+    if (isModalOpen) {
+      document.body.style.overflow = "hidden";
+      document.documentElement.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
+    }
+
+    return () => {
+      document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
+    };
+  }, [isModalOpen]);
 
   const handleLogout = async () => {
     await logout();
@@ -42,15 +60,20 @@ export default function AuthNavigation() {
             </ul>
           </Link>
 
-          <Link
-            href={"/*ConfirmationModal*/"}
-            onClick={handleLogout}
+          <button
+            onClick={() => setIsModalOpen(true)}
             className={css.logoutButton}
           >
             <svg width={24} height={24} className={css.logoutIcon}>
               <use href="/leleka-sprite.svg#icon-logout"></use>
             </svg>
-          </Link>
+          </button>
+          <ConfirmationModal
+            title="Ви точно хочете вийти?"
+            isOpen={isModalOpen}
+            onClose={() => setIsModalOpen(false)}
+            onConfirm={handleLogout}
+          />
         </div>
       )}
 
