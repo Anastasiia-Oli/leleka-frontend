@@ -120,13 +120,13 @@ const ProfileForm = () => {
 
               <div className={css.info_fields_stack}>
                 <div className={css.info_item}>
-                  <span className={css.label}>Ім&apos;я:</span>
-                  <span className={css.value}>{user.name || "Ганна"}</span>
+                  {/* <span className={css.label}>Ім&apos;я:</span> */}
+                  <span className={css.value_name}>{user.name || "Ганна"}</span>
                 </div>
 
                 <div className={css.info_item}>
-                  <span className={css.label}>Email:</span>
-                  <span className={css.value}>
+                  {/* <span className={css.label}>Email:</span> */}
+                  <span className={css.value_email}>
                     {user.email || "hanna@gmail.com"}
                   </span>
                 </div>
@@ -219,7 +219,7 @@ const ProfileForm = () => {
                 }}
                 className={`btn-secondary ${css.cancel_btn}`}
               >
-                Відмінити
+                Відмінити зміни
               </button>
 
               <button
@@ -227,7 +227,7 @@ const ProfileForm = () => {
                 disabled={isSubmitting}
                 className={`btn-primary ${css.submit_btn}`}
               >
-                {isSubmitting ? "Збереження..." : "Зберегти"}
+                {isSubmitting ? "Збереження..." : "Зберегти зміни"}
               </button>
             </div>
           </Form>

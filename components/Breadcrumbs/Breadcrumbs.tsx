@@ -17,7 +17,7 @@ interface ArrowDividerProps {
 
 const ArrowDivider = ({ iconId }: ArrowDividerProps) => (
   <svg className={styles.breadcrumbDivider} aria-hidden="true">
-    <use href={`#${iconId}`} />
+    <use href={`${iconId}`} />
   </svg>
 );
 
@@ -25,7 +25,7 @@ export default function Breadcrumbs() {
   const pathname = usePathname();
   const pathSegments = pathname.split('/').filter(Boolean);
 
-  const ARROW_ICON_ID = '../../public/leleka-sprite.svg/icon-arrow-right';
+  const ARROW_ICON_ID = '/leleka-sprite.svg#icon-breadcrumbs';
 
   const allBreadcrumbs: Breadcrumb[] = [
     { name: ukrainianTranslations.home, href: '/' },

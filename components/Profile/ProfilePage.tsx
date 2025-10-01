@@ -7,12 +7,7 @@ import ProfileForm from "./ProfileEditForm";
 const MyProfilePage = () => {
   return (
     <div className={css.scene}>
-      {/* <div className={css.regCard}> */}
-        {/* <div className={css.regLeft}> */}
-      {/* </div> */}
             <ProfileForm />
-        {/* </div> */}
-      {/* </div> */}
     </div>
   );
 };
