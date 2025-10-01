@@ -4,16 +4,22 @@
   gap: 16px;
 }
 .box {
-  align-items: center;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
-  /* text-align: center; */
+  align-items: start;
+  justify-content: center;
   background-color: var(--pastel-pink-lighter);
   width: 159px;
-  min-height: 105px;
   border-radius: 32px;
-  padding: 10px 16px;
+  padding: 16px;
+}
+.boxText {
+  margin-bottom: 8px;
+  font-family: var(--second-family);
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 0;
 }
 
 @media (min-width: 768px) {
