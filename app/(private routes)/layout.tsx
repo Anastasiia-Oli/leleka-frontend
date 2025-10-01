@@ -5,6 +5,7 @@ import css from "./PRLayout.module.css";
 import SideBar from "@/components/SideBar/SideBar";
 import Header from "@/components/Header/Header";
 import { usePathname } from "next/navigation";
+import { LogoComponent } from "@/components/LogoComponent/LogoComponent";
 
 type Props = {
   children: React.ReactNode;
@@ -23,11 +24,7 @@ const PrivateRoutesLayout = ({ children }: Props) => {
       <section className={css.container}>
         {!shouldHide && (
           <aside className={css.sidebar}>
-            <Link href="/" className={css.logo}>
-              <svg className={css.logoIcon}>
-                <use href="/leleka-sprite.svg#icon-logo" />
-              </svg>
-            </Link>
+            <LogoComponent/>
             <SideBar />
           </aside>
         )}

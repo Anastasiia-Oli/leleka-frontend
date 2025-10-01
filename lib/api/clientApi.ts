@@ -1,7 +1,6 @@
 import { User, Task } from "@/types/user";
 import { JourneyDetails } from "@/types/journeyType";
 import nextServer from "./api";
-import type { ChildSex } from "../../types/user";
 import type { DiaryEntryData, Emotion } from "@/types/diaryModal";
 import { AxiosResponse } from "axios";
 import { DiaryEntry } from "@/types/dairy";
@@ -199,15 +198,15 @@ export async function submitOnboarding(payload: OnboardingPayload) {
 
   return data.user;
 }
-export interface Task {
-  _id: string;
-  text: string;
-  date: string;
-  isDone: boolean;
-  userId: string;
-  createdAt: string;
-  updatedAt: string;
-}
+// export interface Task {
+//   _id: string;
+//   text: string;
+//   date: string;
+//   isDone: boolean;
+//   userId: string;
+//   createdAt: string;
+//   updatedAt: string;
+// }
 
 export interface TaskFormValues {
   _id?: string;
