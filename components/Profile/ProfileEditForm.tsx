@@ -115,12 +115,12 @@ const ProfileForm = () => {
 
               <div className={css.info_fields_stack}>
                 <div className={css.info_item}>
-                  <span className={css.value_name}>{user.name || "Ганна"}</span>
+                  <span className={css.value_name}>{user.name || "Користувач"}</span>
                 </div>
 
                 <div className={css.info_item}>
                   <span className={css.value_email}>
-                    {user.email || "hanna@gmail.com"}
+                    {user.email || "example@gmail.com"}
                   </span>
                 </div>
 
@@ -146,7 +146,7 @@ const ProfileForm = () => {
                 name="name"
                 className={css.dateSelect}
                 value={values.name}
-                placeholder="Ганна"
+                placeholder="Користувач"
               />
 
               <ErrorMessage name="name" component="div" className={css.error} />
@@ -160,7 +160,7 @@ const ProfileForm = () => {
                 name="email"
                 className={css.dateSelect}
                 value={values.email}
-                placeholder="hanna@gmail.com"
+                placeholder="example@gmail.com"
               />
 
               <ErrorMessage
