@@ -1,7 +1,6 @@
 import { User } from "@/types/user";
 import { JourneyDetails } from "@/types/journeyType";
 import nextServer from "./api";
-// import type { ChildSex } from "../../types/user";
 import type { DiaryEntryData, Emotion } from "@/types/diaryModal";
 import { AxiosResponse } from "axios";
 import { DiaryEntry } from "@/types/dairy";
@@ -222,7 +221,8 @@ export async function saveProfile(payload: ProfilePayload) {
 
   return data.user;
 }
-export interface Task {
+
+export interface TaskPropT {
   _id: string;
   text: string;
   date: string;
@@ -243,8 +243,10 @@ export type UpdateTaskDto = Partial<TaskFormValues>;
 
 export const tasksApi = {
   // POST /tasks
-  createTask: async (task: CreateTaskDto): Promise<AxiosResponse<Task>> => {
-    return await nextServer.post<Task>("/tasks", task);
+  createTask: async (
+    task: CreateTaskDto
+  ): Promise<AxiosResponse<TaskPropT>> => {
+    return await nextServer.post<TaskPropT>("/tasks", task);
   },
 };
 
@@ -260,4 +262,3 @@ export const getBabyClient = async (weekNumber: number): Promise<Baby> => {
   const { data } = await nextServer.get<BabyResponse>(`/weeks/${weekNumber}`);
   return data.data.baby;
 };
-
