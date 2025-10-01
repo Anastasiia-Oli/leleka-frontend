@@ -82,6 +82,7 @@ export default function AddDiaryEntryForm({
         await createDiaryEntry(values);
         toast.success("Запис успішно створено!");
       } else if (mode === "edit" && entry?._id) {
+        console.log("📦 Що надсилаємо:", JSON.stringify(values, null, 2));
         await updateDiaryEntry(entry._id, values);
         toast.success("Запис успішно оновлено!");
       }
@@ -213,7 +214,7 @@ export default function AddDiaryEntryForm({
           </div>
 
           <button type="submit" className={css.submitBtn}>
-            {mode === "create" ? "Створити запис" : "Оновити запис"}
+            {mode === "create" ? "Зберегти" : "Зберегти"}
           </button>
         </Form>
       )}
