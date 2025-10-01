@@ -1,22 +1,14 @@
 .card {
   position: relative;
-  min-width: 315px;
-  max-width: 335px;
-  height: 784px;
   padding: 24px;
+  height: fit-content;
   border-radius: 32px;
   background-color: var(--pastel-pink-lighter);
   display: flex;
   flex-direction: column;
-  margin-bottom: 32px;
+  gap: 16px;
 }
 
-.listHeader {
-  display: flex;
-  flex-direction: row;
-  gap: 8px;
-  margin-bottom: 24px;
-}
 .newTask {
   padding: 0;
   border-radius: 50%;
@@ -30,25 +22,6 @@
   top: 24px;
   right: 24px;
   transition: transform 0.2s;
-}
-.title {
-  flex-grow: 1;
-  font-family: var(--second-family);
-  font-weight: 700;
-  font-size: 20px;
-  line-height: 140%;
-  letter-spacing: 0.01em;
-  color: var(--black);
-  width: 239px;
-}
-
-.sectionTitle {
-  font-family: var(--font-family);
-  font-weight: 700;
-  font-size: 14px;
-  line-height: 160%;
-  color: var(--black);
-  margin-bottom: 4px;
 }
 
 .list {
@@ -129,16 +102,11 @@
 .btn {
   display: block;
   text-align: center;
-  font-family: var(--font-family);
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 160%;
-  color: var(--black);
   background-color: var(--pastel-pink-light);
   border-bottom: 4px solid var(--pastel-pink-dark);
   border-radius: 100px;
-  padding: 10px 24px;
-  width: 225px;
+  padding: 6px 24px;
+  width: 173px;
   height: 42px;
   transition: background-color 0.2s;
 }
@@ -148,37 +116,22 @@
 }
 
 @media screen and (min-width: 768px) {
-  .card {
-    max-width: 704px;
-    height: 762px;
-  }
   .listHeader {
     gap: 377px;
   }
-  .text {
-    font-size: 14px;
-  }
 }
 
-@media screen and (min-width: 1440px) {
-  .card {
-    max-width: 390px;
-    height: 499px;
+@media screen and (min-width: 1128px) {
+  .btn {
+    width: 191px;
   }
-
+  .card {
+    min-height: 499px;
+  }
   .listHeader {
     gap: 63px;
   }
-  .title {
-    font-size: 24px;
-  }
-  .sectionTitle {
-    font-size: 16px;
-  }
   .date {
     font-size: 12px;
-  }
-  .text {
-    font-size: 16px;
   }
 }

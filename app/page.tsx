@@ -21,11 +21,17 @@ export default function Home() {
 
         <div className={css.contentWrapper}>
           <GreetingBlock />
+          <div className={css.contentCards}>
+            <div className={css.leftDayCard}>
           <StatusBlock />
-          <BabyTodayCard />
-          <MomTipCard />
-          <TasksReminderCard />
-          <FeelingCheckCard />
+              <BabyTodayCard />
+              <MomTipCard />
+            </div>
+            <div className={css.rightDayCard}>
+              <TasksReminderCard />
+              <FeelingCheckCard />
+            </div>
+          </div>
         </div>
       </div>
     </section>
