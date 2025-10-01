@@ -7,7 +7,6 @@ import FeelingCheckCard from "@/components/FeelingCheckCard/FeelingCheckCard";
 import Header from "@/components/Header/Header";
 import SideBar from "@/components/SideBar/SideBar";
 import css from "./Home.module.css";
-import Link from "next/link";
 import { LogoComponent } from "@/components/LogoComponent/LogoComponent";
 
 export default function Home() {
@@ -16,7 +15,7 @@ export default function Home() {
       <Header />
       <div className={css.bodyWrapper}>
         <div className={css.sideWrapper}>
-          <LogoComponent/>
+          <LogoComponent />
           <SideBar />
         </div>
 
