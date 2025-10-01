@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import DiaryEntryDetails from "@/components/Diary/DiaryEntryDetails/DiaryEntryDetails";
 import AddDiaryEntryModal from "@/components/Diary/AddDiaryEntryModal/AddDiaryEntryModal";
@@ -43,7 +43,6 @@ const DiaryEntryPage = ({ params }: PageProps) => {
   };
 
   const handleEdit = (entryToEdit: DiaryEntry) => {
-    console.log("handleEdit fired ✅", entryToEdit);
     setModalMode("edit");
     setEditingEntry(entryToEdit);
     setIsModalOpen(true);

@@ -20,10 +20,8 @@ export default function AddDiaryEntryModal({
 }: AddDiaryEntryModalProps) {
   useEffect(() => {
     if (mode === "edit" && entry && !isOpen) {
-      console.log("🔄 Автовідкриття модалки на мобілці");
     }
   }, [mode, entry, isOpen]);
-  console.log("📦 Modal props:", { isOpen, mode, entry });
 
   if (!isOpen) return null;
 

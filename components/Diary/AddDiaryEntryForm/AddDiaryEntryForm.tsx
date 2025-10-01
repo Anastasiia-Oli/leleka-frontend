@@ -1,7 +1,7 @@
 "use client";
 
 import { Formik, Form, Field, FormikHelpers } from "formik";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { useDiaryForm } from "@/hooks/useDiaryForm";
 import css from "./AddDiaryEntryForm.module.css";
 import { createDiaryEntry, updateDiaryEntry } from "@/lib/api/clientApi";
@@ -33,7 +33,6 @@ export default function AddDiaryEntryForm({
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [validationSchema, setValidationSchema] =
     useState<ObjectSchema<DiaryEntryValues> | null>(null);
-  const dropdownRef = useRef<HTMLDivElement | null>(null);
 
   const [initialValues, setInitialValues] = useState<DiaryEntryValues>({
     title: "",
@@ -71,27 +70,6 @@ export default function AddDiaryEntryForm({
       });
     }
   }, [mode, entry]);
-
-  // Закриваємо дропдаун при кліку поза ним
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      const target = event.target as HTMLElement;
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node)
-      ) {
-        setDropdownOpen(false);
-      }
-      if (target.closest(`.${css.dropdownHeader}`)) {
-        setDropdownOpen(false);
-      }
-    }
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
 
   // ✅ Сабміт форми
   const handleSubmit = async (
@@ -159,7 +137,7 @@ export default function AddDiaryEntryForm({
             {loading && <p>Завантаження категорій...</p>}
             {error && <p className={css.error}>{error}</p>}
 
-            <div className={css.dropdownWrapper} ref={dropdownRef}>
+            <div className={css.dropdownWrapper}>
               {!dropdownOpen && (
                 <div
                   className={css.selectedEmotions}

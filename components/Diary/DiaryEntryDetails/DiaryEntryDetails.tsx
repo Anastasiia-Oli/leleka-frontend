@@ -149,7 +149,6 @@ const DiaryEntryDetails: React.FC<DiaryEntryDetailsProps> = ({
                 <button
                   className={css.actionButton}
                   onClick={() => {
-                    console.log("Edit clicked", entry._id); // debugging log
                     onEdit(entry); // передаємо entry в обробник
                   }}
                   title="Редагувати"
