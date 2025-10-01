@@ -1,26 +1,14 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import AddDiaryEntryModal from "../Diary/AddDiaryEntryModal/AddDiaryEntryModal";
 import css from "./FeelingCheckCard.module.css";
+import useCloseModal from "@/hooks/useCloseModal";
 
 const FeelingCheckCard = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  useEffect(() => {
-    if (isModalOpen) {
-      document.body.style.overflow = "hidden";
-      document.documentElement.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-      document.documentElement.style.overflow = "";
-    }
-
-    return () => {
-      document.body.style.overflow = "";
-      document.documentElement.style.overflow = "";
-    };
-  }, [isModalOpen]);
+  useCloseModal(() => setIsModalOpen(false));
 
   return (
     <div className={css.card}>
@@ -31,7 +19,7 @@ const FeelingCheckCard = () => {
           <p className="text-primary"> Занотуйте незвичні відчуття у тілі.</p>
         </div>
       </div>
-        <button
+      <button
         type="button"
         className={`${css.btn} text-medium`}
         onClick={() => setIsModalOpen(true)}

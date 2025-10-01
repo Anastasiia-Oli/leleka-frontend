@@ -8,6 +8,7 @@ import AddDiaryEntryModal from "../AddDiaryEntryModal/AddDiaryEntryModal";
 import css from "./DiaryPage.module.css";
 import { fetchDiary } from "@/lib/api/clientApi";
 import { useQuery } from "@tanstack/react-query";
+import useCloseModal from "@/hooks/useCloseModal";
 
 const DiaryPage: React.FC = () => {
   const router = useRouter();
@@ -23,21 +24,6 @@ const DiaryPage: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalMode, setModalMode] = useState<"create" | "edit">("create");
   const [editingEntry, setEditingEntry] = useState<DiaryEntry | null>(null);
-
-  useEffect(() => {
-    if (isModalOpen) {
-      document.body.style.overflow = "hidden";
-      document.documentElement.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-      document.documentElement.style.overflow = "";
-    }
-
-    return () => {
-      document.body.style.overflow = "";
-      document.documentElement.style.overflow = "";
-    };
-  }, [isModalOpen]);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -92,6 +78,8 @@ const DiaryPage: React.FC = () => {
     setIsModalOpen(false);
     setEditingEntry(null);
   };
+
+  useCloseModal(handleCloseModal);
 
   return (
     <div className={css.diaryContainer}>

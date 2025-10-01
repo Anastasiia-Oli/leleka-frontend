@@ -5,6 +5,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import css from "./TasksReminderCard.module.css";
 import AddTaskModal from "../AddTaskModal/AddTaskModal";
+import useCloseModal from "@/hooks/useCloseModal";
 
 function formateDate(date?: string) {
   if (date) {
@@ -66,6 +67,8 @@ const TasksReminderCard = () => {
     queryClient.invalidateQueries({ queryKey: ["tasks"] });
     handleCloseModal();
   };
+
+  useCloseModal(handleCloseModal);
 
   return (
     <div className={css.card}>

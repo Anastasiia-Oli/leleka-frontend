@@ -1,12 +1,13 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import DiaryEntryDetails from "@/components/Diary/DiaryEntryDetails/DiaryEntryDetails";
 import AddDiaryEntryModal from "@/components/Diary/AddDiaryEntryModal/AddDiaryEntryModal";
 import { fetchDiary } from "@/lib/api/clientApi";
 import { DiaryEntry } from "@/types/dairy";
+import useCloseModal from "@/hooks/useCloseModal";
 
 interface PageProps {
   params: Promise<{
@@ -37,21 +38,6 @@ const DiaryEntryPage = ({ params }: PageProps) => {
   const [modalMode, setModalMode] = useState<"create" | "edit">("edit");
   const [editingEntry, setEditingEntry] = useState<DiaryEntry | null>(null);
 
-  useEffect(() => {
-    if (isModalOpen) {
-      document.body.style.overflow = "hidden";
-      document.documentElement.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-      document.documentElement.style.overflow = "";
-    }
-
-    return () => {
-      document.body.style.overflow = "";
-      document.documentElement.style.overflow = "";
-    };
-  }, [isModalOpen]);
-
   const handleBack = () => {
     router.push("/diary");
   };
@@ -66,6 +52,8 @@ const DiaryEntryPage = ({ params }: PageProps) => {
     setIsModalOpen(false);
     setEditingEntry(null);
   };
+
+  useCloseModal(handleCloseModal);
 
   if (isLoading || !entryId) {
     return (
