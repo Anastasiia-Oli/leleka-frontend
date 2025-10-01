@@ -5,82 +5,76 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 999;
+  /* z-index: 999999999999; */
 }
 
-@media(min-width: 375px){
-    
-.modalWindow {
-  background: var(--background); 
-  border-radius: 40px;
-  padding: 64px 20px;
-  height: 413px;
-  width: 335px;
-  max-width: 768px;
+@media (min-width: 375px) {
+  .modalWindow {
+    background: var(--background);
+    border-radius: 40px;
+    padding: 64px 20px;
+    height: 413px;
+    width: 335px;
+    max-width: 768px;
+    /* z-index: 9999999; */
+  }
+
+  .modalTitle {
+    font-family: var(--second-family);
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 120%;
+    letter-spacing: 0.01em;
+    text-align: center;
+    color: var(--color-scheme-text);
+    margin: 0px;
+  }
+
+  .modalActions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 24px;
+    width: 295px;
+    height: 108px;
+    margin-top: 48px;
+  }
+
+  .modalActions :global(button) {
+    border-radius: 100px;
+    padding: 10px 24px;
+    width: 268px;
+    height: 42px;
+    cursor: pointer;
+  }
 }
 
-.modalTitle {
-  font-family: var(--second-family);
-  font-weight: 700;
-  font-size: 36px;
-  line-height: 120%;
-  letter-spacing: 0.01em;
-  text-align: center;
-  color: var(--color-scheme-text);
-  margin: 0px;
+@media (min-width: 768px) {
+  .modalWindow {
+    padding: 64px 32px;
+    height: 261px;
+    width: 704px;
+  }
+
+  .modalActions {
+    flex-wrap: no-wrap;
+    width: 640px;
+    height: 42px;
+  }
 }
 
-.modalActions {
-  display: flex;
-  flex-wrap: wrap; 
-  justify-content: center;
-  gap: 24px;
-  width: 295px;
-  height: 108px;
-  margin-top: 48px;
-}
+@media (min-width: 1440px) {
+  .modalWindow {
+    padding: 64px;
+    height: 338px;
+    width: 768px;
+  }
 
-.modalActions :global(button) {
-  border-radius: 100px;
-  padding: 10px 24px;
-  width: 268px;
-  height: 42px;
-  cursor: pointer;
-}
+  .modalTitle {
+    font-size: 48px;
+  }
 
-}
-
-@media(min-width: 768px){
-
-.modalWindow {
-  padding: 64px 32px;
-  height: 261px;
-  width: 704px;
-}
-
-.modalActions {
-  flex-wrap: no-wrap; 
-  width: 640px;
-  height: 42px;
-}
-
-}
-
-
-@media(min-width: 1440px){
-
-.modalWindow {
-  padding: 64px;
-  height: 338px;
-  width: 768px;
-}
-
-.modalTitle {
-  font-size: 48px;
-}
-
-.modalActions {
-  height: 46px;
-}
-
+  .modalActions {
+    height: 46px;
+  }
 }

@@ -18,11 +18,26 @@ const DiaryPage: React.FC = () => {
   });
 
   const [selectedEntry, setSelectedEntry] = useState<DiaryEntry | null>(null);
-  const [selectedNote, setSelectedNote] = useState<DiaryEntry | null>(null);
+  // const [selectedNote, setSelectedNote] = useState<DiaryEntry | null>(null);
   const [isMobile, setIsMobile] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalMode, setModalMode] = useState<"create" | "edit">("create");
   const [editingEntry, setEditingEntry] = useState<DiaryEntry | null>(null);
+
+  useEffect(() => {
+    if (isModalOpen) {
+      document.body.style.overflow = "hidden";
+      document.documentElement.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
+    }
+
+    return () => {
+      document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
+    };
+  }, [isModalOpen]);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -52,7 +67,7 @@ const DiaryPage: React.FC = () => {
       router.push(`/diary/${entry._id}`);
     } else {
       setSelectedEntry(entry);
-      setSelectedNote(null);
+      // setSelectedNote(null);
     }
     return entry._id;
   };

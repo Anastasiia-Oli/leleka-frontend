@@ -11,7 +11,8 @@
   padding-inline: 0px;
   justify-content: space-between;
   width: 312px;
-  height: 100vh;
+  height: 100dvh;
+  max-height: 100dvh;
   padding-left: 16px;
   padding-right: 16px;
   /* background: var(--background); */
@@ -30,6 +31,13 @@
   line-height: 1.5;
   color: #000;
   transition: transform;
+}
+
+.authWrapper {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 312px;
 }
 
 .sidebar .li:hover {

@@ -19,8 +19,12 @@ export default function AuthNavigation() {
 
   useEffect(() => {
     if (isModalOpen) {
-      document.body.style.overflow = "hidden";
-      document.documentElement.style.overflow = "hidden";
+      document.body.style.setProperty("overflow", "hidden", "important");
+      document.documentElement.style.setProperty(
+        "overflow",
+        "hidden",
+        "important"
+      );
     } else {
       document.body.style.overflow = "";
       document.documentElement.style.overflow = "";
