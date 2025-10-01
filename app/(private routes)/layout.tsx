@@ -5,6 +5,7 @@ import SideBar from "@/components/SideBar/SideBar";
 import Header from "@/components/Header/Header";
 import { usePathname } from "next/navigation";
 import { LogoComponent } from "@/components/LogoComponent/LogoComponent";
+import Breadcrumbs from "@/components/Breadcrumbs/Breadcrumbs";
 
 type Props = {
   children: React.ReactNode;
@@ -28,7 +29,11 @@ const PrivateRoutesLayout = ({ children }: Props) => {
           </aside>
         )}
 
-        <div className={css.privateRoutesWrapper}>{children}</div>
+        <div className={css.privateRoutesWrapper}>
+          {" "}
+          <Breadcrumbs />
+          {children}
+        </div>
       </section>
     </>
   );

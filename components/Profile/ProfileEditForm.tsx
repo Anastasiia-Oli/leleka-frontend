@@ -10,7 +10,6 @@ import * as Yup from "yup";
 import { saveProfile } from "@/lib/api/clientApi";
 import dynamic from "next/dynamic";
 import { useAuthUserStore } from "@/lib/store/authStore";
-import Breadcrumbs from "../Breadcrumbs/Breadcrumbs";
 
 const Select = dynamic(() => import("../ui/Select"), { ssr: false });
 
@@ -77,7 +76,6 @@ const ProfileForm = () => {
       {({ isSubmitting, setFieldValue, values, resetForm }) => {
         return (
           <Form className={css.edit_form}>
-            <Breadcrumbs />
             <div className={css.profile_main_row}>
               <div className={css.photo_file_wrapper}>
                 <div>
