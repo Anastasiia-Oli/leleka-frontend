@@ -5,8 +5,8 @@
 }
 
 .breadcrumbsList {
-  list-style: none; 
-  display: flex; 
+  list-style: none;
+  display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
   padding: 0;
@@ -34,9 +34,21 @@
 }
 
 .breadcrumbDivider {
-    width: 24px;
-    height: 24px;
+  width: 24px;
+  height: 24px;
   fill: var(--color-scheme-text);
   stroke-width: 1px;
   stroke: var(--color-scheme-text);
+}
+
+.breadcrumbLast {
+  font-weight: 400;
+  color: var(--color-neutral);
+  cursor: default;
+  /* text-decoration: none; */
+  pointer-events: none;
+}
+
+.breadcrumbItemLast .breadcrumbLink {
+  pointer-events: none;
 }

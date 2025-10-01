@@ -23,14 +23,15 @@ const ArrowDivider = ({ iconId }: ArrowDividerProps) => (
 
 export default function Breadcrumbs() {
   const pathname = usePathname();
-  const pathSegments = pathname.split("/").filter(Boolean);
+  const pathSegments = pathname
+    .split("/")
+    .filter(Boolean)
+    .filter((segment) => !/^\d{1,2}$/.test(segment));
   const { draft } = useTitleDraftStore();
 
   const ARROW_ICON_ID = "/leleka-sprite.svg#icon-breadcrumbs";
 
-  const allBreadcrumbs: Breadcrumb[] = [
-    // { name: ukrainianTranslations.home, href: "/" },
-  ];
+  const allBreadcrumbs: Breadcrumb[] = [];
 
   allBreadcrumbs.push({ name: ukrainianTranslations.home, href: "/" });
 
@@ -56,18 +57,30 @@ export default function Breadcrumbs() {
   return (
     <nav aria-label="Хлібні крихти" className={styles.breadcrumb}>
       <ul className={styles.breadcrumbsList}>
-        {allBreadcrumbs.map((crumb, index) => (
-          <li key={index} className={styles.breadcrumbItem}>
-            {index > 0 && (
-              <span className={styles.breadcrumbDivider}>
-                <ArrowDivider iconId={ARROW_ICON_ID} />{" "}
-              </span>
-            )}
-            <Link href={crumb.href} className={styles.breadcrumbLink}>
-              {crumb.name}
-            </Link>
-          </li>
-        ))}
+        {allBreadcrumbs.map((crumb, index) => {
+          const isLast = index === allBreadcrumbs.length - 1;
+          return (
+            <li
+              key={index}
+              className={`${styles.breadcrumbItem} ${
+                isLast ? styles.breadcrumbItemLast : ""
+              }`}
+            >
+              {index > 0 && (
+                <span className={styles.breadcrumbDivider}>
+                  <ArrowDivider iconId={ARROW_ICON_ID} />{" "}
+                </span>
+              )}
+              {isLast ? (
+                <span className={styles.breadcrumbLast}>{crumb.name}</span>
+              ) : (
+                <Link href={crumb.href} className={styles.breadcrumbLink}>
+                  {crumb.name}
+                </Link>
+              )}
+            </li>
+          );
+        })}
       </ul>
     </nav>
   );
