@@ -26,11 +26,9 @@ const MomTipCard = () => {
           return;
         }
 
-        // ---- тут рахуємо день (міняється раз на 24 години) ----
         const today = new Date();
         const daysSinceEpoch = Math.floor(today.getTime() / (24 * 60 * 60 * 1000));
 
-        // Беремо по черзі поради з масиву
         const tipIndex = daysSinceEpoch % tips.length;
 
         setTip(tips[tipIndex] || "Порада відсутня");
@@ -45,8 +43,8 @@ const MomTipCard = () => {
 
   return (
   <div className={styles.card}>
-    <div className={styles.title}>Порада для мами</div>
-    <div className={styles.tipBlock}>{tip}</div>
+    <h3 className="header-third">Порада для мами</h3>
+    <p className="text-primary">{tip}</p>
   </div>
 );
 

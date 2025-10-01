@@ -7,7 +7,6 @@ import FeelingCheckCard from "@/components/FeelingCheckCard/FeelingCheckCard";
 import Header from "@/components/Header/Header";
 import SideBar from "@/components/SideBar/SideBar";
 import css from "./Home.module.css";
-import Link from "next/link";
 import { LogoComponent } from "@/components/LogoComponent/LogoComponent";
 
 export default function Home() {
@@ -22,11 +21,17 @@ export default function Home() {
 
         <div className={css.contentWrapper}>
           <GreetingBlock />
+          <div className={css.contentCards}>
+            <div className={css.leftDayCard}>
           <StatusBlock />
-          <BabyTodayCard />
-          <MomTipCard />
-          <TasksReminderCard />
-          <FeelingCheckCard />
+              <BabyTodayCard />
+              <MomTipCard />
+            </div>
+            <div className={css.rightDayCard}>
+              <TasksReminderCard />
+              <FeelingCheckCard />
+            </div>
+          </div>
         </div>
       </div>
     </section>
