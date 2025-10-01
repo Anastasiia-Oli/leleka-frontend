@@ -25,6 +25,21 @@ const DiaryPage: React.FC = () => {
   const [editingEntry, setEditingEntry] = useState<DiaryEntry | null>(null);
 
   useEffect(() => {
+    if (isModalOpen) {
+      document.body.style.overflow = "hidden";
+      document.documentElement.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
+    }
+
+    return () => {
+      document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
+    };
+  }, [isModalOpen]);
+
+  useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 1024);
     };

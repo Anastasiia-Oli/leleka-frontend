@@ -1,149 +1,149 @@
 .diaryContainer {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    padding: 24px 16px;
-    background: var(--pastel-pink-lighter);
-    border-radius: 16px;
-    box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 24px 16px;
+  background: var(--pastel-pink-lighter);
+  border-radius: 16px;
+  box-sizing: border-box;
 }
 
 .diaryHeader {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-shrink: 0;
-    margin-bottom: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  margin-bottom: 16px;
 }
 
 .diaryTitle {
-    margin: 0;
-    color: var(--black);
-    font-weight: var(--bold);
-    font-size: 18px;
-    line-height: 140%;
+  margin: 0;
+  color: var(--black);
+  font-weight: var(--bold);
+  font-size: 18px;
+  line-height: 140%;
 }
 
 .addButton {
-    display: flex;
-    border: none;
-    align-items: center;
-    gap: 8px;
-    cursor: pointer;
-    transition: opacity 0.2s ease;
-    background: var(--pastel-pink-lighter);
-    flex-direction: row;
-    padding: 0px;
+  display: flex;
+  border: none;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+  background: var(--pastel-pink-lighter);
+  flex-direction: row;
+  padding: 0px;
 }
 
 .addButton:hover {
-    opacity: 0.8;
+  opacity: 0.8;
 }
 
 .addText {
-    font-weight: var(--medium);
-    font-size: 14px;
-    line-height: 160%;
-    color: var(--black);
-    white-space: nowrap;
+  font-weight: var(--medium);
+  font-size: 14px;
+  line-height: 160%;
+  color: var(--black);
+  white-space: nowrap;
 }
 
 .addIcon {
-    display: flex;
-    align-items: center;
-    justify-content: right;
-    fill: var(--black);
+  display: flex;
+  align-items: center;
+  justify-content: right;
+  fill: var(--black);
 }
 
 .editIcon {
-    fill: var(--black);
-    transition: fill 0.2s ease;
-    width: 24px;
-    height: 24px;
+  fill: var(--black);
+  transition: fill 0.2s ease;
+  width: 24px;
+  height: 24px;
 }
 
 .entriesList {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    overflow-y: auto;
-    scrollbar-width: thin;
-    scrollbar-color: var(--gray-lighter) transparent;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--gray-lighter) transparent;
 }
 
 .entriesList::-webkit-scrollbar {
-    width: 6px;
+  width: 6px;
 }
 
 .entriesList::-webkit-scrollbar-track {
-    background: transparent;
+  background: transparent;
 }
 
 .entriesList::-webkit-scrollbar-thumb {
-    background: var(--gray-lighter);
-    border-radius: 3px;
+  background: var(--gray-lighter);
+  border-radius: 3px;
 }
 
 .entriesList::-webkit-scrollbar-thumb:hover {
-    background: var(--gray-light);
+  background: var(--gray-light);
 }
 
 .placeholder {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 200px;
-    color: var(--gray);
-    text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  color: var(--gray);
+  text-align: center;
 }
 
 /* Десктопна версія з фіксованою висотою */
 @media (min-width: 1024px) {
-    /* .diaryContainer {
+  /* .diaryContainer {
         height: 500px;
         max-height: 500px;
     } */
 
-    .entriesList {
-        overflow-y: auto;
+  .entriesList {
+    overflow-y: auto;
 
-        /* Віднімаємо висоту заголовка та відступів */
-    }
+    /* Віднімаємо висоту заголовка та відступів */
+  }
 }
 
 /* Планшети */
 @media (min-width: 768px) and (max-width: 1023px) {
-    .diaryContainer {
-        height: auto;
-        min-height: 300px;
-    }
+  .diaryContainer {
+    height: auto;
+    min-height: 300px;
+  }
 
-    .entriesList {
-        overflow-y: visible;
-        max-height: none;
-    }
+  .entriesList {
+    overflow-y: visible;
+    max-height: none;
+  }
 }
 
 /* Мобільні пристрої */
 @media screen and (max-width: 767px) {
-    .diaryContainer {
-        padding: 16px;
-        height: auto;
-        min-height: 300px;
-    }
+  .diaryContainer {
+    padding: 16px;
+    height: auto;
+    min-height: 300px;
+  }
 
-    .entriesList {
-        overflow-y: visible;
-        max-height: none;
-    }
+  .entriesList {
+    overflow-y: visible;
+    max-height: none;
+  }
 
-    .addText {
-        font-size: 14px;
-    }
+  .addText {
+    font-size: 14px;
+  }
 
-    .addIcon svg {
-        width: 20px;
-        height: 20px;
-    }
+  .addIcon svg {
+    width: 20px;
+    height: 20px;
+  }
 }

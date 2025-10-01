@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { DiaryEntry } from "@/types/dairy";
 import css from "./DiaryEntryDetails.module.css";
 import { toast } from "react-hot-toast";
@@ -39,6 +39,21 @@ const DiaryEntryDetails: React.FC<DiaryEntryDetailsProps> = ({
   //  ----- deleter end
 
   const [isConfirmingDelete, setIsConfirmingDelete] = useState(false);
+
+  useEffect(() => {
+    if (isConfirmingDelete) {
+      document.body.style.overflow = "hidden";
+      document.documentElement.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
+    }
+
+    return () => {
+      document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
+    };
+  }, [isConfirmingDelete]);
 
   if (!entry) {
     return (
