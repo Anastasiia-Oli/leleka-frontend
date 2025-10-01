@@ -10,7 +10,7 @@ import Link from "next/link";
 
 interface DiaryEntryDetailsProps {
   entry: DiaryEntry | null;
-  onEdit?: () => void;
+  onEdit?: (entry: DiaryEntry) => void;
   onBack?: () => void;
 }
 
@@ -155,6 +155,9 @@ const DiaryEntryDetails: React.FC<DiaryEntryDetailsProps> = ({
                 <Link
                   href={`/diary/action/edit/${entry._id}`}
                   className={css.actionButton}
+                  onClick={() => {
+                    onEdit(entry); // передаємо entry в обробник
+                  }}
                   title="Редагувати"
                   aria-disabled={isPending}
                   style={{ pointerEvents: isPending ? 'none' : 'auto' }}

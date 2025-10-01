@@ -1,8 +1,9 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import DiaryEntryDetails from "@/components/Diary/DiaryEntryDetails/DiaryEntryDetails";
+import AddDiaryEntryModal from "@/components/Diary/AddDiaryEntryModal/AddDiaryEntryModal";
 import { fetchDiary } from "@/lib/api/clientApi";
 import { DiaryEntry } from "@/types/dairy";
 import { useQuery } from "@tanstack/react-query";
@@ -25,14 +26,31 @@ const DiaryEntryPage = ({ params }: PageProps) => {
   // Знаходимо конкретний запис за ID
   const entry = diaryEntries?.find((e) => e._id === params.entryId) || null;
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalMode, setModalMode] = useState<"create" | "edit">("edit");
+  const [editingEntry, setEditingEntry] = useState<DiaryEntry | null>(null);
+
+  // useEffect(() => {
+  //   if (entry) {
+  //     setEditingEntry(entry);
+  //     setModalMode("edit");
+  //     setIsModalOpen(true);
+  //   }
+  // }, [entry]);
+
   const handleBack = () => {
     router.push("/diary");
   };
 
-  const handleEdit = () => {
-    if (entry) {
-      console.log("Open AddDiaryEntryModal for editing", entry);
-    }
+  const handleEdit = (entryToEdit: DiaryEntry) => {
+    setModalMode("edit");
+    setEditingEntry(entryToEdit);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setEditingEntry(null);
   };
 
   if (isLoading) {
@@ -81,15 +99,30 @@ const DiaryEntryPage = ({ params }: PageProps) => {
   }
 
   return (
-    <div className="diaryContainer" style={{ padding: "16px", minHeight: "100vh" }}>
-      <div style={{ maxWidth: "100%", margin: "0 auto" }}>
-        <DiaryEntryDetails
-          entry={entry}
-          onEdit={handleEdit}
-          onBack={handleBack}
-        />
+    <>
+      <div
+        style={{
+          minHeight: "100vh",
+          background: "var(--pastel-pink-lighter)",
+          padding: "16px",
+        }}
+      >
+        <div style={{ maxWidth: "100%", margin: "0 auto" }}>
+          <DiaryEntryDetails
+            entry={entry}
+            onEdit={handleEdit}
+            onBack={handleBack}
+          />
+        </div>
       </div>
-    </div>
+      {/* Модалка редагування */}
+      <AddDiaryEntryModal
+        isOpen={isModalOpen}
+        mode={modalMode}
+        entry={editingEntry}
+        onClose={handleCloseModal}
+      />
+    </>
   );
 };
 

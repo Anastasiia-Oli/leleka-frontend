@@ -56,21 +56,24 @@ export async function middleware(request: NextRequest) {
         }
       }
     }
-    if (isPublicRoute) {
-      return NextResponse.next();
-    }
+    // if (isPublicRoute) {
+    //   return NextResponse.next();
+    // }
 
     if (isPrivateRoute) {
-      return NextResponse.redirect(new URL("/auth/login", request.url));
+      return NextResponse.redirect(new URL("/auth/register", request.url));
     }
+
+    return NextResponse.next();
   }
 
   if (isPublicRoute) {
     return NextResponse.redirect(new URL("/", request.url));
   }
-  if (isPrivateRoute) {
-    return NextResponse.next();
-  }
+  // if (isPrivateRoute) {
+  //   return NextResponse.next();
+  // }
+  return NextResponse.next();
 }
 
 export const config = {

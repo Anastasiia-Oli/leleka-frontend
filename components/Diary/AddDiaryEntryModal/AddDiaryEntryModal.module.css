@@ -1,0 +1,96 @@
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.25);
+}
+
+.modal {
+  position: relative;
+  width: 100%;
+  max-width: 334px;
+  max-height: 90vh;
+  border-radius: 40px;
+  background-color: #fff;
+  padding: 48px 20px;
+  overflow-y: auto;
+}
+
+.closeBtn {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+.closeBtn svg {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  stroke: #000 !important;
+  stroke-width: 2 !important;
+  fill: none !important;
+}
+
+.closeBtn:hover {
+  color: #555;
+}
+
+.title {
+  font-family: "Comfortaa", sans-serif;
+  font-weight: 700;
+  font-size: 36px;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+  text-align: center;
+  color: #000;
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+/* Tablet */
+@media (min-width: 768px) {
+  .modal {
+    padding: 64px 32px;
+    width: 100%;
+    max-width: 704px;
+  }
+
+  .closeBtn {
+    top: 36px;
+    right: 36px;
+  }
+
+  .title {
+    margin-bottom: 48px;
+  }
+}
+
+/* Desktop */
+@media (min-width: 1440px) {
+  .modal {
+    padding: 64px;
+    width: 100%;
+    max-width: 768px;
+  }
+
+  .closeBtn {
+    top: 36px;
+    right: 36px;
+  }
+
+  .title {
+    font-size: 48px;
+  }
+}

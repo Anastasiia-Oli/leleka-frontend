@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Comfortaa } from "next/font/google";
 import "./globals.css";
 import TanStackProvider from "@/components/TanStackProvider/TanStackProvider";
-import Header from "@/components/Header/Header";
 import AuthProvider from "@/components/AuthProvider/AuthProvider";
 import { lato } from "./fonts";
 
@@ -22,20 +21,14 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-  modal,
 }: Readonly<{
   children: React.ReactNode;
-  modal: React.ReactNode;
 }>) {
   return (
     <html lang="uk">
       <body className={`${lato.variable} ${comfortaa.variable}`}>
         <TanStackProvider>
-          <AuthProvider>
-            <Header />
-            {children}
-            {modal}
-          </AuthProvider>
+          <AuthProvider>{children}</AuthProvider>
         </TanStackProvider>
       </body>
     </html>

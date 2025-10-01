@@ -1,10 +1,11 @@
 import { cookies } from "next/headers";
 import nextServer from "./api";
-import { User } from "@/types/user";
+import { User, Task } from "@/types/user";
+import { TaskProp } from "./clientApi";
 
 export const checkServerSession = async () => {
   const cookieStore = await cookies();
-  const res = await nextServer.post("/auth/refresh", {
+  const res = await nextServer.get("/auth/session", {
     headers: {
       Cookie: cookieStore.toString(),
     },
@@ -19,5 +20,21 @@ export const getMeServer = async () => {
       Cookie: cookieStore.toString(),
     },
   });
-  return response.data;
+  return response;
 };
+
+export const getEmotionsServer = async () => {
+  const cookieStore = await cookies();
+  const res = await nextServer.get("/emotions", {
+    headers: { Cookie: cookieStore.toString() },
+  });
+  return res.data;
+};
+
+export async function getTasksServer(): Promise<Task[]> {
+  const cookieStore = await cookies();
+  const { data } = await nextServer.get<TaskProp>("/tasks", {
+    headers: { Cookie: cookieStore.toString() },
+  });
+  return data.data;
+}

@@ -1,11 +1,11 @@
-import { User } from "@/types/user";
+import { User, Task } from "@/types/user";
 import { JourneyDetails } from "@/types/journeyType";
 import nextServer from "./api";
-
+import type { DiaryEntryData, Emotion } from "@/types/diaryModal";
+import { AxiosResponse } from "axios";
 import { DiaryEntry } from "@/types/dairy";
-import { Emotion } from "@/types/dairy";
 import { CreateDiaryEntryData } from "@/types/dairy";
-import type { ChildSex } from "../../types/user";
+import type { Baby, ChildSex } from "../../types/user";
 
 export interface RegisterRequest {
   name: string;
@@ -50,6 +50,14 @@ export type ApiResponse<T> = {
 };
 
 type OnboardingPayload = {
+  childSex: ChildSex;
+  dueDate: string;
+  photo?: File;
+};
+
+type ProfilePayload = {
+  name: string;
+  email: string;
   childSex: ChildSex;
   dueDate: string;
   photo?: File;
@@ -100,13 +108,36 @@ export async function logout(): Promise<LogoutResponse> {
 type CheckSessionResponse = { success: boolean };
 
 export const checkSession = async () => {
-  const { data } = await nextServer.post<CheckSessionResponse>("/auth/session");
+  try {
+    const { data } =
+      await nextServer.get<CheckSessionResponse>("/auth/session");
 
-  return data.success;
+    return data.success;
+  } catch {
+    return false;
+  }
 };
 
 export const getMe = async () => {
   const { data } = await nextServer.get<User>("/users/current");
+  return data;
+};
+
+export async function createDiaryEntry(data: DiaryEntryData) {
+  const { data: res } = await nextServer.post<DiaryEntryData>("/diaries", data);
+  return res;
+}
+
+export async function updateDiaryEntry(id: string, data: DiaryEntryData) {
+  const { data: res } = await nextServer.patch<DiaryEntryData>(
+    `/diaries/${id}`,
+    data
+  );
+  return res;
+}
+
+export const getEmotions = async (): Promise<Emotion[]> => {
+  const { data } = await nextServer.get<Emotion[]>("/emotions");
   return data;
 };
 
@@ -143,6 +174,24 @@ export async function getMomDailyTips(
   return data;
 }
 
+export type TaskProp = {
+  status: number;
+  data: Task[];
+};
+export async function getTasks(): Promise<Task[]> {
+  const { data } = await nextServer.get<TaskProp>("/tasks");
+  return data.data;
+}
+export async function changeStateTask(
+  task: Task,
+  isDone: boolean
+): Promise<Task> {
+  const { data } = await nextServer.patch<Task>(`/tasks/${task._id}/status`, {
+    isDone,
+  });
+  return data;
+}
+
 export async function submitOnboarding(payload: OnboardingPayload) {
   const { childSex, dueDate, photo } = payload;
 
@@ -155,5 +204,66 @@ export async function submitOnboarding(payload: OnboardingPayload) {
 
   const { data } = await nextServer.patch("/users", { childSex, dueDate });
 
-  return data;
+  return data.user;
 }
+
+export async function saveProfile(payload: ProfilePayload) {
+  const { name, email, childSex, dueDate, photo } = payload;
+
+  if (photo) {
+    const fd = new FormData();
+    fd.append("avatar", photo);
+
+    await nextServer.patch("/users/avatar", fd);
+  }
+
+  const { data } = await nextServer.patch("/users", {
+    name,
+    email,
+    childSex,
+    dueDate,
+  });
+
+  return data.user;
+}
+
+export interface TaskPropT {
+  _id: string;
+  text: string;
+  date: string;
+  isDone: boolean;
+  userId: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface TaskFormValues {
+  _id?: string;
+  text: string;
+  date: string;
+}
+
+export type CreateTaskDto = TaskFormValues & { isDone: boolean };
+export type UpdateTaskDto = Partial<TaskFormValues>;
+
+export const tasksApi = {
+  // POST /tasks
+  createTask: async (
+    task: CreateTaskDto
+  ): Promise<AxiosResponse<TaskPropT>> => {
+    return await nextServer.post<TaskPropT>("/tasks", task);
+  },
+};
+
+export interface BabyResponse {
+  status: number;
+  message: string;
+  weekNumber: number;
+  data: {
+    baby: Baby;
+  };
+}
+export const getBabyClient = async (weekNumber: number): Promise<Baby> => {
+  const { data } = await nextServer.get<BabyResponse>(`/weeks/${weekNumber}`);
+  return data.data.baby;
+};

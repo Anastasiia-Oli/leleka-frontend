@@ -1,9 +1,10 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { DiaryEntry } from "@/types/dairy";
 import { useRouter } from "next/navigation";
 import DiaryList from "../DiaryList/DiaryList";
 import DiaryEntryDetails from "../DiaryEntryDetails/DiaryEntryDetails";
+import AddDiaryEntryModal from "../AddDiaryEntryModal/AddDiaryEntryModal";
 import css from "./DiaryPage.module.css";
 import { fetchDiary } from "@/lib/api/clientApi";
 import { useQuery } from "@tanstack/react-query";
@@ -20,9 +21,10 @@ const DiaryPage: React.FC = () => {
   const [selectedNote, setSelectedNote] = useState<DiaryEntry | null>(null);
   const [isMobile, setIsMobile] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalMode, setModalMode] = useState<"create" | "edit">("create");
   const [editingEntry, setEditingEntry] = useState<DiaryEntry | null>(null);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 1024);
     };
@@ -32,22 +34,17 @@ const DiaryPage: React.FC = () => {
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
-  React.useEffect(() => {
-    if (!data || isMobile) return;
-
-    if (data.length === 0) {
-      setSelectedEntry(null);
-      return;
-    }
-
-    // Якщо вибраний запис видалено, обираємо перший доступний
-    const isSelectedDeleted = selectedEntry &&
-      !data.find(entry => entry._id === selectedEntry._id);
-
-    if (!selectedEntry || isSelectedDeleted) {
+  useEffect(() => {
+    if (data && data.length > 0 && !selectedEntry && !isMobile) {
       setSelectedEntry(data[0]);
     }
   }, [data, selectedEntry, isMobile]);
+
+  useEffect(() => {
+    if (selectedEntry) {
+      setEditingEntry(selectedEntry);
+    }
+  }, [selectedEntry]);
 
   const handleEntryClick = (entry: DiaryEntry) => {
     if (isMobile) {
@@ -61,19 +58,19 @@ const DiaryPage: React.FC = () => {
   };
 
   const handleAddEntry = () => {
+    setModalMode("create");
     setEditingEntry(null);
     setIsModalOpen(true);
   };
 
-  const handleAddNote = () => {
-    console.log("Open AddNoteModal");
-  };
+  // const handleAddNote = () => {
+  //   console.log("Open AddNoteModal");
+  // };
 
-  const handleEditEntry = () => {
-    if (selectedEntry) {
-      setEditingEntry(selectedEntry);
-      setIsModalOpen(true);
-    }
+  const handleEditEntry = (selectedEntry: DiaryEntry) => {
+    setModalMode("edit");
+    setEditingEntry(selectedEntry);
+    setIsModalOpen(true);
   };
 
   const handleCloseModal = () => {
@@ -84,12 +81,19 @@ const DiaryPage: React.FC = () => {
   return (
     <div className={css.diaryContainer}>
       <div className={css.mobileLayout}>
-        <DiaryList
-          data={data || []}
-          onEntryClick={handleEntryClick}
-          selectedEntryId={selectedEntry?._id}
-          onAddEntry={handleAddEntry}
-        />
+        <>
+          <DiaryList
+            data={data || []}
+            onEntryClick={handleEntryClick}
+            selectedEntryId={selectedEntry?._id}
+            onAddEntry={handleAddEntry}
+          />
+
+          {/* Якщо є вибраний запис — показуємо деталі (щоб була кнопка редагування) */}
+          {isMobile && selectedEntry && (
+            <DiaryEntryDetails entry={selectedEntry} onEdit={handleEditEntry} />
+          )}
+        </>
       </div>
 
       <div className={css.desktopLayout}>
@@ -104,6 +108,12 @@ const DiaryPage: React.FC = () => {
           <DiaryEntryDetails entry={selectedEntry} onEdit={handleEditEntry} />
         </div>
       </div>
+      <AddDiaryEntryModal
+        isOpen={isModalOpen}
+        mode={modalMode}
+        entry={editingEntry}
+        onClose={handleCloseModal}
+      />
     </div>
   );
 };
