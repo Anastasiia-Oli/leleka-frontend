@@ -2,6 +2,7 @@ import SideBar from "../SideBar/SideBar";
 import Link from "next/link";
 import React from "react";
 import css from "./Menu.module.css";
+import { LogoComponent } from "../LogoComponent/LogoComponent";
 
 interface SideBarProps {
   isOpen: boolean;
@@ -17,11 +18,7 @@ const Menu = ({ isOpen = true, onClose }: SideBarProps) => {
           onClick={(e) => e.stopPropagation()}
         >
           <div className={css.menuComponents}>
-            <Link href="/" className={css.logo}>
-              <svg className={css.logoIcon}>
-                <use href="/leleka-sprite.svg#icon-logo" />
-              </svg>
-            </Link>
+            <LogoComponent/>
             <button className={css.closeBtn} onClick={onClose}>
               <svg className={css.closeIcon}>
                 <use href="/leleka-sprite.svg#icon-close" />

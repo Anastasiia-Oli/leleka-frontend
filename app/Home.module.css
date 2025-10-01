@@ -6,6 +6,7 @@
 }
 
 .sideWrapper {
+  padding-top: 8px;
   display: none;
   border-right: 1px solid var(--color-scheme-border);
 }

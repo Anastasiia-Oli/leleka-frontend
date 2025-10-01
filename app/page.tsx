@@ -7,7 +7,7 @@ import FeelingCheckCard from "@/components/FeelingCheckCard/FeelingCheckCard";
 import Header from "@/components/Header/Header";
 import SideBar from "@/components/SideBar/SideBar";
 import css from "./Home.module.css";
-import Link from "next/link";
+import { LogoComponent } from "@/components/LogoComponent/LogoComponent";
 
 export default function Home() {
   return (
@@ -15,11 +15,7 @@ export default function Home() {
       <Header />
       <div className={css.bodyWrapper}>
         <div className={css.sideWrapper}>
-          <Link href="/" className={css.logo}>
-            <svg className={css.logoIcon}>
-              <use href="/leleka-sprite.svg#icon-logo" />
-            </svg>
-          </Link>
+          <LogoComponent />
           <SideBar />
         </div>
 
