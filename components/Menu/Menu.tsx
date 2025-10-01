@@ -1,5 +1,4 @@
 import SideBar from "../SideBar/SideBar";
-import Link from "next/link";
 import React from "react";
 import css from "./Menu.module.css";
 import { LogoComponent } from "../LogoComponent/LogoComponent";
@@ -18,7 +17,7 @@ const Menu = ({ isOpen = true, onClose }: SideBarProps) => {
           onClick={(e) => e.stopPropagation()}
         >
           <div className={css.menuComponents}>
-            <LogoComponent/>
+            <LogoComponent />
             <button className={css.closeBtn} onClick={onClose}>
               <svg className={css.closeIcon}>
                 <use href="/leleka-sprite.svg#icon-close" />

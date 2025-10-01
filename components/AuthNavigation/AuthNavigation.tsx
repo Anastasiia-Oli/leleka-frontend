@@ -22,7 +22,7 @@ export default function AuthNavigation() {
 
   return (
     <div className={css.sideFooterAuth}>
-      {isAuthenticated && ( //delete "!" later
+      {isAuthenticated && (
         <div className={css.sideAuth}>
           <Link
             href="/profile"
@@ -43,7 +43,7 @@ export default function AuthNavigation() {
           </Link>
 
           <Link
-            href="/auth/login"
+            href={"/*ConfirmationModal*/"}
             onClick={handleLogout}
             className={css.logoutButton}
           >

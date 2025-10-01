@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 
 interface DiaryEntryDetailsProps {
   entry: DiaryEntry | null;
-  onEdit?: () => void;
+  onEdit?: (entry: DiaryEntry) => void;
   onBack?: () => void;
 }
 
@@ -148,7 +148,9 @@ const DiaryEntryDetails: React.FC<DiaryEntryDetailsProps> = ({
               {onEdit && (
                 <button
                   className={css.actionButton}
-                  onClick={onEdit}
+                  onClick={() => {
+                    onEdit(entry); // передаємо entry в обробник
+                  }}
                   title="Редагувати"
                   disabled={isPending}
                 >

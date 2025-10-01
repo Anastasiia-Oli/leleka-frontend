@@ -61,7 +61,7 @@ export async function middleware(request: NextRequest) {
     // }
 
     if (isPrivateRoute) {
-      return NextResponse.redirect(new URL("/auth/login", request.url));
+      return NextResponse.redirect(new URL("/auth/register", request.url));
     }
 
     return NextResponse.next();
