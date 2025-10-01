@@ -198,15 +198,15 @@ export async function submitOnboarding(payload: OnboardingPayload) {
 
   return data.user;
 }
-// export interface Task {
-//   _id: string;
-//   text: string;
-//   date: string;
-//   isDone: boolean;
-//   userId: string;
-//   createdAt: string;
-//   updatedAt: string;
-// }
+export interface TaskPropT {
+  _id: string;
+  text: string;
+  date: string;
+  isDone: boolean;
+  userId: string;
+  createdAt: string;
+  updatedAt: string;
+}
 
 export interface TaskFormValues {
   _id?: string;
@@ -219,8 +219,10 @@ export type UpdateTaskDto = Partial<TaskFormValues>;
 
 export const tasksApi = {
   // POST /tasks
-  createTask: async (task: CreateTaskDto): Promise<AxiosResponse<Task>> => {
-    return await nextServer.post<Task>("/tasks", task);
+  createTask: async (
+    task: CreateTaskDto
+  ): Promise<AxiosResponse<TaskPropT>> => {
+    return await nextServer.post<TaskPropT>("/tasks", task);
   },
 };
 
@@ -236,4 +238,3 @@ export const getBabyClient = async (weekNumber: number): Promise<Baby> => {
   const { data } = await nextServer.get<BabyResponse>(`/weeks/${weekNumber}`);
   return data.data.baby;
 };
-

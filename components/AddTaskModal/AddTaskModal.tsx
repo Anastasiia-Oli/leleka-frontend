@@ -4,12 +4,12 @@ import { useEffect } from "react";
 import css from "./AddTaskModal.module.css";
 import AddTaskForm from "../AddTaskForm/AddTaskForm";
 import { toast } from "react-toastify";
-import { Task, TaskFormValues, tasksApi } from "@/lib/api/clientApi";
+import { TaskPropT, TaskFormValues, tasksApi } from "@/lib/api/clientApi";
 
 interface AddTaskModalProps {
   isOpen: boolean;
-  initialData?: Task;
-  onTaskSaved: (task: Task) => void;
+  initialData?: TaskPropT;
+  onTaskSaved: (task: TaskPropT) => void;
   onClose: () => void;
 }
 

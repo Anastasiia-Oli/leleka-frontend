@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
     console.log("[/api/diaries] Forwarding to backend, body:", body);
 
     // Не нехтуй validateStatus — так ми зможемо логувати відповідь навіть для 4xx/5xx
-    const resp = await api.post("/diaries", body, {
+    const resp = await api.post("/api/diaries", body, {
       headers: {
         Cookie: cookieStore.toString(),
         "Content-Type": "application/json",
