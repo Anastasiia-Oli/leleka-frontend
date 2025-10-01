@@ -36,7 +36,9 @@ const SideBar = () => {
               <Link href={"/profile"}>Профіль</Link>
             </li>
           </ul>
-          <AuthNavigation />
+          <div className={css.authWrapper}>
+            <AuthNavigation />
+          </div>
         </aside>
       </section>
     </>

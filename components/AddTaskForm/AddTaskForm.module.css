@@ -1,0 +1,134 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+}
+
+.fieldWrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  font-family: "Lato", sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #000;
+  margin-bottom: 8px;
+}
+
+@media (min-width: 1440px) {
+  .label {
+    font-size: 16px;
+  }
+}
+
+.field {
+  border: 2px solid rgba(255, 255, 255, 0);
+  border-radius: 12px;
+  padding: 8px 12px;
+  width: 100%;
+  padding: 8px 12px;
+  background: rgba(0, 0, 0, 0.05);
+  height: 37px;
+}
+
+.field::placeholder {
+  font-family: "Lato", sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.5;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.field:focus::placeholder {
+  opacity: 0;
+}
+
+.field:focus {
+  border: 2px solid #ffcbd3;
+  outline: none;
+}
+
+@media (min-width: 768px) {
+  .field {
+    width: 640px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .field {
+    height: 40px;
+  }
+  .field::placeholder {
+    font-size: 16px;
+  }
+}
+
+.errorField {
+  border: 1px solid #c60000;
+}
+
+.errorField::placeholder {
+  color: #c60000;
+}
+.errorMessage {
+  font-family: "Lato", sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 1.6;
+  color: #c60000;
+  margin-top: 8px;
+}
+
+.dateInput {
+  border: 2px solid rgba(255, 255, 255, 0);
+  border-radius: 12px;
+  padding: 8px 12px;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.05);
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: textfield;
+  font-family: "Lato", sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #000;
+  box-sizing: border-box;
+}
+
+@media (min-width: 1440px) {
+  .dateInput {
+    font-size: 16px;
+  }
+}
+
+.submitTaskBtn {
+  height: 42px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  padding: 10px auto;
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0 auto;
+  border-bottom: 4px solid var(--pastel-pink);
+  background-color: var(--pastel-pink-light);
+  transition: background-color 300ms linear;
+}
+
+@media (min-width: 768px) {
+  .submitTaskBtn {
+    max-width: 268px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .submitTaskBtn {
+    height: 46px;
+  }
+}

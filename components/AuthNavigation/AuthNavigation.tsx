@@ -34,7 +34,7 @@ export default function AuthNavigation() {
               alt="User avatar"
               width={40}
               height={40}
-              className="userPhoto"
+              className={css.userPhoto}
             />
             <ul className={css.sideUser}>
               <li className={css.sideName}>{user.name}</li>
