@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { DiaryEntry } from "@/types/dairy";
 import { useRouter } from "next/navigation";
 import DiaryList from "../DiaryList/DiaryList";
@@ -24,7 +24,7 @@ const DiaryPage: React.FC = () => {
   const [modalMode, setModalMode] = useState<"create" | "edit">("create");
   const [editingEntry, setEditingEntry] = useState<DiaryEntry | null>(null);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 1024);
     };
@@ -34,11 +34,17 @@ const DiaryPage: React.FC = () => {
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (data && data.length > 0 && !selectedEntry && !isMobile) {
       setSelectedEntry(data[0]);
     }
   }, [data, selectedEntry, isMobile]);
+
+  useEffect(() => {
+    if (selectedEntry) {
+      setEditingEntry(selectedEntry);
+    }
+  }, [selectedEntry]);
 
   const handleEntryClick = (entry: DiaryEntry) => {
     if (isMobile) {
@@ -61,12 +67,10 @@ const DiaryPage: React.FC = () => {
   //   console.log("Open AddNoteModal");
   // };
 
-  const handleEditEntry = () => {
-    if (selectedEntry) {
-      setModalMode("edit");
-      setEditingEntry(selectedEntry);
-      setIsModalOpen(true);
-    }
+  const handleEditEntry = (selectedEntry: DiaryEntry) => {
+    setModalMode("edit");
+    setEditingEntry(selectedEntry);
+    setIsModalOpen(true);
   };
 
   const handleCloseModal = () => {
@@ -77,12 +81,19 @@ const DiaryPage: React.FC = () => {
   return (
     <div className={css.diaryContainer}>
       <div className={css.mobileLayout}>
-        <DiaryList
-          data={data || []}
-          onEntryClick={handleEntryClick}
-          selectedEntryId={selectedEntry?._id}
-          onAddEntry={handleAddEntry}
-        />
+        <>
+          <DiaryList
+            data={data || []}
+            onEntryClick={handleEntryClick}
+            selectedEntryId={selectedEntry?._id}
+            onAddEntry={handleAddEntry}
+          />
+
+          {/* Якщо є вибраний запис — показуємо деталі (щоб була кнопка редагування) */}
+          {isMobile && selectedEntry && (
+            <DiaryEntryDetails entry={selectedEntry} onEdit={handleEditEntry} />
+          )}
+        </>
       </div>
 
       <div className={css.desktopLayout}>
