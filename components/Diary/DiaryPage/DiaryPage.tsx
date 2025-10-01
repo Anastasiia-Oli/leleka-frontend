@@ -18,7 +18,7 @@ const DiaryPage: React.FC = () => {
   });
 
   const [selectedEntry, setSelectedEntry] = useState<DiaryEntry | null>(null);
-  const [selectedNote, setSelectedNote] = useState<DiaryEntry | null>(null);
+  // const [selectedNote, setSelectedNote] = useState<DiaryEntry | null>(null);
   const [isMobile, setIsMobile] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalMode, setModalMode] = useState<"create" | "edit">("create");
@@ -67,7 +67,7 @@ const DiaryPage: React.FC = () => {
       router.push(`/diary/${entry._id}`);
     } else {
       setSelectedEntry(entry);
-      setSelectedNote(null);
+      // setSelectedNote(null);
     }
     return entry._id;
   };
