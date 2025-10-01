@@ -3,7 +3,6 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useState } from "react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import css from "./ProfileForm.module.css";
 import toast from "react-hot-toast";
 import { ChildSex } from "@/types/user";
@@ -34,7 +33,6 @@ export const ProfileSchema = Yup.object({
 });
 
 const ProfileForm = () => {
-  const router = useRouter();
   const [preview, setPreview] = useState<string | null>(null);
   const user = useAuthUserStore((state) => state.user);
   const setUser = useAuthUserStore((state) => state.setUser);

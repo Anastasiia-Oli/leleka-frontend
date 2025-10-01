@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { createPortal } from "react-dom";
 import css from "./ConfirmationModal.module.css";
 import Button from "../ui/Button";
 
@@ -25,28 +26,33 @@ const ConfirmationModal = ({
     };
     if (isOpen) {
       document.addEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = "hidden";
+      document.documentElement.style.overflow = "hidden";
     }
-    return () => document.removeEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
+    };
   }, [isOpen, onClose]);
 
   if (!isOpen) return null;
 
-  return (
-    <>
-      <div className={css.modalBackdrop} onClick={onClose}>
-        <div className={css.modalWindow} onClick={(e) => e.stopPropagation()}>
-          <h2 className={css.modalTitle}>{title}</h2>
-          <div className={css.modalActions}>
-            <div onClick={onClose}>
-              <Button label={"Ні"} style="primary" />
-            </div>
-            <div onClick={onConfirm}>
-              <Button label={"Так"} style="secondary" />
-            </div>
+  return createPortal(
+    <div className={css.modalBackdrop} onClick={onClose}>
+      <div className={css.modalWindow} onClick={(e) => e.stopPropagation()}>
+        <h2 className={css.modalTitle}>{title}</h2>
+        <div className={css.modalActions}>
+          <div onClick={onClose}>
+            <Button label={"Ні"} style="primary" />
+          </div>
+          <div onClick={onConfirm}>
+            <Button label={"Так"} style="secondary" />
           </div>
         </div>
       </div>
-    </>
+    </div>,
+    document.body
   );
 };
 

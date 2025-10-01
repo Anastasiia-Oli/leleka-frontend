@@ -24,14 +24,16 @@ const FeelingCheckCard = () => {
 
   return (
     <div className={css.card}>
-      <h2>Як ви себе почуваєте?</h2>
-      <h3>Рекомендація на сьогодні:</h3>
-      <p> Занотуйте незвичні відчуття у тілі.</p>
-
-      {/* замінила Link на кнопку */}
-      <button
+      <div className={css.textBlock}>
+        <h3 className="header-third">Як ви себе почуваєте?</h3>
+        <div className={css.advice}>
+          <p className="text-bold">Рекомендація на сьогодні:</p>
+          <p className="text-primary"> Занотуйте незвичні відчуття у тілі.</p>
+        </div>
+      </div>
+        <button
         type="button"
-        className={css.btn}
+        className={`${css.btn} text-medium`}
         onClick={() => setIsModalOpen(true)}
       >
         Зробити запис у щоденник
