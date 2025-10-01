@@ -19,7 +19,7 @@
 
 .load_photo_btn {
   padding: 8px 20px;
-  width: 218px;
+  width: 100%;
   height: 38px;
   display: inline-block;
   font-family: var(--font-family);
@@ -53,13 +53,13 @@
   object-fit: cover;
 }
 
-.edit_form {
+/* .edit_form {
   display: flex;
   flex-direction: column;
   gap: 32px;
   align-items: stretch;
   width: 43%;
-}
+} */
 
 .label_cont {
   display: flex;
@@ -96,12 +96,12 @@
 }
 
 .submit_btn {
-  width: auto;
+  width: 100%;
   height: 42px;
 }
 
 .cancel_btn {
-  width: auto;  
+  width: 100%;  
   height: 42px;
 }
 
@@ -111,16 +111,9 @@
   gap: 16px;
   width: 100%;
   flex-direction: row;
-  justify-content: flex-end;
-}
-
-.profile_main_row {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 40px; 
-    margin-bottom: 40px;
-    width: 100%;
+  /* justify-content: flex-end; */
+  margin-top: 24px;
+  padding-top: 24px;
 }
 
 .info_fields_stack {
@@ -128,6 +121,7 @@
     flex-direction: column;
      gap: 15px; 
     flex-grow: 1; 
+    justify-content: center;
 }
 
 .photo_file_wrapper {
@@ -141,6 +135,8 @@
   line-height: 140%;
   letter-spacing: 0.01em;
   color: var(--color-scheme-text);
+  display:block;
+  text-align: center;
 }
 
 .value_email{
@@ -148,8 +144,78 @@
   font-size: 16px;
   line-height: 150%;
   color: var(--color-scheme-text);
+  display:block;
+  text-align: center;
 }
 
 .label_cont .select__clear-indicator {
     display: none !important;
+}
+
+@media (min-width: 768px) {
+.profile_main_row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 40px;
+  margin-bottom: 40px;
+  width: 100%;
+}
+.load_photo_btn {
+   width: 218px;
+}
+
+  .value_name{
+  font-family: var(--second-family);
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 140%;
+  letter-spacing: 0.01em;
+  color: var(--color-scheme-text);
+  display:block;
+  text-align: left;
+}
+
+
+.value_email{
+  font-family: var(--font-family);
+  font-size: 16px;
+  line-height: 150%;
+  color: var(--color-scheme-text);
+  display:block;
+  text-align: left;
+}
+
+.label_cont {
+  /* display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%; */
+  margin-top: 24px;
+}
+
+.actions_wrapper {
+  display: flex;
+  /* justify-content: space-between; */
+  gap: 16px;
+  width: 100%;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin-top: 24px;
+  padding-top: 24px;
+}
+
+.submit_btn {
+  width: auto;
+  height: 38px;
+}
+
+.cancel_btn {
+  width: auto;  
+  height: 38px;
+}
+}
+
+@media (min-width: 1128px) {
+
 }

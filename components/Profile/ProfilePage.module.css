@@ -1,10 +1,11 @@
 .scene {
   min-height: 100vh;
-  display: flex;
+  /* display: flex; */
   justify-content: center;
   align-items: center;
   background: var(--bg);
   padding: 16px;
+  width: 100%;
 }
 
 .regRight {
@@ -34,8 +35,8 @@
 }
 
 .regCard {
-  width: 100%;
-  max-width: 360px;
+  /* max-width: 100%; */
+  max-width: 500px;
   background: var(--card);
   border-radius: 24px;
   overflow: hidden;
@@ -52,6 +53,15 @@
   align-items: center;
   justify-content: center;
   min-height: 100vh;
+}
+
+.edit_form {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  align-items: stretch;
+  /* width: 43%; */
+  max-width: 100%;
 }
 
 @media (min-width: 768px) {
@@ -72,15 +82,15 @@
 }
 
 @media (min-width: 1128px) {
-.scene {
-  min-height: 100vh;
-  display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
-  background: var(--bg);
-  padding-left: 32px;
-  padding-top: 0; 
-}
+  .scene {
+    min-height: 100vh;
+    /* display: flex; */
+    justify-content: flex-start;
+    align-items: flex-start;
+    background: var(--bg);
+    padding-left: 32px;
+    padding-top: 0;
+  }
 
   .regCard {
     width: 1440px;
@@ -98,8 +108,8 @@
     min-height: auto;
     margin: 32px 64px;
     padding: 56px;
-    display: flex; 
-   flex-direction: column;
+    display: flex;
+    flex-direction: column;
     align-items: stretch;
   }
   .logoCont {

@@ -1,7 +1,7 @@
-import { User, Task } from "@/types/user";
+import { User } from "@/types/user";
 import { JourneyDetails } from "@/types/journeyType";
 import nextServer from "./api";
-import type { ChildSex } from "../../types/user";
+// import type { ChildSex } from "../../types/user";
 import type { DiaryEntryData, Emotion } from "@/types/diaryModal";
 import { AxiosResponse } from "axios";
 import { DiaryEntry } from "@/types/dairy";
