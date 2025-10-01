@@ -1,7 +1,6 @@
 import React from "react";
 import DiaryEntryCard from "../DiaryEntryCard/DiaryEntryCard";
 import css from "./DiaryList.module.css";
-import { useQuery } from "@tanstack/react-query";
 import { DiaryEntry } from "@/types/dairy";
 import Link from "next/link";
 
@@ -12,17 +11,13 @@ interface DiaryListProps {
   onAddEntry?: () => void;
 }
 
-
 const DiaryList: React.FC<DiaryListProps> = ({
   onEntryClick,
   selectedEntryId,
   onAddEntry,
-  data
+  data,
 }) => {
-
-
   return (
-
     <div className={css.diaryContainer}>
       <div className={css.diaryHeader}>
         <h2 className={`${css.diaryTitle} header-third`}>Ваші записи</h2>

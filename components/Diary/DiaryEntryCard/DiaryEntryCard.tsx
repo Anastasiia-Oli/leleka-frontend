@@ -1,4 +1,6 @@
-'use client';
+// картка щоденика
+
+"use client";
 
 import React from "react";
 import { DiaryEntry } from "@/types/dairy";
@@ -13,7 +15,7 @@ interface DiaryEntryCardProps {
 const DiaryEntryCard: React.FC<DiaryEntryCardProps> = ({
   entry,
   onClick,
-  isSelected
+  isSelected,
 }) => {
   // Показуємо максимум 3 емоції, решту ховаємо під "+N"
   const visibleEmotions = entry.emotions?.slice(0, 3) || [];
@@ -21,7 +23,8 @@ const DiaryEntryCard: React.FC<DiaryEntryCardProps> = ({
 
   // Функція форматування дати
   const formatDate = (dateString: string) => {
-    if (typeof dateString === 'string' && dateString.includes('липня')) {
+    // Якщо дата вже в правильному форматі, повертаємо її
+    if (typeof dateString === "string" && dateString.includes("липня")) {
       return dateString;
     }
 
@@ -31,12 +34,14 @@ const DiaryEntryCard: React.FC<DiaryEntryCardProps> = ({
         return dateString;
       }
 
-      return date.toLocaleDateString('uk-UA', {
-        day: 'numeric',
-        month: 'long',
-        year: 'numeric'
+      // Форматуємо дату в український формат
+      return date.toLocaleDateString("uk-UA", {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
       });
-    } catch (error) {
+    } catch {
+      // У випадку помилки повертаємо оригінальний рядок
       return dateString;
     }
   };
@@ -44,7 +49,7 @@ const DiaryEntryCard: React.FC<DiaryEntryCardProps> = ({
   return (
     <div
       onClick={onClick}
-      className={`${css.card} ${isSelected ? css.selected : ''}`}
+      className={`${css.card} ${isSelected ? css.selected : ""}`}
     >
       <div className={css.cardHeader}>
         <h3 className={`${css.cardTitle} header-fourth`}>{entry.title}</h3>
@@ -60,9 +65,7 @@ const DiaryEntryCard: React.FC<DiaryEntryCardProps> = ({
           </span>
         ))}
         {hiddenEmotionsCount > 0 && (
-          <span className={css.moreEmotions}>
-            +{hiddenEmotionsCount}
-          </span>
+          <span className={css.moreEmotions}>+{hiddenEmotionsCount}</span>
         )}
       </div>
     </div>
