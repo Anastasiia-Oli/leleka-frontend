@@ -77,11 +77,9 @@ const ProfileForm = () => {
       enableReinitialize={true}
     >
       {({ isSubmitting, setFieldValue, values, resetForm }) => {
-
         return (
-          
           <Form className={css.edit_form}>
-            <Breadcrumbs/>
+            <Breadcrumbs />
             <div className={css.profile_main_row}>
               <div className={css.photo_file_wrapper}>
                 <div>
@@ -114,7 +112,9 @@ const ProfileForm = () => {
 
               <div className={css.info_fields_stack}>
                 <div className={css.info_item}>
-                  <span className={css.value_name}>{user.name || "Користувач"}</span>
+                  <span className={css.value_name}>
+                    {user.name || "Користувач"}
+                  </span>
                 </div>
 
                 <div className={css.info_item}>
@@ -177,7 +177,6 @@ const ProfileForm = () => {
                 value={values.gender}
                 onChange={(val: string) => setFieldValue("gender", val)}
                 placeholder="Оберіть стать"
-                isClearable={false}
               />
               <ErrorMessage
                 name="gender"
