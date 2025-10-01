@@ -1,17 +1,30 @@
 .diaryContainer {
     display: flex;
     flex-direction: column;
-    height: 100%;
+    height: auto;
+    background: var(--pastel-pink-lighter);
+    border-radius: 32px;
+    padding: 32px 20px;
+    /* мобільний відступ */
+    gap: 16px;
+    box-sizing: border-box;
+    min-width: 100%;
+    /* адаптивна ширина */
+}
+
+.contentWrapper {
+    display: flex;
+    flex-direction: column;
     background: var(--pastel-pink-lighter);
     border-radius: 16px;
-    padding: 24px;
+    padding: 12px;
+    /* менше на мобілці */
     gap: 8px;
-    box-sizing: border-box;
-
+    flex: 1;
 }
 
 .backButton {
-    display: none;
+    display: block;
     background: none;
     border: none;
     color: var(--black);
@@ -26,10 +39,13 @@
     color: var(--pastel-pink-dark);
 }
 
-
 .headerTop {
+    display: flex;
+    flex-direction: column;
+    /* у мобілці стовпчик */
+    gap: 12px;
+    align-items: flex-start;
     margin-bottom: 12px;
-    gap: 16px;
 }
 
 .diaryTitle {
@@ -46,10 +62,12 @@
 
 .headerActions {
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    gap: 6px;
+    align-items: flex-start;
+    width: 100%;
     justify-content: space-between;
-    gap: 8px;
-    flex-shrink: 0;
+
 }
 
 .actionButton,
@@ -57,23 +75,14 @@
     background: none;
     border: none;
     cursor: pointer;
-    padding: 8px;
     border-radius: 8px;
     transition: background-color 0.2s ease;
     display: flex;
     align-items: center;
     justify-content: center;
-}
-
-.actionButton {
-    margin-left: 8px;
-}
-
-
-
-.actionButton:hover,
-.closeButton:hover {
-    background: var(--gray-lightest);
+    width: 28px;
+    height: 28px;
+    padding: 4px;
 }
 
 .editIcon,
@@ -82,8 +91,9 @@
     transition: fill 0.2s ease;
 }
 
-.editIcon {
-    margin-right: 8px;
+.actionButton:hover,
+.closeButton:hover {
+    background: var(--gray-lightest);
 }
 
 .actionButton:hover .editIcon,
@@ -95,33 +105,29 @@
     display: flex;
     align-items: center;
     gap: 8px;
-    flex-shrink: 0;
-    margin-left: 8px;
-    justify-content: left;
+
 }
 
 .date {
     color: var(--gray);
-    margin-bottom: 16px;
     font-size: 14px;
-    font-weight: 400;
     line-height: 160%;
-    margin: 9px 8px 9px 0px;
+    margin: 9px 8px 9px 0;
 }
 
 .diaryContent {
     flex: 1;
     overflow-y: auto;
+    display: flex;
     flex-direction: column;
     gap: 16px;
 }
 
 .diaryContent p {
     line-height: 1.6;
-    margin: 0;
+    margin: 0 0 16px;
     color: var(--black);
     flex: 1;
-    margin-bottom: 16px;
 }
 
 .emotions {
@@ -136,8 +142,7 @@
     color: var(--black);
     padding: 4px 10px;
     border-radius: 16px;
-    font-size: 14px;
-    font-weight: 400;
+    font-size: 12px;
     line-height: 1.2;
 }
 
@@ -150,139 +155,67 @@
     text-align: center;
 }
 
-/* Desktop fixed height with scroll */
-@media (min-width: 1024px) {
-    /* .diarycontainer { */
-    /* height: 450px; */
-    /* Fixed height for desktop */
-}
-
-/* } */
-
-/* Mobile/Tablet styles */
-@media (max-width: 1023px) {
-    .backButton {
-        display: block;
+@media (min-width: 768px) {
+    .diaryContainer {
+        gap: 8px;
+        padding: 32px;
+        /* більше падінг */
+        min-width: 375px;
+        height: 765px;
     }
 
-    .headerTop {
-        flex-direction: column;
-        gap: 12px;
-        align-items: flex-start;
-    }
-
-    .headerActions {
-        align-self: flex-end;
-    }
-
-    .emotionTag {
-        font-size: 12px;
-        padding: 4px 10px;
-    }
-}
-
-@media (max-width: 767px) {
-    .diaryontainer {
-        gap: 16px;
+    .contentWrapper {
         padding: 16px;
     }
 
     .headerActions {
-        gap: 6px;
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 8px;
+        width: auto;
     }
 
     .actionButton,
     .closeButton {
-        width: 28px;
-        height: 28px;
-        padding: 4px;
+        width: auto;
+        height: auto;
+        padding: 8px;
     }
 
     .editIcon,
     .deleteIcon {
-        width: 18px;
-        height: 18px;
+        width: auto;
+        height: auto;
+    }
+
+    .emotionTag {
+        font-size: 14px;
+    }
+
+    .backButton {
+        display: none;
+        /* приховуємо */
     }
 }
 
-.loadingOverlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(255, 255, 255, 0.8);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-    border-radius: 16px;
-}
-
-.loadingSpinner {
-    text-align: center;
-    padding: 20px;
-    color: var(--gray-dark);
-}
-
-.loadingSpinner p {
-    margin: 0;
-    font-size: 14px;
-    font-weight: 500;
-}
-
-/* Анімація для кнопок у стані disabled */
-.actionButton:disabled,
-.closeButton:disabled,
-.backButton:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-    pointer-events: none;
-}
-
-.actionButton:disabled:hover,
-.closeButton:disabled:hover {
-    background: none;
-}
-
-.actionButton:disabled .editIcon,
-.closeButton:disabled .deleteIcon {
-    fill: var(--gray-light);
-}
-
-/* Додаткова анімація завантаження */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
+@media (min-width: 1024px) {
+    .diaryContainer {
+        height: 100%;
+        /* або можна задати fixed height */
     }
 
-    to {
-        opacity: 1;
+    .headerTop {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 16px;
     }
 }
 
-.loadingOverlay {
-    animation: fadeIn 0.2s ease-in-out;
-}
-
-/* Стилі для mobile */
-@media (max-width: 767px) {
-    .loadingSpinner {
-        padding: 15px;
-    }
-
-    .loadingSpinner p {
-        font-size: 13px;
-    }
-}
-
-/* Модальне вікно підтвердження */
+/* Confirm Modal */
 .confirmModal {
     position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    inset: 0;
+    /* скорочення top/left/right/bottom */
     background-color: rgba(0, 0, 0, 0.5);
     display: flex;
     align-items: center;
@@ -292,60 +225,40 @@
 }
 
 .confirmContent {
-    background: var(--card, white);
-    padding: 24px;
+    background: var(--card, #fff);
+    padding: 20px;
+    /* менше на мобілці */
+    margin: 16px;
     border-radius: 16px;
-    max-width: 420px;
-    width: 90%;
+    width: calc(100% - 32px);
+    /* адаптивна ширина */
     max-height: 90vh;
     overflow-y: auto;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
     animation: slideIn 0.3s ease-out;
 }
 
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
-}
-
-@keyframes slideIn {
-    from {
-        opacity: 0;
-        transform: translateY(-20px) scale(0.95);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
-}
-
 .confirmContent h3 {
-    margin: 0 0 16px 0;
-    font-size: 18px;
+    margin: 0 0 16px;
+    font-size: 16px;
+    /* менше на мобілці */
     font-weight: 600;
     color: var(--text, #1a1a1a);
     line-height: 1.3;
 }
 
 .confirmContent p {
-    margin: 0 0 8px 0;
+    margin: 0 0 8px;
     color: var(--text, #1a1a1a);
-    line-height: 1.5;
     font-size: 14px;
+    line-height: 1.5;
 }
 
 .warningText {
     color: var(--color-red, #dc2626) !important;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 500;
     margin-bottom: 24px !important;
-    padding: 8px 12px;
+    padding: 6px 10px;
     background: rgba(220, 38, 38, 0.1);
     border-radius: 8px;
     border-left: 3px solid var(--color-red, #dc2626);
@@ -353,22 +266,27 @@
 
 .confirmButtons {
     display: flex;
-    gap: 12px;
-    justify-content: flex-end;
+    flex-direction: column-reverse;
+    /* кнопки одна під одною */
+    gap: 8px;
     margin-top: 20px;
 }
 
-.cancelButton {
-    padding: 10px 20px;
-    border: 1px solid var(--border, #e2e8f0);
-    background: var(--card, white);
-    color: var(--text, #1a1a1a);
+.cancelButton,
+.confirmDeleteButton {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
     border-radius: 8px;
-    cursor: pointer;
-    font-size: 14px;
     font-weight: 500;
+    cursor: pointer;
     transition: all 0.2s ease;
-    min-width: 80px;
+}
+
+.cancelButton {
+    border: 1px solid var(--border, #e2e8f0);
+    background: var(--card, #fff);
+    color: var(--text, #1a1a1a);
 }
 
 .cancelButton:hover:not(:disabled) {
@@ -378,16 +296,9 @@
 }
 
 .confirmDeleteButton {
-    padding: 10px 20px;
     border: none;
     background: var(--color-red, #dc2626);
     color: white;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: 500;
-    transition: all 0.2s ease;
-    min-width: 80px;
     position: relative;
 }
 
@@ -397,26 +308,10 @@
     box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
 }
 
-.confirmDeleteButton:active:not(:disabled) {
-    transform: translateY(0);
-    box-shadow: 0 2px 6px rgba(220, 38, 38, 0.3);
-}
-
-.confirmDeleteButton:disabled,
-.cancelButton:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-    transform: none !important;
-    box-shadow: none !important;
-}
-
-/* Loading overlay */
+/* Loading Overlay */
 .loadingOverlay {
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    inset: 0;
     background-color: rgba(255, 255, 255, 0.9);
     display: flex;
     align-items: center;
@@ -424,47 +319,59 @@
     z-index: 100;
     border-radius: 16px;
     backdrop-filter: blur(2px);
+    animation: fadeIn 0.2s ease-in-out;
 }
 
 .loadingSpinner {
     text-align: center;
-    padding: 20px;
+    padding: 15px;
+    /* мобільна версія */
     color: var(--text, #1a1a1a);
 }
 
 .loadingSpinner p {
     margin: 0;
-    font-size: 14px;
+    font-size: 13px;
+    /* трохи менший на мобілці */
     font-weight: 500;
 }
 
-/* Mobile адаптація */
-@media (max-width: 768px) {
+@media (min-width: 768px) {
     .confirmContent {
-        padding: 20px;
-        margin: 16px;
-        max-width: none;
-        width: calc(100% - 32px);
+        padding: 24px;
+        margin: 0;
+        max-width: 420px;
+        width: 90%;
     }
 
     .confirmContent h3 {
-        font-size: 16px;
+        font-size: 18px;
+    }
+
+    .warningText {
+        font-size: 13px;
+        padding: 8px 12px;
     }
 
     .confirmButtons {
-        flex-direction: column-reverse;
-        gap: 8px;
+        flex-direction: row;
+        /* кнопки поруч */
+        justify-content: flex-end;
+        gap: 12px;
     }
 
     .cancelButton,
     .confirmDeleteButton {
-        width: 100%;
-        padding: 12px;
-        font-size: 16px;
+        width: auto;
+        padding: 10px 20px;
+        font-size: 14px;
     }
 
-    .warningText {
-        font-size: 12px;
-        padding: 6px 10px;
+    .loadingSpinner {
+        padding: 20px;
+    }
+
+    .loadingSpinner p {
+        font-size: 14px;
     }
 }
