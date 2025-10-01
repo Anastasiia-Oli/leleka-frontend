@@ -5,6 +5,7 @@
     background: var(--pastel-pink-lighter);
     border-radius: 32px;
 }
+
 .card {
     background: var(--pastel-pink);
     border-radius: 16px;
@@ -14,7 +15,9 @@
     border: 2px solid transparent;
 }
 
-.card:hover {
+.card:hover,
+.card:focus,
+.card:active {
     background: var(--pastel-pink-lightest);
     border-color: var(--pastel-pink);
 }
@@ -58,6 +61,7 @@
     text-align: center;
 }
 
+
 .moreEmotions {
     background: var(--gray-lightest);
     color: var(--black);
@@ -66,6 +70,8 @@
     font-size: 12px;
     font-weight: 500;
 }
+
+
 
 /* Mobile styles */
 @media (max-width: 767px) {
