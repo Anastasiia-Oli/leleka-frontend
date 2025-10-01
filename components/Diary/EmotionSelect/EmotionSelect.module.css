@@ -1,0 +1,89 @@
+.scrollWrapper {
+  position: relative;
+  height: 220px;
+}
+
+/* Контейнер, який скролиться */
+.scrollContainer {
+  max-height: 220px;
+  overflow-y: auto;
+  padding-right: 20px;
+  scrollbar-width: none;
+  border-top: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+.scrollContainer::-webkit-scrollbar {
+  display: none;
+}
+
+/* Контейнер опцій */
+.optionsList {
+  display: flex;
+  flex-direction: column;
+}
+
+.track {
+  position: absolute;
+  top: 8px;
+  right: 14px;
+  width: 6px;
+  height: 204px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  pointer-events: none;
+}
+
+.thumb {
+  position: absolute;
+  right: calc(14px - 2px); /* вирівнювання по центру */
+  width: 10px;
+  height: 56px;
+  background: #ffcbd3;
+  border-radius: 4px;
+  pointer-events: none;
+  transition: top 0.1s linear;
+}
+
+/* Стиль опцій */
+.option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  font-family: "Lato", sans-serif;
+  font-size: 14px;
+  color: #000;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.option:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+/* Кастомний чекбокс */
+.option input[type="checkbox"] {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  background-color: rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+  position: relative;
+}
+
+.option input[type="checkbox"]:checked {
+  background-color: #000;
+  border-color: #000;
+}
+
+.option input[type="checkbox"]:checked::after {
+  content: "✔";
+  color: #fff;
+  font-size: 14px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

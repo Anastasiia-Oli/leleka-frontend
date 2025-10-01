@@ -23,6 +23,14 @@ export const getMeServer = async () => {
   return response;
 };
 
+export const getEmotionsServer = async () => {
+  const cookieStore = await cookies();
+  const res = await nextServer.get("/emotions", {
+    headers: { Cookie: cookieStore.toString() },
+  });
+  return res.data;
+};
+
 export async function getTasksServer(): Promise<Task[]> {
   const cookieStore = await cookies();
   const { data } = await nextServer.get<TaskProp>("/tasks", {

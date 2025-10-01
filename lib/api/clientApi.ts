@@ -1,10 +1,10 @@
 import { User, Task } from "@/types/user";
 import { JourneyDetails } from "@/types/journeyType";
 import nextServer from "./api";
+import type { ChildSex } from "../../types/user";
+import type { DiaryEntryData, Emotion } from "@/types/diaryModal";
 import { AxiosResponse } from "axios";
-
 import { DiaryEntry } from "@/types/dairy";
-import { Emotion } from "@/types/dairy";
 import { CreateDiaryEntryData } from "@/types/dairy";
 import type { Baby, ChildSex } from "../../types/user";
 
@@ -113,6 +113,24 @@ export const checkSession = async () => {
 
 export const getMe = async () => {
   const { data } = await nextServer.get<User>("/users/current");
+  return data;
+};
+
+export async function createDiaryEntry(data: DiaryEntryData) {
+  const { data: res } = await nextServer.post<DiaryEntryData>("/diaries", data);
+  return res;
+}
+
+export async function updateDiaryEntry(id: string, data: DiaryEntryData) {
+  const { data: res } = await nextServer.patch<DiaryEntryData>(
+    `/diaries/${id}`,
+    data
+  );
+  return res;
+}
+
+export const getEmotions = async (): Promise<Emotion[]> => {
+  const { data } = await nextServer.get<Emotion[]>("/emotions");
   return data;
 };
 
