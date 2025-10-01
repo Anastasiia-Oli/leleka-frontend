@@ -1,3 +1,4 @@
+// types/user.ts
 export type ChildSex = "Ще не знаю" | "Дівчинка" | "Хлопчик";
 
 export interface User {

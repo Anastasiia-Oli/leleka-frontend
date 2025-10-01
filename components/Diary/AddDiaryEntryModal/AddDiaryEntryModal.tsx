@@ -3,6 +3,7 @@
 import AddDiaryEntryForm from "../AddDiaryEntryForm/AddDiaryEntryForm";
 import css from "./AddDiaryEntryModal.module.css";
 import { DiaryEntry } from "@/types/dairy";
+import { useEffect } from "react";
 
 interface AddDiaryEntryModalProps {
   isOpen: boolean;
@@ -17,6 +18,11 @@ export default function AddDiaryEntryModal({
   entry,
   onClose,
 }: AddDiaryEntryModalProps) {
+  useEffect(() => {
+    if (mode === "edit" && entry && !isOpen) {
+    }
+  }, [mode, entry, isOpen]);
+
   if (!isOpen) return null;
 
   return (

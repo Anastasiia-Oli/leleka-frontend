@@ -55,6 +55,14 @@ type OnboardingPayload = {
   photo?: File;
 };
 
+type ProfilePayload = {
+  name: string;
+  email: string;
+  childSex: ChildSex;
+  dueDate: string;
+  photo?: File;
+};
+
 export type LogoutResponse = { message?: string };
 
 export const getJourneyDetailsByWeek = async (
@@ -198,6 +206,27 @@ export async function submitOnboarding(payload: OnboardingPayload) {
 
   return data.user;
 }
+
+export async function saveProfile(payload: ProfilePayload) {
+  const { name, email, childSex, dueDate, photo } = payload;
+
+  if (photo) {
+    const fd = new FormData();
+    fd.append("avatar", photo);
+
+    await nextServer.patch("/users/avatar", fd);
+  }
+
+  const { data } = await nextServer.patch("/users", {
+    name,
+    email,
+    childSex,
+    dueDate,
+  });
+
+  return data.user;
+}
+
 export interface TaskPropT {
   _id: string;
   text: string;
