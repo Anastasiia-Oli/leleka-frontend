@@ -53,7 +53,7 @@ const DiaryEntryPage = ({ params }: PageProps) => {
     setEditingEntry(null);
   };
 
-  useCloseModal(handleCloseModal);
+  useCloseModal(handleCloseModal, isModalOpen);
 
   if (isLoading || !entryId) {
     return (

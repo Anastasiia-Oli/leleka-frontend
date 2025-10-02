@@ -79,7 +79,7 @@ const DiaryPage: React.FC = () => {
     setEditingEntry(null);
   };
 
-  useCloseModal(handleCloseModal);
+  useCloseModal(handleCloseModal, isModalOpen);
 
   return (
     <div className={css.diaryContainer}>

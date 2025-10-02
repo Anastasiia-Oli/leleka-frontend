@@ -1,18 +1,22 @@
 import { useEffect } from "react";
 
-const useCloseModal = (onClose: () => void) => {
+const useCloseModal = (onClose: () => void, isOpen: boolean) => {
   useEffect(() => {
     const handleEscClose = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
     };
 
-    document.addEventListener("keydown", handleEscClose);
-    document.body.style.overflow = "hidden";
+    if (isOpen) {
+      document.addEventListener("keydown", handleEscClose);
+      document.body.style.overflow = "hidden";
+      document.documentElement.style.overflow = "hidden";
+    }
     return () => {
       document.removeEventListener("keydown", handleEscClose);
       document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
     };
-  }, [onClose]);
+  }, [onClose, isOpen]);
 };
 
 export default useCloseModal;

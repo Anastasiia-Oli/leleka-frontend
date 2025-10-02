@@ -8,7 +8,7 @@ import useCloseModal from "@/hooks/useCloseModal";
 const FeelingCheckCard = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  useCloseModal(() => setIsModalOpen(false));
+  useCloseModal(() => setIsModalOpen(false), isModalOpen);
 
   return (
     <div className={css.card}>

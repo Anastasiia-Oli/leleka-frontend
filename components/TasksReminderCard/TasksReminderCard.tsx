@@ -2,7 +2,7 @@
 import { changeStateTask, getTasks } from "@/lib/api/clientApi";
 import { Task } from "@/types/user";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import css from "./TasksReminderCard.module.css";
 import AddTaskModal from "../AddTaskModal/AddTaskModal";
 import useCloseModal from "@/hooks/useCloseModal";
@@ -21,21 +21,6 @@ function formateDate(date?: string) {
 const TasksReminderCard = () => {
   const queryClient = useQueryClient();
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  useEffect(() => {
-    if (isModalOpen) {
-      document.body.style.overflow = "hidden";
-      document.documentElement.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-      document.documentElement.style.overflow = "";
-    }
-
-    return () => {
-      document.body.style.overflow = "";
-      document.documentElement.style.overflow = "";
-    };
-  }, [isModalOpen]);
 
   const {
     data: tasks = [],
@@ -68,7 +53,7 @@ const TasksReminderCard = () => {
     handleCloseModal();
   };
 
-  useCloseModal(handleCloseModal);
+  useCloseModal(handleCloseModal, isModalOpen);
 
   return (
     <div className={css.card}>

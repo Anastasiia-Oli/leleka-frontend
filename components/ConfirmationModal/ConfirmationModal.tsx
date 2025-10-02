@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect } from "react";
 import { createPortal } from "react-dom";
 import css from "./ConfirmationModal.module.css";
 import Button from "../ui/Button";
+import useCloseModal from "@/hooks/useCloseModal";
 
 interface ConfirmationModalProps {
   title: string;
@@ -18,23 +18,7 @@ const ConfirmationModal = ({
   onClose,
   isOpen,
 }: ConfirmationModalProps) => {
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        onClose();
-      }
-    };
-    if (isOpen) {
-      document.addEventListener("keydown", handleKeyDown);
-      document.body.style.overflow = "hidden";
-      document.documentElement.style.overflow = "hidden";
-    }
-    return () => {
-      document.removeEventListener("keydown", handleKeyDown);
-      document.body.style.overflow = "";
-      document.documentElement.style.overflow = "";
-    };
-  }, [isOpen, onClose]);
+  useCloseModal(onClose, isOpen);
 
   if (!isOpen) return null;
 
