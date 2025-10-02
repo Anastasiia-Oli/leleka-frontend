@@ -4,33 +4,12 @@
   justify-content: center;
   align-items: center;
   background: var(--bg);
-  padding: 16px;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 .regRight {
   display: none;
-}
-
-.logoCont {
-  position: absolute;
-  top: 21px;
-  left: 24px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.logo {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 105px;
-  height: 45px;
-}
-
-.logoIcon {
-  width: 95px;
-  height: 29px;
 }
 
 .regCard {
@@ -39,39 +18,62 @@
   background: var(--card);
   border-radius: 24px;
   overflow: hidden;
-  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.08);
   display: grid;
   grid-template-columns: 1fr;
+  position: relative;
+}
+
+.logoCont {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 24px;
+  margin-left: 24px;
+  margin-bottom: 50px;
+}
+
+.logo {
+  top: 13.5px;
+  left: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logoIcon {
+  width: 95px;
+  height: 29px;
 }
 
 .regLeft {
-  padding: 20px;
   position: relative;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   min-height: 100vh;
 }
 
 @media (min-width: 768px) {
+  .scene {
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+
   .regCard {
-    width: 720px;
-    height: 900px;
+    width: 704px;
+    height: auto;
     max-width: none;
-  }
-  .regLeft {
-    padding: 40px 24px;
-    justify-content: center;
-    min-height: auto;
-  }
-  .logoCont {
-    top: 21px;
-    left: 37px;
   }
 }
 
 @media (min-width: 1128px) {
+  .scene {
+    display: flex;
+    justify-content: flex-start;
+    padding: 0;
+    margin: 0;
+  }
   .regCard {
     width: 1440px;
     height: 900px;
@@ -84,12 +86,16 @@
     background: #fafaf9;
   }
   .regLeft {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
     justify-content: center;
-    min-height: auto;
-    margin: 0 64px;
-    padding: 56px;
   }
+
   .logoCont {
-    left: 0;
+    margin-bottom: 50px;
+    margin-top: 0;
+    margin-left: 0;
+    align-self: flex-start;
   }
 }
