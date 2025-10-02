@@ -23,17 +23,6 @@
   border-right: 1px solid var(--color-scheme-border);
 }
 
-@media (min-width: 1128px) {
-  .sideWrapper {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .contentWrapper {
-    margin-left: 312px;
-  }
-}
-
 .contentWrapper {
   position: relative;
   display: flex;
@@ -64,20 +53,54 @@
   }
   .contentWrapper {
     padding: 32px;
+    padding-top: 24px;
+    margin-left: 312px;
   }
 }
 
-.title {
-  font-size: 36px;
-  font-weight: 700;
-  color: #1a1a1a;
-  margin-bottom: 60px;
-  text-align: center;
+/* not found styles */
+
+.notFoundBack {
+  background-color: var(--color-scheme-foreground);
+  width: 100dvw;
+  height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.description {
-  font-size: 18px;
+.notFoundWrapper {
+  background-color: var(--color-scheme-foreground-alt);
+  width: fit-content;
+  padding: 32px;
+  border-radius: 40px;
+  display: flex;
+  flex-direction: column;
+  margin-left: 16px;
+  margin-right: 16px;
+}
+
+.notFoundTitle {
+  font-size: 50px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 40px;
+  font-family: var(--font-family);
+}
+
+.notFoundDescription {
+  display: flex;
+  font-size: 30px;
   color: #444444;
   line-height: 28px;
   margin-bottom: 16px;
+}
+
+.notFoundLink {
+  display: flex;
+  font-size: 30px;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  color: #444444;
+  line-height: 28px;
 }

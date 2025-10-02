@@ -10,7 +10,7 @@ import * as Yup from "yup";
 import { saveProfile } from "@/lib/api/clientApi";
 import dynamic from "next/dynamic";
 import { useAuthUserStore } from "@/lib/store/authStore";
-import Breadcrumbs from "../Breadcrumbs/Breadcrumbs";
+import type { User } from "@/types/user";
 
 const Select = dynamic(() => import("../ui/Select"), { ssr: false });
 
@@ -24,6 +24,10 @@ type FormValues = {
   dueDate: string;
 };
 
+interface ProfileFormProps {
+  currentUser: User;
+}
+
 export const ProfileSchema = Yup.object({
   name: Yup.string().required("Вкажіть ім’я").max(50, "Максимум 50 символів"),
   email: Yup.string().email("Некоректний email").required("Вкажіть email"),
@@ -32,17 +36,17 @@ export const ProfileSchema = Yup.object({
   photo: Yup.mixed<File>().nullable(),
 });
 
-const ProfileForm = () => {
+const ProfileForm: React.FC<ProfileFormProps> = ({ currentUser }) => {
   const [preview, setPreview] = useState<string | null>(null);
-  const user = useAuthUserStore((state) => state.user);
+  // const user = useAuthUserStore((state) => state.user);
   const setUser = useAuthUserStore((state) => state.setUser);
 
   const initialValues: FormValues = {
-    name: user.name || "",
-    email: user.email || "",
+    name: currentUser.name || "",
+    email: currentUser.email || "",
     photo: null,
-    gender: user.childSex || "Ще не знаю",
-    dueDate: user.dueDate || "",
+    gender: currentUser.childSex || "Ще не знаю",
+    dueDate: currentUser.dueDate || "",
   };
 
   return (
@@ -77,13 +81,16 @@ const ProfileForm = () => {
       {({ isSubmitting, setFieldValue, values, resetForm }) => {
         return (
           <Form className={css.edit_form}>
-            <Breadcrumbs />
             <div className={css.profile_main_row}>
               <div className={css.photo_file_wrapper}>
                 <div>
                   <label htmlFor="fileInput" className={css.avatarLabel}>
                     <Image
-                      src={preview || user.photo || "/images/placeholder.png"}
+                      src={
+                        preview ||
+                        currentUser.photo ||
+                        "/images/placeholder.png"
+                      }
                       alt="avatar"
                       className={css.avatar}
                       width={132}
@@ -111,13 +118,13 @@ const ProfileForm = () => {
               <div className={css.info_fields_stack}>
                 <div className={css.info_item}>
                   <span className={css.value_name}>
-                    {user.name || "Користувач"}
+                    {currentUser.name || "Користувач"}
                   </span>
                 </div>
 
                 <div className={css.info_item}>
                   <span className={css.value_email}>
-                    {user.email || "example@gmail.com"}
+                    {currentUser.email || "example@gmail.com"}
                   </span>
                 </div>
 

@@ -177,6 +177,11 @@
   font-size: 14px;
 }
 
+.comfortTips {
+  max-height: 48px;
+  overflow-y: auto;
+}
+
 .advicesList p {
   color: #333;
   margin-left: 32px;
@@ -238,7 +243,7 @@
   .journeyDetails {
     flex-direction: row;
     align-items: flex-start;
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: 1.7fr 1.5fr;
   }
 
   .titleLogoFacts {

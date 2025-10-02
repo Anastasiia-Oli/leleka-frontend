@@ -20,7 +20,7 @@ export const getMeServer = async () => {
       Cookie: cookieStore.toString(),
     },
   });
-  return response;
+  return response.data;
 };
 
 export const getEmotionsServer = async () => {

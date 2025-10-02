@@ -5,8 +5,8 @@
 }
 
 .breadcrumbsList {
-  list-style: none; 
-  display: flex; 
+  list-style: none;
+  display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
   padding: 0;
@@ -27,16 +27,31 @@
   text-align: center;
   line-height: 160%;
   color: var(--color-scheme-text);
+  text-decoration: none;
 }
 
 .breadcrumbLink:hover {
-  text-decoration: underline;
+  text-decoration: none;
 }
 
 .breadcrumbDivider {
-    width: 24px;
-    height: 24px;
+  width: 24px;
+  height: 24px;
   fill: var(--color-scheme-text);
   stroke-width: 1px;
   stroke: var(--color-scheme-text);
+  margin-right: 8px;
+}
+
+.breadcrumbLast {
+  font-weight: 400;
+  color: var(--color-neutral);
+  cursor: default;
+  /* text-decoration: none; */
+  pointer-events: none;
+  font-size: 14px;
+}
+
+.breadcrumbItemLast .breadcrumbLink {
+  pointer-events: none;
 }

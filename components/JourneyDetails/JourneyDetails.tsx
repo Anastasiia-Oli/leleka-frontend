@@ -90,7 +90,9 @@ export default function JourneyDetailsComponent({
                     </svg>
                     <h5>{data?.mom.comfortTips[0].category}</h5>
                   </div>
-                  <p>{data?.mom.comfortTips[0].tip}</p>
+                  <p className={css.comfortTips}>
+                    {data?.mom.comfortTips[0].tip}
+                  </p>
                 </li>
                 <li>
                   <div className={css.iconTitleAdvice}>
@@ -99,7 +101,9 @@ export default function JourneyDetailsComponent({
                     </svg>
                     <h5>{data?.mom.comfortTips[1].category}</h5>
                   </div>
-                  <p>{data?.mom.comfortTips[1].tip}</p>
+                  <p className={css.comfortTips}>
+                    {data?.mom.comfortTips[1].tip}
+                  </p>
                 </li>
                 <li>
                   <div className={css.iconTitleAdvice}>
@@ -108,7 +112,9 @@ export default function JourneyDetailsComponent({
                     </svg>
                     <h5>{data?.mom.comfortTips[2].category}</h5>
                   </div>
-                  <p>{data?.mom.comfortTips[2].tip}</p>
+                  <p className={css.comfortTips}>
+                    {data?.mom.comfortTips[2].tip}
+                  </p>
                 </li>
               </ul>
             </div>
