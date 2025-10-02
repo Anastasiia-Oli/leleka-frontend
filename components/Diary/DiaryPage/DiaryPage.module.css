@@ -1,7 +1,8 @@
 .diaryContainer {
-    min-height: 100dvh;
-    padding: 24px 16px;
+    /* min-height: 100vh; */
+    /* padding: 32px; */
     box-sizing: border-box;
+    height: 100dvh;
 }
 
 /* Мобільна версія за замовчуванням */
@@ -23,14 +24,18 @@
     gap: 16px;
 }
 
-/* Десктопна версія */
-@media (min-width: 1024px) {
-    .diaryContainer {
-        padding: 24px;
-    }
+.headerGreeting {
+    font-size: 24px;
+    font-weight: var(--bold);
+    line-height: 140%;
+    color: var(--black);
+    margin: 24px 0;
+}
 
-    .greetingBlock {
-        margin-bottom: 24px;
+/* Десктопна версія */
+@media (min-width: 1023px) {
+    .diaryContainer {
+        /* padding: 24px; */
     }
 
     .mobileLayout {
@@ -44,25 +49,30 @@
     .desktopGrid {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 24px;
-        height: 100dvh;
+        gap: 12px;
+        /* height: 500px; */
         max-width: 100dvw;
-        overflow: hidden;
+        margin: 0 auto;
+        padding: 0 32px;
+
+    }
+
+    .greetingBlock {
+        margin-left: 32px;
+        grid-column: span 2;
     }
 }
 
 /* Планшети */
 @media (min-width: 768px) and (max-width: 1023px) {
     .diaryContainer {
-        padding: 24px 20px;
+        /* padding: 24px 20px; */
     }
-
 }
 
 /* Мобільні пристрої */
 @media (max-width: 767px) {
     .diaryContainer {
-        padding: 16px;
+        /* padding: 16px; */
     }
-
 }

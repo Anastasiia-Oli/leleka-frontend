@@ -115,7 +115,7 @@
 /* Планшети */
 @media (min-width: 768px) and (max-width: 1023px) {
   .diaryContainer {
-    max-width: 389px;
+    /* max-width: 389px; */
     height: auto;
     min-height: 300px;
   }
@@ -129,6 +129,8 @@
 /* Мобільні пристрої */
 @media screen and (max-width: 767px) {
   .diaryContainer {
+    width: auto;
+    max-width: 704px;
     padding: 16px;
     height: auto;
     min-height: 300px;
