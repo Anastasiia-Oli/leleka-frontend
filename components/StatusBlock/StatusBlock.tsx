@@ -7,6 +7,7 @@ import { useEffect } from "react";
 
 const StatusBlock = () => {
   const user = useAuthUserStore((state) => state.user);
+  const { isAuthenticated } = useAuthUserStore();
   const { getCurrWeek } = useGetCurrentWeek();
 
   const dueDateM = new Date(user.dueDate ? user.dueDate + "T00:00:00" : "");
@@ -34,7 +35,7 @@ const StatusBlock = () => {
     }
   }, [week, getCurrWeek]);
 
-  if (!isValidDate) {
+  if (!isValidDate && isAuthenticated) {
     return (
       <div className={css.wrapper}>
         <div className={css.box}>
@@ -44,35 +45,33 @@ const StatusBlock = () => {
     );
   }
 
-  // const today = new Date();
-  // const pregancyStart = new Date(
-  //   dueDateM.getTime() - 280 * 24 * 60 * 60 * 1000
-  // );
-  // const week = Math.floor(
-  //   (today.getTime() - pregancyStart.getTime()) / (7 * 24 * 60 * 60 * 1000)
-  // );
-
-  // // useEffect(() => {
-  // //   getCurrWeek(week);
-  // // }, [week]);
-
-  // const daysLeft = Math.ceil(
-  //   (dueDateM.getTime() - today.getTime()) / (24 * 60 * 60 * 1000)
-  // );
-
   return (
     <div className={css.wrapper}>
-      <div className={css.box}>
-        <p className={css.boxTitle}>Тиждень</p>
-        <p className={css.boxText}>{week}</p>
-      </div>
-      <div className={css.box}>
-        <p className={css.boxTitle}>Днів до зустрічі</p>
-        <p className={css.boxText}>~{daysLeft}</p>
-      </div>
+      {!isAuthenticated ? (
+        <>
+          <div className={css.box}>
+            <p className={css.boxTitle}>Тиждень</p>
+            <p className={css.boxText}>1</p>
+          </div>
+          <div className={css.box}>
+            <p className={css.boxTitle}>Днів до зустрічі</p>
+            <p className={css.boxText}>~280</p>
+          </div>
+        </>
+      ) : (
+        <>
+          <div className={css.box}>
+            <p className={css.boxTitle}>Тиждень</p>
+            <p className={css.boxText}>{week}</p>
+          </div>
+          <div className={css.box}>
+            <p className={css.boxTitle}>Днів до зустрічі</p>
+            <p className={css.boxText}>~{daysLeft}</p>
+          </div>
+        </>
+      )}
     </div>
   );
 };
 
 export default StatusBlock;
-
