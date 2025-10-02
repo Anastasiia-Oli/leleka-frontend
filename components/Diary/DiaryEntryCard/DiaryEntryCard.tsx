@@ -29,12 +29,8 @@ const DiaryEntryCard: React.FC<DiaryEntryCardProps> = ({
     }
 
     try {
-      // Спробуємо створити дату з рядка
       const date = new Date(dateString);
-
-      // Перевіряємо, чи дата валідна
       if (isNaN(date.getTime())) {
-        // Якщо дата невалідна, повертаємо оригінальний рядок
         return dateString;
       }
 

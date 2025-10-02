@@ -1,13 +1,12 @@
 .diaryContainer {
     display: flex;
     flex-direction: column;
-    height: 100%;
+    height: 100vh;
     background: var(--pastel-pink-lighter);
-    border-radius: 16px;
+    border-radius: 32px;
     padding: 24px;
     gap: 8px;
     box-sizing: border-box;
-
 }
 
 .backButton {
@@ -20,16 +19,17 @@
     cursor: pointer;
     padding: 8px 0;
     align-self: flex-start;
+    margin-bottom: 16px;
 }
 
 .backButton:hover {
     color: var(--pastel-pink-dark);
 }
 
-
 .headerTop {
-    margin-bottom: 12px;
-    gap: 16px;
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
 }
 
 .diaryTitle {
@@ -45,11 +45,13 @@
 }
 
 .headerActions {
-    display: flex;
-    align-items: center;
+    display: grid;
+    grid-auto-flow: 1ow;
+    align-items: left;
     justify-content: space-between;
     gap: 8px;
     flex-shrink: 0;
+
 }
 
 .actionButton,
@@ -68,8 +70,6 @@
 .actionButton {
     margin-left: 8px;
 }
-
-
 
 .actionButton:hover,
 .closeButton:hover {
@@ -96,7 +96,6 @@
     align-items: center;
     gap: 8px;
     flex-shrink: 0;
-    margin-left: 8px;
     justify-content: left;
 }
 
@@ -113,7 +112,7 @@
     flex: 1;
     overflow-y: auto;
     flex-direction: column;
-    gap: 16px;
+    background: var(--pastel-pink-lighter);
 }
 
 .diaryContent p {
@@ -132,7 +131,7 @@
 }
 
 .emotionTag {
-    background: var(--gray-lightest);
+    background: var(--white);
     color: var(--black);
     padding: 4px 10px;
     border-radius: 16px;
@@ -152,26 +151,43 @@
 
 /* Desktop fixed height with scroll */
 @media (min-width: 1024px) {
-    /* .diarycontainer { */
-    /* height: 450px; */
-    /* Fixed height for desktop */
+    .desktopLayout {
+        max-width: 1128px;
+        margin: 0 auto;
+        padding: 32px;
+        display: block;
+        min-height: 100vh;
+    }
+
+    .mobileLayout {
+        display: none;
+    }
+
+    .diaryContainer {
+        min-height: 100vh;
+        width: 643px;
+        padding: 32px;
+
+    }
 }
 
-/* } */
-
 /* Mobile/Tablet styles */
-@media (max-width: 1023px) {
+@media (min-width: 1023px) {
     .backButton {
         display: block;
     }
 
     .headerTop {
-        flex-direction: column;
-        gap: 12px;
+        flex-direction: row;
+        margin-bottom: 8px;
         align-items: flex-start;
     }
 
     .headerActions {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+        justify-content: space-between;
         align-self: flex-end;
     }
 
@@ -182,19 +198,28 @@
 }
 
 @media (max-width: 767px) {
-    .diaryontainer {
+    .diaryContainer {
         gap: 16px;
-        padding: 16px;
+        padding: 24px;
+        border-radius: 24px;
+    }
+
+    .headerTop {
+        flex-direction: row;
+        margin-bottom: 8px;
+        align-items: flex-start;
     }
 
     .headerActions {
+        display: flex;
         gap: 6px;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-self: flex-end;
     }
 
     .actionButton,
     .closeButton {
-        width: 28px;
-        height: 28px;
         padding: 4px;
     }
 
@@ -231,7 +256,6 @@
     font-weight: 500;
 }
 
-/* Анімація для кнопок у стані disabled */
 .actionButton:disabled,
 .closeButton:disabled,
 .backButton:disabled {
@@ -250,7 +274,6 @@
     fill: var(--gray-light);
 }
 
-/* Додаткова анімація завантаження */
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -265,7 +288,6 @@
     animation: fadeIn 0.2s ease-in-out;
 }
 
-/* Стилі для mobile */
 @media (max-width: 767px) {
     .loadingSpinner {
         padding: 15px;
@@ -276,7 +298,6 @@
     }
 }
 
-/* Модальне вікно підтвердження */
 .confirmModal {
     position: fixed;
     top: 0;
@@ -292,7 +313,7 @@
 }
 
 .confirmContent {
-    background: var(--card, white);
+    background: var(--white);
     padding: 24px;
     border-radius: 16px;
     max-width: 420px;
@@ -301,16 +322,6 @@
     overflow-y: auto;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
     animation: slideIn 0.3s ease-out;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
 }
 
 @keyframes slideIn {
@@ -329,26 +340,26 @@
     margin: 0 0 16px 0;
     font-size: 18px;
     font-weight: 600;
-    color: var(--text, #1a1a1a);
+    color: var(--black);
     line-height: 1.3;
 }
 
 .confirmContent p {
     margin: 0 0 8px 0;
-    color: var(--text, #1a1a1a);
+    color: var(--black);
     line-height: 1.5;
     font-size: 14px;
 }
 
 .warningText {
-    color: var(--color-red, #dc2626) !important;
+    color: var(--color-red) !important;
     font-size: 13px;
     font-weight: 500;
     margin-bottom: 24px !important;
     padding: 8px 12px;
     background: rgba(220, 38, 38, 0.1);
     border-radius: 8px;
-    border-left: 3px solid var(--color-red, #dc2626);
+    border-left: 3px solid var(--color-red);
 }
 
 .confirmButtons {
@@ -360,9 +371,9 @@
 
 .cancelButton {
     padding: 10px 20px;
-    border: 1px solid var(--border, #e2e8f0);
-    background: var(--card, white);
-    color: var(--text, #1a1a1a);
+    border: 1px solid var(--gray-lighter);
+    background: var(--white);
+    color: var(--black);
     border-radius: 8px;
     cursor: pointer;
     font-size: 14px;
@@ -372,15 +383,15 @@
 }
 
 .cancelButton:hover:not(:disabled) {
-    background: var(--hover, #f1f5f9);
-    border-color: var(--border-hover, #cbd5e1);
+    background: var(--gray-lightest);
+    border-color: var(--gray-light);
     transform: translateY(-1px);
 }
 
 .confirmDeleteButton {
     padding: 10px 20px;
     border: none;
-    background: var(--color-red, #dc2626);
+    background: var(--color-red);
     color: white;
     border-radius: 8px;
     cursor: pointer;
@@ -392,7 +403,7 @@
 }
 
 .confirmDeleteButton:hover:not(:disabled) {
-    background: var(--color-red-hover, #b91c1c);
+    background: #b91c1c;
     transform: translateY(-1px);
     box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
 }
@@ -410,7 +421,6 @@
     box-shadow: none !important;
 }
 
-/* Loading overlay */
 .loadingOverlay {
     position: absolute;
     top: 0;
@@ -426,19 +436,6 @@
     backdrop-filter: blur(2px);
 }
 
-.loadingSpinner {
-    text-align: center;
-    padding: 20px;
-    color: var(--text, #1a1a1a);
-}
-
-.loadingSpinner p {
-    margin: 0;
-    font-size: 14px;
-    font-weight: 500;
-}
-
-/* Mobile адаптація */
 @media (max-width: 768px) {
     .confirmContent {
         padding: 20px;

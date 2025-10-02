@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import DiaryList from "../DiaryList/DiaryList";
 import DiaryEntryDetails from "../DiaryEntryDetails/DiaryEntryDetails";
 import AddDiaryEntryModal from "../AddDiaryEntryModal/AddDiaryEntryModal";
+import GreetingBlock from "@/components/GreetingBlock/GreetingBlock";
 import css from "./DiaryPage.module.css";
 import { fetchDiary } from "@/lib/api/clientApi";
 import { useQuery } from "@tanstack/react-query";
@@ -19,58 +20,46 @@ const DiaryPage: React.FC = () => {
   });
 
   const [selectedEntry, setSelectedEntry] = useState<DiaryEntry | null>(null);
-  // const [selectedNote, setSelectedNote] = useState<DiaryEntry | null>(null);
   const [isMobile, setIsMobile] = useState(false);
+  const [showMobileDetails, setShowMobileDetails] = useState(false);
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalMode, setModalMode] = useState<"create" | "edit">("create");
   const [editingEntry, setEditingEntry] = useState<DiaryEntry | null>(null);
 
+  // --- Відстежуємо розмір екрана ---
   useEffect(() => {
-    if (isModalOpen) {
-      document.body.style.overflow = "hidden";
-      document.documentElement.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-      document.documentElement.style.overflow = "";
-    }
-
-    return () => {
-      document.body.style.overflow = "";
-      document.documentElement.style.overflow = "";
-    };
-  }, [isModalOpen]);
-
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 1024);
-    };
+    const checkMobile = () => setIsMobile(window.innerWidth < 1024);
 
     checkMobile();
     window.addEventListener("resize", checkMobile);
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
+  // --- Логіка для десктопу: завжди є вибраний запис ---
   useEffect(() => {
-    if (data && data.length > 0 && !selectedEntry && !isMobile) {
+    if (!data || isMobile) return;
+
+    if (data.length === 0) {
+      setSelectedEntry(null);
+      return;
+    }
+
+    const isSelectedDeleted =
+      selectedEntry && !data.find((entry) => entry._id === selectedEntry._id);
+
+    if (!selectedEntry || isSelectedDeleted) {
       setSelectedEntry(data[0]);
     }
   }, [data, selectedEntry, isMobile]);
 
-  useEffect(() => {
-    if (selectedEntry) {
-      setEditingEntry(selectedEntry);
-    }
-  }, [selectedEntry]);
-
+  // --- Обробники ---
   const handleEntryClick = (entry: DiaryEntry) => {
     if (isMobile) {
-      // Використовуємо Next.js router замість window.location.href
-      router.push(`/diary/${entry._id}`);
+      router.push(`/diary/${entry._id}`); // мобільна логіка
     } else {
-      setSelectedEntry(entry);
-      // setSelectedNote(null);
+      setSelectedEntry(entry); // десктопна логіка
     }
-    return entry._id;
   };
 
   const handleAddEntry = () => {
@@ -79,13 +68,9 @@ const DiaryPage: React.FC = () => {
     setIsModalOpen(true);
   };
 
-  // const handleAddNote = () => {
-  //   console.log("Open AddNoteModal");
-  // };
-
-  const handleEditEntry = (selectedEntry: DiaryEntry) => {
+  const handleEditEntry = (entry: DiaryEntry) => {
     setModalMode("edit");
-    setEditingEntry(selectedEntry);
+    setEditingEntry(entry);
     setIsModalOpen(true);
   };
 
@@ -94,25 +79,35 @@ const DiaryPage: React.FC = () => {
     setEditingEntry(null);
   };
 
+  const handleBackToList = () => {
+    setShowMobileDetails(false);
+    setSelectedEntry(null);
+  };
+
+  // --- Рендер ---
   return (
+
     <div className={css.diaryContainer}>
+      <div className={css.headerGreeting}>
+        <GreetingBlock /></div>
+      {/* Мобільна версія */}
       <div className={css.mobileLayout}>
-        <>
-          <GreetingBlock />
+        {!showMobileDetails ? (
           <DiaryList
             data={data || []}
             onEntryClick={handleEntryClick}
             selectedEntryId={selectedEntry?._id}
-            onAddEntry={handleAddEntry}
           />
-
-          {/* Якщо є вибраний запис — показуємо деталі (щоб була кнопка редагування) */}
-          {isMobile && selectedEntry && (
-            <DiaryEntryDetails entry={selectedEntry} onEdit={handleEditEntry} />
-          )}
-        </>
+        ) : (
+          <DiaryEntryDetails
+            entry={selectedEntry}
+            onEdit={handleEditEntry}
+            onBack={handleBackToList}
+          />
+        )}
       </div>
 
+      {/* Десктопна версія */}
       <div className={css.desktopLayout}>
         <GreetingBlock />
         <div className={css.desktopGrid}>
@@ -120,12 +115,12 @@ const DiaryPage: React.FC = () => {
             data={data || []}
             onEntryClick={handleEntryClick}
             selectedEntryId={selectedEntry?._id}
-            onAddEntry={handleAddEntry}
           />
-
           <DiaryEntryDetails entry={selectedEntry} onEdit={handleEditEntry} />
         </div>
       </div>
+
+      {/* Модалка додавання/редагування */}
       <AddDiaryEntryModal
         isOpen={isModalOpen}
         mode={modalMode}

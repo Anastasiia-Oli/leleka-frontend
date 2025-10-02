@@ -6,6 +6,7 @@ import css from "./DiaryEntryDetails.module.css";
 import { toast } from "react-hot-toast";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteDiaryEntry } from "@/lib/api/clientApi";
+<!-- import Link from "next/link"; -->
 import { useRouter } from "next/navigation";
 import { useTitleDraftStore } from "@/lib/store/titleStore";
 
@@ -34,22 +35,31 @@ const DiaryEntryDetails: React.FC<DiaryEntryDetailsProps> = ({
 
   //  ----- deleter
   const queryClient = useQueryClient();
+  const [isConfirmingDelete, setIsConfirmingDelete] = useState(false);
 
   const { mutate, isPending } = useMutation({
     mutationFn: deleteDiaryEntry,
-    onSuccess: () => {
-      toast.success("Note deleted successfully");
-      setIsConfirmingDelete(false); // close modal
+    onSuccess: (_, deletedId) => {
+      toast.success("Запис успішно видалено");
+      setIsConfirmingDelete(false);
+
+      // Оптимістичне оновлення кешу
+      queryClient.setQueryData<DiaryEntry[]>(["diary"], (oldData) =>
+        oldData?.filter((entry) => entry._id !== deletedId) ?? []
+      );
+
+      // Інвалідуємо для гарантії синхронізації
       queryClient.invalidateQueries({ queryKey: ["diary"] });
-      router.push("/diary");
+
+      // Для мобільного повертаємось назад
+      if (onBack) {
+        onBack();
+      }
     },
     onError: () => {
-      toast.error("Failed to delete note");
+      toast.error("Не вдалося видалити запис");
     },
   });
-  //  ----- deleter end
-
-  const [isConfirmingDelete, setIsConfirmingDelete] = useState(false);
 
   useEffect(() => {
     if (isConfirmingDelete) {
@@ -172,13 +182,15 @@ const DiaryEntryDetails: React.FC<DiaryEntryDetailsProps> = ({
                 {entry.title}
               </h2>
               {onEdit && (
-                <button
+                <Link
+                  href={`/diary/action/edit/${entry._id}`}
                   className={css.actionButton}
                   onClick={() => {
                     onEdit(entry); // передаємо entry в обробник
                   }}
                   title="Редагувати"
-                  disabled={isPending}
+                  aria-disabled={isPending}
+                  style={{ pointerEvents: isPending ? 'none' : 'auto' }}
                 >
                   <svg
                     className={css.editIcon}
@@ -188,7 +200,7 @@ const DiaryEntryDetails: React.FC<DiaryEntryDetailsProps> = ({
                   >
                     <use href="/leleka-sprite.svg#icon-edit_square" />
                   </svg>
-                </button>
+                </Link>
               )}
             </div>
 

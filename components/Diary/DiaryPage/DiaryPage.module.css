@@ -20,6 +20,14 @@
     gap: 16px;
 }
 
+.headerGreeting {
+    font-size: 24px;
+    font-weight: var(--bold);
+    line-height: 140%;
+    color: var(--black);
+    margin: 24px 0;
+}
+
 /* Десктопна версія */
 @media (min-width: 1024px) {
     .diaryContainer {
@@ -37,9 +45,10 @@
     .desktopGrid {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 24px;
+        /* gap: 24px; */
         /* height: 500px; */
-        max-width: 100%;
+        max-width: 100vh;
+        margin: 0 auto;
     }
 }
 

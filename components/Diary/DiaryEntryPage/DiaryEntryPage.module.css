@@ -1,4 +1,4 @@
-.container {
+.diaryContainer {
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -96,7 +96,7 @@
 }
 
 /* Стилі для всіх розмірів - динамічна висота */
-.container {
+.diaryContainer {
     height: auto;
     min-height: 300px;
 }
@@ -119,7 +119,7 @@
 
 
 @media screen and (max-width: 767px) {
-    .container {
+    .diaryContainer {
         padding: 16px;
     }
 
