@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Comfortaa } from "next/font/google";
+// import { appWithTranslation } from "next-i18next";
 import "./globals.css";
 import TanStackProvider from "@/components/TanStackProvider/TanStackProvider";
 import AuthProvider from "@/components/AuthProvider/AuthProvider";
@@ -36,3 +37,20 @@ export default function RootLayout({
 }
 
 // change language in this file
+// export default appWithTranslation(RootLayout);
+
+// using in components example
+// "use client";
+
+// import { useTranslation } from 'react-i18next';
+
+// export default function Example() {
+//   const { t } = useTranslation('translation');
+
+//   return (
+//     <div>
+//       <h1>{t('welcome')}</h1>
+//       <p>{t('description')}</p>
+//     </div>
+//   );
+// }
