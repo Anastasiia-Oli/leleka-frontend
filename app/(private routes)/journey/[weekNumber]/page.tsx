@@ -1,4 +1,3 @@
-
 import {
   dehydrate,
   HydrationBoundary,
@@ -6,6 +5,15 @@ import {
 } from "@tanstack/react-query";
 import { ClientJourney } from "./ClientJourney";
 import { getJourneyDetailsByWeek } from "@/lib/api/clientApi";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Leleka | Journey",
+  description: "Track your pregnancy journey",
+  icons: {
+    icon: "/favicon.svg",
+  },
+};
 
 const page = async ({
   params,
