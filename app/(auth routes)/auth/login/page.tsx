@@ -1,6 +1,15 @@
 import Image from "next/image";
 import styles from "./page.module.css";
 import LoginForm from "@/components/Auth/LoginForm";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Leleka | Login",
+  description: "Access your account",
+  icons: {
+    icon: "/favicon.svg",
+  },
+};
 
 export default function SignInPage() {
   return (

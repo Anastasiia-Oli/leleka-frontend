@@ -1,6 +1,15 @@
 import Image from "next/image";
 import styles from "./page.module.css";
 import RegistrationForm from "@/components/Auth/RegistrationForm";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Leleka | Register",
+  description: "Create your account",
+  icons: {
+    icon: "/favicon.svg",
+  },
+};
 
 export default function SignUpPage() {
   return (
