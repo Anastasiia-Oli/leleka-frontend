@@ -8,6 +8,7 @@ import AddDiaryEntryModal from "../AddDiaryEntryModal/AddDiaryEntryModal";
 import css from "./DiaryPage.module.css";
 import { fetchDiary } from "@/lib/api/clientApi";
 import { useQuery } from "@tanstack/react-query";
+import GreetingBlock from "@/components/GreetingBlock/GreetingBlock";
 
 const DiaryPage: React.FC = () => {
   const router = useRouter();
@@ -97,6 +98,7 @@ const DiaryPage: React.FC = () => {
     <div className={css.diaryContainer}>
       <div className={css.mobileLayout}>
         <>
+          <GreetingBlock />
           <DiaryList
             data={data || []}
             onEntryClick={handleEntryClick}
@@ -112,6 +114,7 @@ const DiaryPage: React.FC = () => {
       </div>
 
       <div className={css.desktopLayout}>
+        <GreetingBlock />
         <div className={css.desktopGrid}>
           <DiaryList
             data={data || []}

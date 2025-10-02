@@ -23,17 +23,6 @@
   border-right: 1px solid var(--color-scheme-border);
 }
 
-@media (min-width: 1128px) {
-  .sideWrapper {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .contentWrapper {
-    margin-left: 312px;
-  }
-}
-
 .contentWrapper {
   position: relative;
   display: flex;
@@ -64,8 +53,12 @@
   }
   .contentWrapper {
     padding: 32px;
+    padding-top: 24px;
+    margin-left: 312px;
   }
 }
+
+/* not found styles */
 
 .notFoundBack {
   background-color: var(--color-scheme-foreground);

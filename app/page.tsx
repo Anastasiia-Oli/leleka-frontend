@@ -9,6 +9,15 @@ import SideBar from "@/components/SideBar/SideBar";
 import css from "./Home.module.css";
 import { LogoComponent } from "@/components/LogoComponent/LogoComponent";
 import Breadcrumbs from "@/components/Breadcrumbs/Breadcrumbs";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Leleka",
+  description: "Track your pregnancy journey with Leleka",
+  icons: {
+    icon: "/favicon.svg",
+  },
+};
 
 export default function Home() {
   return (
