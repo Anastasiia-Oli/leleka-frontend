@@ -1,13 +1,16 @@
 .diaryContainer {
-    /* min-height: 100vh; */
+    min-height: 100dvh;
     padding: 24px 16px;
     box-sizing: border-box;
-    height: 100%;
 }
 
 /* Мобільна версія за замовчуванням */
 .mobileLayout {
     display: block;
+}
+
+.greetingBlock {
+    margin-bottom: 24px;
 }
 
 .desktopLayout {
@@ -26,6 +29,10 @@
         padding: 24px;
     }
 
+    .greetingBlock {
+        margin-bottom: 24px;
+    }
+
     .mobileLayout {
         display: none;
     }
@@ -38,8 +45,9 @@
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 24px;
-        /* height: 500px; */
-        max-width: 100%;
+        height: 100dvh;
+        max-width: 100dvw;
+        overflow: hidden;
     }
 }
 
@@ -48,6 +56,7 @@
     .diaryContainer {
         padding: 24px 20px;
     }
+
 }
 
 /* Мобільні пристрої */
@@ -55,4 +64,5 @@
     .diaryContainer {
         padding: 16px;
     }
+
 }

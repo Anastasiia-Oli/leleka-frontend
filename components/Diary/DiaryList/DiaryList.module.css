@@ -100,10 +100,10 @@
 
 /* Десктопна версія з фіксованою висотою */
 @media (min-width: 1024px) {
-  /* .diaryContainer {
-        height: 500px;
-        max-height: 500px;
-    } */
+  .diaryContainer {
+    height: 100dvh;
+    max-width: 389px;
+  }
 
   .entriesList {
     overflow-y: auto;
@@ -115,6 +115,7 @@
 /* Планшети */
 @media (min-width: 768px) and (max-width: 1023px) {
   .diaryContainer {
+    max-width: 389px;
     height: auto;
     min-height: 300px;
   }

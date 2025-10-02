@@ -152,8 +152,11 @@
 
 /* Desktop fixed height with scroll */
 @media (min-width: 1024px) {
-    /* .diarycontainer { */
-    /* height: 450px; */
+    .diaryContainer {
+        height: 100dvh;
+        max-width: 643px;
+    }
+
     /* Fixed height for desktop */
 }
 

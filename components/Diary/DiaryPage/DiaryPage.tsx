@@ -24,6 +24,7 @@ const DiaryPage: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalMode, setModalMode] = useState<"create" | "edit">("create");
   const [editingEntry, setEditingEntry] = useState<DiaryEntry | null>(null);
+  const [showMobileDetails, setShowMobileDetails] = useState(false);
 
   useEffect(() => {
     if (isModalOpen) {
@@ -79,6 +80,7 @@ const DiaryPage: React.FC = () => {
     setIsModalOpen(true);
   };
 
+
   // const handleAddNote = () => {
   //   console.log("Open AddNoteModal");
   // };
@@ -94,27 +96,36 @@ const DiaryPage: React.FC = () => {
     setEditingEntry(null);
   };
 
+  const handleBackToList = () => {
+    setShowMobileDetails(false);
+    setSelectedEntry(null);
+  };
+
   return (
+
     <div className={css.diaryContainer}>
+      <div className={css.greetingBlock}>
+        <GreetingBlock /></div>
+      {/* Мобільна версія */}
       <div className={css.mobileLayout}>
-        <>
-          <GreetingBlock />
+        {!showMobileDetails ? (
           <DiaryList
             data={data || []}
             onEntryClick={handleEntryClick}
             selectedEntryId={selectedEntry?._id}
             onAddEntry={handleAddEntry}
           />
-
-          {/* Якщо є вибраний запис — показуємо деталі (щоб була кнопка редагування) */}
-          {isMobile && selectedEntry && (
-            <DiaryEntryDetails entry={selectedEntry} onEdit={handleEditEntry} />
-          )}
-        </>
+        ) : (
+          <DiaryEntryDetails
+            entry={selectedEntry}
+            onEdit={handleEditEntry}
+            onBack={handleBackToList}
+          />
+        )}
       </div>
 
+      {/* Десктопна версія */}
       <div className={css.desktopLayout}>
-        <GreetingBlock />
         <div className={css.desktopGrid}>
           <DiaryList
             data={data || []}
@@ -122,10 +133,11 @@ const DiaryPage: React.FC = () => {
             selectedEntryId={selectedEntry?._id}
             onAddEntry={handleAddEntry}
           />
-
           <DiaryEntryDetails entry={selectedEntry} onEdit={handleEditEntry} />
         </div>
       </div>
+
+      {/* Модалка додавання/редагування */}
       <AddDiaryEntryModal
         isOpen={isModalOpen}
         mode={modalMode}
