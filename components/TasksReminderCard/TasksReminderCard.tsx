@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import css from "./TasksReminderCard.module.css";
 import AddTaskModal from "../AddTaskModal/AddTaskModal";
 import { useAuthUserStore } from "@/lib/store/authStore";
+import { useRouter } from "next/navigation";
 
 function formateDate(date?: string) {
   if (date) {
@@ -22,6 +23,8 @@ const TasksReminderCard = () => {
   const { isAuthenticated } = useAuthUserStore();
   const queryClient = useQueryClient();
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const router = useRouter();
 
   useEffect(() => {
     if (isModalOpen) {
@@ -76,7 +79,12 @@ const TasksReminderCard = () => {
         <div className={css.card}>
           <div className={css.listHeader}>
             <h3 className="header-third">Важливі завдання</h3>
-            <button className={css.newTask} onClick={handleOpenModal}>
+            <button
+              className={css.newTask}
+              onClick={() => {
+                router.push("/auth/login");
+              }}
+            >
               <svg viewBox="0 0 32 32" width="20" height="20">
                 <path
                   d="M16 03v26M03 16h26"
@@ -86,6 +94,18 @@ const TasksReminderCard = () => {
               </svg>
             </button>
           </div>
+          <h3 className={css.unAuthTitle}>Наразі немає жодних завдань</h3>
+          <p className={css.unAuthEmpty}>Створіть мершій нове завдання!</p>
+          <button
+            type="button"
+            className={`${css.btn} text-medium`}
+            id="openTaskModal"
+            onClick={() => {
+              router.push("/auth/login");
+            }}
+          >
+            Створити завдання
+          </button>
         </div>
       ) : (
         <div className={css.card}>
@@ -209,3 +229,4 @@ const TasksReminderCard = () => {
 };
 
 export default TasksReminderCard;
+// hhh
