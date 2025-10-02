@@ -4,12 +4,13 @@
   gap: 16px;
 }
 .box {
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: start;
   justify-content: center;
   background-color: var(--pastel-pink-lighter);
-  width: 159px;
+  min-width: 159px;
   border-radius: 32px;
   padding: 16px;
 }
@@ -24,21 +25,23 @@
 
 @media (min-width: 768px) {
   .wrapper {
-    width: 704px;
+    width: 100%;
     gap: 32px;
   }
   .box {
-    width: 336px;
+    flex: 1;
+    min-width: 336px;
   }
 }
 @media (min-width: 1440px) {
   .wrapper {
-    width: 642px;
+    width: 100%;
     justify-content: flex-start;
   }
   .box {
+    flex: 1;
     min-height: 127px;
-    width: 305px;
+    min-width: 305px;
   }
   .boxTitle {
     font-size: 16px;
