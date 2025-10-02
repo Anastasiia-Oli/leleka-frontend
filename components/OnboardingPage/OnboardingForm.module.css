@@ -6,7 +6,7 @@
 }
 
 .header {
-  margin: 0;
+  margin: 0px;
   text-align: center;
 }
 
@@ -87,4 +87,29 @@
 .submit_btn {
   width: 100%;
   height: 42px;
+  margin-bottom: 30px;
+}
+
+@media (min-width: 768px) {
+  .regCard {
+    width: 704px;
+    height: auto;
+    max-width: none;
+  }
+
+  .edit_form {
+    width: 100%;
+    max-width: 480px;
+    margin: 110 auto;
+  }
+}
+
+@media (min-width: 1128px) {
+  .scene {
+    padding: 0;
+    margin: 0;
+  }
+  .onboard_container {
+    margin: 0 auto;
+  }
 }
