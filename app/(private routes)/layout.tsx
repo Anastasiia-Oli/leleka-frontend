@@ -14,9 +14,9 @@ type Props = {
 const PrivateRoutesLayout = ({ children }: Props) => {
   const pathname = usePathname();
 
-  const hideHeaderSidebar = ["/profile/edit"];
+  const hideHeaderSidebarBreadcrumbs = ["/profile/edit"];
 
-  const shouldHide = hideHeaderSidebar.includes(pathname);
+  const shouldHide = hideHeaderSidebarBreadcrumbs.includes(pathname);
 
   return (
     <>
@@ -25,15 +25,11 @@ const PrivateRoutesLayout = ({ children }: Props) => {
         {!shouldHide && (
           <aside className={css.sidebar}>
             <LogoComponent />
-            <SideBar />
+            <SideBar /> <Breadcrumbs />
           </aside>
         )}
 
-        <div className={css.privateRoutesWrapper}>
-          {" "}
-          <Breadcrumbs />
-          {children}
-        </div>
+        <div className={css.privateRoutesWrapper}>{children}</div>
       </section>
     </>
   );
