@@ -100,10 +100,11 @@
 
 /* Десктопна версія з фіксованою висотою */
 @media (min-width: 1024px) {
-  /* .diaryContainer {
-        height: 500px;
-        max-height: 500px;
-    } */
+  .diaryContainer {
+    width: 389px;
+    min-height: 100vh;
+
+  }
 
   .entriesList {
     overflow-y: auto;
@@ -115,7 +116,7 @@
 /* Планшети */
 @media (min-width: 768px) and (max-width: 1023px) {
   .diaryContainer {
-    height: auto;
+    height: 100vh;
     min-height: 300px;
   }
 
@@ -128,9 +129,10 @@
 /* Мобільні пристрої */
 @media screen and (max-width: 767px) {
   .diaryContainer {
+    max-width: 727;
     padding: 16px;
-    height: auto;
-    min-height: 300px;
+    height: 100vh;
+    /* min-height: 300px; */
   }
 
   .entriesList {

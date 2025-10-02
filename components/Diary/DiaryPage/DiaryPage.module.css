@@ -45,9 +45,10 @@
     .desktopGrid {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 24px;
+        /* gap: 24px; */
         /* height: 500px; */
-        max-width: 100%;
+        max-width: 100vh;
+        margin: 0 auto;
     }
 }
 
