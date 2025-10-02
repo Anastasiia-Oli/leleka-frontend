@@ -244,6 +244,7 @@
     flex-direction: row;
     align-items: flex-start;
     grid-template-columns: 1.7fr 1.5fr;
+    padding: 32px;
   }
 
   .titleLogoFacts {
@@ -263,7 +264,7 @@
 
   .infoForMomBlock {
     flex: 1;
-    max-width: 602px;
+    max-width: 650px;
   }
 
   .iconTitleAdvice h5 {
