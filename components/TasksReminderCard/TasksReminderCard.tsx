@@ -83,8 +83,7 @@ const TasksReminderCard = () => {
               className={css.newTask}
               onClick={() => {
                 router.push("/auth/login");
-              }}
-            >
+              }
               <svg viewBox="0 0 32 32" width="20" height="20">
                 <path
                   d="M16 03v26M03 16h26"

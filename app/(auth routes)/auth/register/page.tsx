@@ -12,6 +12,8 @@ export default function SignUpPage() {
               src="/favicon.svg"
               alt="Лелека"
               className={styles.logoIcon}
+              width={32}
+              height={32}
             />
             <span className={styles.brandText}>Лелека</span>
           </div>
