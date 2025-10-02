@@ -2,12 +2,13 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Mousewheel } from "swiper/modules";
 import type { Swiper as SwiperType } from "swiper";
 import "swiper/css";
 import css from "./WeekSelector.module.css";
+import { useGetCurrentWeek } from "@/lib/store/getCurrentWeekStore";
 
 type WeekSelectorProps = {
   weeks: number[];
@@ -16,19 +17,24 @@ type WeekSelectorProps = {
 
 const WeekSelector = ({ weeks, onButtonClick }: WeekSelectorProps) => {
   const pathname = usePathname();
+  const { initialWeek } = useGetCurrentWeek();
   const swiperRef = useRef<SwiperType | null>(null);
 
-  const currentWeek = Number(pathname?.split("/").filter(Boolean).pop());
+  const currentWeek = initialWeek;
+
+  const activeWeek = useMemo(() => {
+    const match = pathname.match(/\/journey\/(\d+)/);
+    return match ? Number(match[1]) : initialWeek;
+  }, [pathname, initialWeek]);
 
   useEffect(() => {
-    if (swiperRef.current && !isNaN(currentWeek)) {
-      const index = weeks.indexOf(currentWeek);
+    if (swiperRef.current && !isNaN(activeWeek)) {
+      const index = weeks.indexOf(activeWeek);
       if (index !== -1) {
         swiperRef.current.slideTo(index, 0);
       }
     }
-  }, [currentWeek, weeks]);
-
+  }, [activeWeek, weeks]);
   return (
     <div className={css.weekSelectorContainer}>
       <Swiper

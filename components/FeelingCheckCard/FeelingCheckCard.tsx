@@ -3,9 +3,13 @@
 import { useState, useEffect } from "react";
 import AddDiaryEntryModal from "../Diary/AddDiaryEntryModal/AddDiaryEntryModal";
 import css from "./FeelingCheckCard.module.css";
+import { useAuthUserStore } from "@/lib/store/authStore";
+import { useRouter } from "next/navigation";
 
 const FeelingCheckCard = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { isAuthenticated } = useAuthUserStore();
+  const router = useRouter();
 
   useEffect(() => {
     if (isModalOpen) {
@@ -31,10 +35,16 @@ const FeelingCheckCard = () => {
           <p className="text-primary"> Занотуйте незвичні відчуття у тілі.</p>
         </div>
       </div>
-        <button
+      <button
         type="button"
         className={`${css.btn} text-medium`}
-        onClick={() => setIsModalOpen(true)}
+        onClick={() => {
+          if (!isAuthenticated) {
+            router.push("/auth/login");
+          } else {
+            setIsModalOpen(true);
+          }
+        }}
       >
         Зробити запис у щоденник
       </button>
