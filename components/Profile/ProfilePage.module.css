@@ -90,6 +90,7 @@
     background: var(--bg);
     padding-left: 32px;
     padding-top: 0;
+    max-width: 644px;
   }
 
   .regCard {

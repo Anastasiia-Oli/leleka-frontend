@@ -27,10 +27,11 @@
   text-align: center;
   line-height: 160%;
   color: var(--color-scheme-text);
+  text-decoration: none;
 }
 
 .breadcrumbLink:hover {
-  text-decoration: underline;
+  text-decoration: none;
 }
 
 .breadcrumbDivider {
@@ -39,6 +40,7 @@
   fill: var(--color-scheme-text);
   stroke-width: 1px;
   stroke: var(--color-scheme-text);
+  margin-right: 8px;
 }
 
 .breadcrumbLast {
@@ -47,6 +49,7 @@
   cursor: default;
   /* text-decoration: none; */
   pointer-events: none;
+  font-size: 14px;
 }
 
 .breadcrumbItemLast .breadcrumbLink {
