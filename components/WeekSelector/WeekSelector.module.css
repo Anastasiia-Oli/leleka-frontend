@@ -3,6 +3,7 @@
   overflow-x: auto;
   overflow-y: hidden;
   box-sizing: border-box;
+  margin-top: 24px;
 }
 
 .weeksList {
@@ -106,7 +107,7 @@
   -moz-user-select: none;
   -ms-user-select: none;
 
-/* .weeksList {
+  /* .weeksList {
   list-style: none;
   display: flex;
   gap: 16px;
@@ -142,7 +143,6 @@
   overflow-x: auto;
   overflow-y: hidden;
   margin-top: 24px; */
-
 }
 
 @media screen and (min-width: 1440px) {

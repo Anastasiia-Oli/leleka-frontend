@@ -1,9 +1,14 @@
-import React from 'react';
-import ProfilePage from '../../../components/Profile/ProfilePage'; 
+import React from "react";
+import { getMeServer } from "@/lib/api/serverApi";
+import ProfileForm from "@/components/Profile/ProfileEditForm";
+import css from "./ProfilePage.module.css";
 
-const MyProfilePage = () => {
+export default async function MyProfilePage() {
+  const user = await getMeServer();
 
-  return <ProfilePage />;
-};
-
-export default MyProfilePage;
+  return (
+    <div className={css.scene}>
+      <ProfileForm currentUser={user} />
+    </div>
+  );
+}

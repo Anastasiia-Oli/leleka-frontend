@@ -6,40 +6,22 @@ import { useAuthUserStore } from "@/lib/store/authStore";
 import { useRouter } from "next/navigation";
 import { logout } from "@/lib/api/clientApi";
 import Image from "next/image";
-import { useEffect, useState } from "react";
-import ConfirmationModal from "../ConfirmationModal/ConfirmationModal";
+import { useModalStore } from "@/lib/store/modalStore";
 
 export default function AuthNavigation() {
   const router = useRouter();
   const { user, isAuthenticated } = useAuthUserStore();
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const clearIsAuthenticated = useAuthUserStore(
     (state) => state.clearIsAuthenticated
   );
+  const openLogoutModal = useModalStore((set) => set.openLogoutModal);
 
-  useEffect(() => {
-    if (isModalOpen) {
-      document.body.style.setProperty("overflow", "hidden", "important");
-      document.documentElement.style.setProperty(
-        "overflow",
-        "hidden",
-        "important"
-      );
-    } else {
-      document.body.style.overflow = "";
-      document.documentElement.style.overflow = "";
-    }
-
-    return () => {
-      document.body.style.overflow = "";
-      document.documentElement.style.overflow = "";
-    };
-  }, [isModalOpen]);
-
-  const handleLogout = async () => {
-    await logout();
-    clearIsAuthenticated();
-    router.push("/auth/login");
+  const handleLogoutClick = () => {
+    openLogoutModal(async () => {
+      await logout();
+      clearIsAuthenticated();
+      router.push("/auth/login");
+    });
   };
 
   return (
@@ -64,20 +46,17 @@ export default function AuthNavigation() {
             </ul>
           </Link>
 
-          <button
-            onClick={() => setIsModalOpen(true)}
-            className={css.logoutButton}
-          >
+          <button onClick={handleLogoutClick} className={css.logoutButton}>
             <svg width={24} height={24} className={css.logoutIcon}>
               <use href="/leleka-sprite.svg#icon-logout"></use>
             </svg>
           </button>
-          <ConfirmationModal
+          {/* <ConfirmationModal
             title="Ви точно хочете вийти?"
             isOpen={isModalOpen}
             onClose={() => setIsModalOpen(false)}
             onConfirm={handleLogout}
-          />
+          /> */}
         </div>
       )}
 

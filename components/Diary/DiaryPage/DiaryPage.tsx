@@ -9,6 +9,7 @@ import GreetingBlock from "@/components/GreetingBlock/GreetingBlock";
 import css from "./DiaryPage.module.css";
 import { fetchDiary } from "@/lib/api/clientApi";
 import { useQuery } from "@tanstack/react-query";
+import GreetingBlock from "@/components/GreetingBlock/GreetingBlock";
 
 const DiaryPage: React.FC = () => {
   const router = useRouter();
@@ -110,6 +111,7 @@ const DiaryPage: React.FC = () => {
 
       {/* Десктопна версія */}
       <div className={css.desktopLayout}>
+        <GreetingBlock />
         <div className={css.desktopGrid}>
           <DiaryList
             data={data || []}

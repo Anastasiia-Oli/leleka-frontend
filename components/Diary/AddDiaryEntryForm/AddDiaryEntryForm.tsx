@@ -10,6 +10,7 @@ import EmotionSelect from "@/components/Diary/EmotionSelect/EmotionSelect";
 import { ObjectSchema } from "yup";
 import { toast } from "react-hot-toast";
 import { DiaryEntry } from "@/types/dairy";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface DiaryEntryValues {
   title: string;
@@ -29,6 +30,7 @@ export default function AddDiaryEntryForm({
   entry,
   onSuccess,
 }: AddDiaryEntryFormProps) {
+  const queryClient = useQueryClient();
   const { emotions, loading, error, topCount } = useDiaryForm();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [validationSchema, setValidationSchema] =
@@ -78,14 +80,16 @@ export default function AddDiaryEntryForm({
   ) => {
     try {
       if (mode === "create") {
-        console.log("📤 Дані, які відправляємо:", values);
+        // console.log("📤 Дані, які відправляємо:", values);
         await createDiaryEntry(values);
         toast.success("Запис успішно створено!");
       } else if (mode === "edit" && entry?._id) {
-        console.log("📦 Що надсилаємо:", JSON.stringify(values, null, 2));
+        // console.log("📦 Що надсилаємо:", JSON.stringify(values, null, 2));
         await updateDiaryEntry(entry._id, values);
         toast.success("Запис успішно оновлено!");
       }
+
+      await queryClient.invalidateQueries({ queryKey: ["diary"] });
 
       helpers.resetForm();
       onSuccess(); // ✅ закриває модалку
