@@ -9,6 +9,8 @@ export default function SignInPage() {
         <div className={styles.regLeft}>
           <div className={styles.logoFixed}>
             <Image
+              width={30}
+              height={30}
               src="/favicon.svg"
               alt="Лелека"
               className={styles.logoIcon}
