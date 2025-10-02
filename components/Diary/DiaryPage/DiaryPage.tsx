@@ -106,8 +106,6 @@ const DiaryPage: React.FC = () => {
         )}
       </div>
 
-
-
       {/* Десктопна версія */}
       <div className={css.desktopLayout}>
         <div className={css.desktopGrid}>
