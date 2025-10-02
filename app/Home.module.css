@@ -1,4 +1,13 @@
-.homeContainer {
+.leftDayCard {
+  width: 100%;
+  gap: 24px;
+  display: flex;
+  flex-direction: column;
+}
+.rightDayCard {
+  gap: 24px;
+  display: flex;
+  flex-direction: column;
 }
 
 .bodyWrapper {
@@ -6,16 +15,69 @@
 }
 
 .sideWrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding-top: 8px;
   display: none;
+  border-right: 1px solid var(--color-scheme-border);
 }
 
 @media (min-width: 1128px) {
   .sideWrapper {
     display: flex;
+    flex-direction: column;
+  }
+
+  .contentWrapper {
+    margin-left: 312px;
   }
 }
 
 .contentWrapper {
-  padding: 32px;
-  padding-top: 24px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  gap: 16px;
+}
+
+.contentCards {
+  display: flex;
+  gap: 24px;
+  flex-direction: column;
+}
+
+@media (min-width: 768px) {
+  .contentCards {
+    flex-direction: column;
+  }
+}
+
+@media (min-width: 1128px) {
+  .sideWrapper {
+    display: flex;
+    flex-direction: column;
+  }
+  .contentCards {
+    flex-direction: row;
+  }
+  .contentWrapper {
+    padding: 32px;
+  }
+}
+
+.title {
+  font-size: 36px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 60px;
+  text-align: center;
+}
+
+.description {
+  font-size: 18px;
+  color: #444444;
+  line-height: 28px;
+  margin-bottom: 16px;
 }

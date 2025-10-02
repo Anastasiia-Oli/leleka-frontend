@@ -5,20 +5,27 @@
 }
 
 .sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 312px;
   background-color: var(--color-scheme-background);
   color: var(--color-scheme-text);
   padding: 0px;
-  display: flex;
   flex-direction: column;
   border-right: 1px solid var(--color-scheme-border);
   display: none;
   height: 100vh;
+  overflow: hidden;
 }
 
 @media (min-width: 1128px) {
   .sidebar {
     display: flex;
+  }
+
+  .privateRoutesWrapper {
+    margin-left: 312px;
   }
 }
 
@@ -32,6 +39,9 @@
   align-items: center;
   width: 105px;
   height: 45px;
+  padding-top: 24px;
+  padding-bottom: 16px;
+  padding-left: 24px;
 }
 
 .logoIcon {

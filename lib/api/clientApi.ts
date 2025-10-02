@@ -1,10 +1,9 @@
-import { User } from "@/types/user";
+import { User, Task } from "@/types/user";
 import { JourneyDetails } from "@/types/journeyType";
 import nextServer from "./api";
+import type { DiaryEntryData, Emotion } from "@/types/diaryModal";
 import { AxiosResponse } from "axios";
-
 import { DiaryEntry } from "@/types/dairy";
-import { Emotion } from "@/types/dairy";
 import { CreateDiaryEntryData } from "@/types/dairy";
 import type { Baby, ChildSex } from "../../types/user";
 
@@ -51,6 +50,14 @@ export type ApiResponse<T> = {
 };
 
 type OnboardingPayload = {
+  childSex: ChildSex;
+  dueDate: string;
+  photo?: File;
+};
+
+type ProfilePayload = {
+  name: string;
+  email: string;
   childSex: ChildSex;
   dueDate: string;
   photo?: File;
@@ -116,6 +123,24 @@ export const getMe = async () => {
   return data;
 };
 
+export async function createDiaryEntry(data: DiaryEntryData) {
+  const { data: res } = await nextServer.post<DiaryEntryData>("/diaries", data);
+  return res;
+}
+
+export async function updateDiaryEntry(id: string, data: DiaryEntryData) {
+  const { data: res } = await nextServer.patch<DiaryEntryData>(
+    `/diaries/${id}`,
+    data
+  );
+  return res;
+}
+
+export const getEmotions = async (): Promise<Emotion[]> => {
+  const { data } = await nextServer.get<Emotion[]>("/emotions");
+  return data;
+};
+
 export async function fetchDiary(): Promise<DiaryEntry[]> {
   const res = await nextServer.get<DiaryEntry[]>("/diaries");
   return res.data;
@@ -149,6 +174,24 @@ export async function getMomDailyTips(
   return data;
 }
 
+export type TaskProp = {
+  status: number;
+  data: Task[];
+};
+export async function getTasks(): Promise<Task[]> {
+  const { data } = await nextServer.get<TaskProp>("/tasks");
+  return data.data;
+}
+export async function changeStateTask(
+  task: Task,
+  isDone: boolean
+): Promise<Task> {
+  const { data } = await nextServer.patch<Task>(`/tasks/${task._id}/status`, {
+    isDone,
+  });
+  return data;
+}
+
 export async function submitOnboarding(payload: OnboardingPayload) {
   const { childSex, dueDate, photo } = payload;
 
@@ -163,7 +206,28 @@ export async function submitOnboarding(payload: OnboardingPayload) {
 
   return data.user;
 }
-export interface Task {
+
+export async function saveProfile(payload: ProfilePayload) {
+  const { name, email, childSex, dueDate, photo } = payload;
+
+  if (photo) {
+    const fd = new FormData();
+    fd.append("avatar", photo);
+
+    await nextServer.patch("/users/avatar", fd);
+  }
+
+  const { data } = await nextServer.patch("/users", {
+    name,
+    email,
+    childSex,
+    dueDate,
+  });
+
+  return data.user;
+}
+
+export interface TaskPropT {
   _id: string;
   text: string;
   date: string;
@@ -184,8 +248,10 @@ export type UpdateTaskDto = Partial<TaskFormValues>;
 
 export const tasksApi = {
   // POST /tasks
-  createTask: async (task: CreateTaskDto): Promise<AxiosResponse<Task>> => {
-    return await nextServer.post<Task>("/tasks", task);
+  createTask: async (
+    task: CreateTaskDto
+  ): Promise<AxiosResponse<TaskPropT>> => {
+    return await nextServer.post<TaskPropT>("/tasks", task);
   },
 };
 

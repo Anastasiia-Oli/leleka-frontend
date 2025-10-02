@@ -17,37 +17,37 @@ const BabyTodayCard = () => {
     <div className={css.card}>
       {isSuccess && (
         <>
-          <h2 className={css.title}>Малюк сьогодні</h2>
+          <h3 className="header-third">Малюк сьогодні</h3>
           <div className={css.wrap}>
-            <Image
-              src={baby?.image ?? "/placeholder.png"}
-              alt="baby"
-              width={287}
-              height={217}
-              sizes="(min-width:335px) 287px, (min-width:768px) 257px, 100vw"
-              className={css.img}
-            />
+            <div className={css.imgBox}>
+              <Image
+                src={baby?.image ?? "/placeholder.png"}
+                alt="baby"
+                fill
+                className={css.img}
+              />
+            </div>
             <div className={css.babyInfo}>
-              <p className={css.infoTitle}>
+              <p className="text-bold">
                 Розмір:
-                <span className={css.infoText}>
+                <span className={`${css.span} text-primary`}>
                   Приблизно {baby?.babySize} см
                 </span>
               </p>
-              <p className={css.infoTitle}>
+              <p className="text-bold">
                 Вага:
-                <span className={css.infoText}>
+                <span className={`${css.span} text-primary`}>
                   Близько {baby?.babyWeight} грамів.
                 </span>
               </p>
-              <p className={css.infoTitle}>
+              <p className="text-bold">
                 Активність:
-                <span className={css.infoText}>{baby?.babyActivity}</span>
+                <span className={`${css.span} text-primary`}>{baby?.babyActivity}</span>
               </p>
             </div>
           </div>
 
-          <p className={css.babyFact}>{baby?.interestingFact}</p>
+          <p className="text-primary">{baby?.interestingFact}</p>
         </>
       )}
     </div>

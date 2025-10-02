@@ -8,7 +8,7 @@ const GreetingBlock = () => {
 
   return (
     <div className={css.greeting}>
-      <h1 className={css.text}>Вітаю, {user.name || "користувачу"}!</h1>
+      <h2 className="header-second">Вітаю, {user.name || "користувачу"}!</h2>
     </div>
 
   );

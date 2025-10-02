@@ -38,8 +38,7 @@ const StatusBlock = () => {
     return (
       <div className={css.wrapper}>
         <div className={css.box}>
-          <p className={css.boxTitle}>Дата не задана</p>
-          <p className={css.boxTextNan}>Вкажіть дату пологів</p>
+          <p className="header-fourth">Вкажіть дату пологів</p>
         </div>
       </div>
     );

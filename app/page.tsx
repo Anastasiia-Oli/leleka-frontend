@@ -7,6 +7,8 @@ import FeelingCheckCard from "@/components/FeelingCheckCard/FeelingCheckCard";
 import Header from "@/components/Header/Header";
 import SideBar from "@/components/SideBar/SideBar";
 import css from "./Home.module.css";
+import { LogoComponent } from "@/components/LogoComponent/LogoComponent";
+import Breadcrumbs from "@/components/Breadcrumbs/Breadcrumbs";
 
 export default function Home() {
   return (
@@ -14,16 +16,24 @@ export default function Home() {
       <Header />
       <div className={css.bodyWrapper}>
         <div className={css.sideWrapper}>
+          <LogoComponent />
           <SideBar />
         </div>
 
         <div className={css.contentWrapper}>
+          <Breadcrumbs />
           <GreetingBlock />
-          <StatusBlock />
-          <BabyTodayCard />
-          <MomTipCard />
-          <TasksReminderCard />
-          <FeelingCheckCard />
+          <div className={css.contentCards}>
+            <div className={css.leftDayCard}>
+              <StatusBlock />
+              <BabyTodayCard />
+              <MomTipCard />
+            </div>
+            <div className={css.rightDayCard}>
+              <TasksReminderCard />
+              <FeelingCheckCard />
+            </div>
+          </div>
         </div>
       </div>
     </section>

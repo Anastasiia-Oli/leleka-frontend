@@ -1,6 +1,6 @@
 // картка щоденика
 
-'use client';
+"use client";
 
 import React from "react";
 import { DiaryEntry } from "@/types/dairy";
@@ -12,8 +12,11 @@ interface DiaryEntryCardProps {
   isSelected?: boolean;
 }
 
-const DiaryEntryCard: React.FC<DiaryEntryCardProps> = ({ entry, onClick, isSelected }) => {
-
+const DiaryEntryCard: React.FC<DiaryEntryCardProps> = ({
+  entry,
+  onClick,
+  isSelected,
+}) => {
   // Показуємо максимум 3 емоції, решту ховаємо під "+N"
   const visibleEmotions = entry.emotions?.slice(0, 3) || [];
   const hiddenEmotionsCount = Math.max((entry.emotions?.length ?? 0) - 3, 0);
@@ -21,7 +24,7 @@ const DiaryEntryCard: React.FC<DiaryEntryCardProps> = ({ entry, onClick, isSelec
   // Функція форматування дати
   const formatDate = (dateString: string) => {
     // Якщо дата вже в правильному форматі, повертаємо її
-    if (typeof dateString === 'string' && dateString.includes('липня')) {
+    if (typeof dateString === "string" && dateString.includes("липня")) {
       return dateString;
     }
 
@@ -36,12 +39,12 @@ const DiaryEntryCard: React.FC<DiaryEntryCardProps> = ({ entry, onClick, isSelec
       }
 
       // Форматуємо дату в український формат
-      return date.toLocaleDateString('uk-UA', {
-        day: 'numeric',
-        month: 'long',
-        year: 'numeric'
+      return date.toLocaleDateString("uk-UA", {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
       });
-    } catch (error) {
+    } catch {
       // У випадку помилки повертаємо оригінальний рядок
       return dateString;
     }
@@ -50,7 +53,7 @@ const DiaryEntryCard: React.FC<DiaryEntryCardProps> = ({ entry, onClick, isSelec
   return (
     <div
       onClick={onClick}
-      className={`${css.card} ${isSelected ? css.selected : ''}`}
+      className={`${css.card} ${isSelected ? css.selected : ""}`}
     >
       <div className={css.cardHeader}>
         <h3 className={`${css.cardTitle} header-fourth`}>{entry.title}</h3>
@@ -66,9 +69,7 @@ const DiaryEntryCard: React.FC<DiaryEntryCardProps> = ({ entry, onClick, isSelec
           </span>
         ))}
         {hiddenEmotionsCount > 0 && (
-          <span className={css.moreEmotions}>
-            +{hiddenEmotionsCount}
-          </span>
+          <span className={css.moreEmotions}>+{hiddenEmotionsCount}</span>
         )}
       </div>
     </div>

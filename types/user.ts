@@ -1,3 +1,4 @@
+// types/user.ts
 export type ChildSex = "Ще не знаю" | "Дівчинка" | "Хлопчик";
 
 export interface User {
@@ -10,6 +11,13 @@ export interface User {
   createdAt: string;
   updatedAt: string;
 }
+
+export type Task = {
+  _id?: string;
+  text?: string;
+  date?: string | undefined;
+  isDone?: boolean;
+};
 
 export type Baby = {
   weekNumber: number;

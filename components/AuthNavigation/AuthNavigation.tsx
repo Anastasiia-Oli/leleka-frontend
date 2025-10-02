@@ -6,13 +6,35 @@ import { useAuthUserStore } from "@/lib/store/authStore";
 import { useRouter } from "next/navigation";
 import { logout } from "@/lib/api/clientApi";
 import Image from "next/image";
+import { useEffect, useState } from "react";
+import ConfirmationModal from "../ConfirmationModal/ConfirmationModal";
 
 export default function AuthNavigation() {
   const router = useRouter();
   const { user, isAuthenticated } = useAuthUserStore();
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const clearIsAuthenticated = useAuthUserStore(
     (state) => state.clearIsAuthenticated
   );
+
+  useEffect(() => {
+    if (isModalOpen) {
+      document.body.style.setProperty("overflow", "hidden", "important");
+      document.documentElement.style.setProperty(
+        "overflow",
+        "hidden",
+        "important"
+      );
+    } else {
+      document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
+    }
+
+    return () => {
+      document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
+    };
+  }, [isModalOpen]);
 
   const handleLogout = async () => {
     await logout();
@@ -22,7 +44,7 @@ export default function AuthNavigation() {
 
   return (
     <div className={css.sideFooterAuth}>
-      {isAuthenticated && ( //delete "!" later
+      {isAuthenticated && (
         <div className={css.sideAuth}>
           <Link
             href="/profile"
@@ -42,15 +64,20 @@ export default function AuthNavigation() {
             </ul>
           </Link>
 
-          <Link
-            href="/auth/login"
-            onClick={handleLogout}
+          <button
+            onClick={() => setIsModalOpen(true)}
             className={css.logoutButton}
           >
             <svg width={24} height={24} className={css.logoutIcon}>
               <use href="/leleka-sprite.svg#icon-logout"></use>
             </svg>
-          </Link>
+          </button>
+          <ConfirmationModal
+            title="Ви точно хочете вийти?"
+            isOpen={isModalOpen}
+            onClose={() => setIsModalOpen(false)}
+            onConfirm={handleLogout}
+          />
         </div>
       )}
 

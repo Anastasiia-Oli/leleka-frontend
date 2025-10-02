@@ -1,10 +1,11 @@
 "use client";
 
-import Link from "next/link";
 import css from "./PRLayout.module.css";
 import SideBar from "@/components/SideBar/SideBar";
 import Header from "@/components/Header/Header";
 import { usePathname } from "next/navigation";
+import { LogoComponent } from "@/components/LogoComponent/LogoComponent";
+import Breadcrumbs from "@/components/Breadcrumbs/Breadcrumbs";
 
 type Props = {
   children: React.ReactNode;
@@ -23,16 +24,16 @@ const PrivateRoutesLayout = ({ children }: Props) => {
       <section className={css.container}>
         {!shouldHide && (
           <aside className={css.sidebar}>
-            <Link href="/" className={css.logo}>
-              <svg className={css.logoIcon}>
-                <use href="/leleka-sprite.svg#icon-logo" />
-              </svg>
-            </Link>
+            <LogoComponent />
             <SideBar />
           </aside>
         )}
 
-        <div className={css.privateRoutesWrapper}>{children}</div>
+        <div className={css.privateRoutesWrapper}>
+          {" "}
+          <Breadcrumbs />
+          {children}
+        </div>
       </section>
     </>
   );

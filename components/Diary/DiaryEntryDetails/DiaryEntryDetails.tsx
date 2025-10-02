@@ -1,16 +1,17 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { DiaryEntry } from "@/types/dairy";
 import css from "./DiaryEntryDetails.module.css";
 import { toast } from "react-hot-toast";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteDiaryEntry } from "@/lib/api/clientApi";
 import { useRouter } from "next/navigation";
+import { useTitleDraftStore } from "@/lib/store/titleStore";
 
 interface DiaryEntryDetailsProps {
   entry: DiaryEntry | null;
-  onEdit?: () => void;
+  onEdit?: (entry: DiaryEntry) => void;
   onBack?: () => void;
 }
 
@@ -19,6 +20,16 @@ const DiaryEntryDetails: React.FC<DiaryEntryDetailsProps> = ({
   onEdit,
   onBack,
 }) => {
+  const { setDraft, clearDraft } = useTitleDraftStore();
+
+  useEffect(() => {
+    if (entry?.title) {
+      setDraft(entry.title);
+    } else {
+      clearDraft();
+    }
+  }, [entry, setDraft, clearDraft]);
+
   const router = useRouter();
 
   //  ----- deleter
@@ -39,6 +50,21 @@ const DiaryEntryDetails: React.FC<DiaryEntryDetailsProps> = ({
   //  ----- deleter end
 
   const [isConfirmingDelete, setIsConfirmingDelete] = useState(false);
+
+  useEffect(() => {
+    if (isConfirmingDelete) {
+      document.body.style.overflow = "hidden";
+      document.documentElement.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
+    }
+
+    return () => {
+      document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
+    };
+  }, [isConfirmingDelete]);
 
   if (!entry) {
     return (
@@ -148,7 +174,9 @@ const DiaryEntryDetails: React.FC<DiaryEntryDetailsProps> = ({
               {onEdit && (
                 <button
                   className={css.actionButton}
-                  onClick={onEdit}
+                  onClick={() => {
+                    onEdit(entry); // передаємо entry в обробник
+                  }}
                   title="Редагувати"
                   disabled={isPending}
                 >
