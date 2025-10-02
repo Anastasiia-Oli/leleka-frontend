@@ -6,7 +6,7 @@ type AuthUserStore = {
   user: User;
   isAuthenticated: boolean;
   setUser: (user: User) => void;
-   setIsAuthenticated: (value: boolean) => void;
+  setIsAuthenticated: (value: boolean) => void;
   clearIsAuthenticated: () => void;
 };
 
@@ -44,6 +44,15 @@ export const useAuthUserStore = create<AuthUserStore>()(
         user: state.user,
         isAuthenticated: state.isAuthenticated,
       }),
+      // merge: (persistedState: unknown, currentState) => {
+      //   if (typeof persistedState === "object" && persistedState !== null) {
+      //     return {
+      //       ...currentState,
+      //       ...(persistedState as Partial<AuthUserStore>),
+      //     };
+      //   }
+      //   return currentState;
+      // },
     }
   )
 );
